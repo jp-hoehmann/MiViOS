@@ -21,7 +21,20 @@ limitations under the License.
 
 ## Build instructions
 
+The build is meant to run inside the project directory (the same directory this file is in).
+
+To get started quickly:
+
+* Build a bootable CD-ROM image of the operating system by invoking `$ ./iso.sh`.
+* Build a bootable CD-ROM image and run it in qemu by in invoking `$ ./qemu.sh`.  
+
+The build is split into three steps, which are exposed as scripts, so they can be hooked into an IDE:
+
+* Build the OS by invoking `$ ./build.sh`.
+* After running the build, install the OS into a bootable CD-ROM image by invoking `$ ./install.sh`.
+* After installing, run the OS in qemu by invoking `$ ./run.sh`.
+
+There are two additional scripts that might be useful in certain situations:
+
+* Copy all the headers into the `sysroot` (without compiling anything) by invoking `$ ./headers.sh`.
 * Clean up the source tree by invoking `$ ./clean.sh`.
-* Install all the headers into the `sysroot` by invoking `$ ./headers.sh`.
-* Build a bootable cdrom image of the operating system by invoking `$ ./iso.sh`.
-* Build a bootable cdrom image and run it in qemu by in invoking `$ ./qemu.sh`.  

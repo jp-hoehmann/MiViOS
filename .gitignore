@@ -1,8 +1,7 @@
-
 #
 # .gitignore
 #
-# Files not to be tracked by version control.
+# Created by Jean-Pierre Höhmann on 25.08.18.
 #
 # Copyright 2018 Jean-Pierre Höhmann (@NuvandaPV) <jean-pierre@höhmann.info>
 #
@@ -85,6 +84,10 @@ Module.symvers
 Mkfile.old
 dkms.conf
 
+# Kernels
+#
+*.kernel
+
 #
 # Unimportant files
 #
@@ -114,9 +117,29 @@ logs
 *.log
 
 #
+# Build artifacts
+#
+
+# System root directory to be.
+#
+build/sysroot/
+
+# Root directory for the actual iso.
+#
+build/isodir/
+
+# CD-ROM image.
+#
+*.iso
+
+#
 # Miscellaneous files
 #
 
 # IDE files.
 #
 .idea/
+
+# CMake stuff.
+#
+.cmake-build-default/
