@@ -19,28 +19,29 @@
  */
 
 #ifndef _STRING_H
-    /*
-     * String interface.
-     */
+#define _STRING_H 1
 
-    #define _STRING_H 1
+#include "sys/cdefs.h"
 
-    #include "sys/cdefs.h"
+/*
+ * String interface.
+ */
 
-    #include <stddef.h>
+#include <stddef.h>
 
-    #ifdef __cplusplus
-        extern "C" {
-    #endif
+#ifdef __cplusplus
+    extern "C" {
+#endif // __cplusplus
 
-    int memcmp(const void*, const void*, size_t);
-    int strcmp(const char*, const char*);
-    void* memcpy(void* __restrict, const void* __restrict, size_t);
-    void* memmove(void*, const void*, size_t);
-    void* memset(void*, int, size_t);
-    size_t strlen(const char*);
+int memcmp(const void*, const void*, size_t);
+int strcmp(const char*, const char*);
+void* memcpy(void* __restrict, const void* __restrict, size_t);
+void* memmove(void*, const void*, size_t);
+void* memset(void*, int, size_t);
+size_t strlen(const char*);
 
-    #ifdef __cplusplus
-        }
-    #endif
-#endif
+#ifdef __cplusplus
+    }
+#endif // __cplusplus
+
+#endif // _STRING_H

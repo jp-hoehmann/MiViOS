@@ -19,25 +19,26 @@
  */
 
 #ifndef _STDIO_H
-    /*
-     * Stdio interface.
-     */
+#define _STDIO_H 1
 
-    #define _STDIO_H 1
+#include "sys/cdefs.h"
 
-    #include "sys/cdefs.h"
+/*
+ * Stdio interface.
+ */
 
-    #define EOF (-1)
+#define EOF (-1)
 
-    #ifdef __cplusplus
-        extern "C" {
-    #endif
+#ifdef __cplusplus
+    extern "C" {
+#endif // __cplusplus
 
-    int printf(const char* __restrict, ...);
-    int putchar(int);
-    int puts(const char*);
+int printf(const char* __restrict, ...);
+int putchar(int);
+int puts(const char*);
 
-    #ifdef __cplusplus
-        }
-    #endif
-#endif
+#ifdef __cplusplus
+    }
+#endif // __clusplus
+
+#endif // _STDIO_H

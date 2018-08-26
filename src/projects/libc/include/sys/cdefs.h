@@ -19,10 +19,12 @@
  */
 
 #ifndef _SYS_CDEFS_H
-    /*
-     * Macros for the libc.
-     */
+#define _SYS_CDEFS_H 1
 
-    #define _SYS_CDEFS_H 1
-    #define __mivios_libc 1
-#endif
+/*
+ * Macros for the libc.
+ */
+
+#define __mivios_libc 1
+
+#endif // _SYS_CDEFS_H
