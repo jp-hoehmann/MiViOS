@@ -142,4 +142,4 @@ build/isodir/
 
 # CMake stuff.
 #
-.cmake-build-default/
+cmake-build-default/
