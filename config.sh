@@ -46,6 +46,7 @@ INCLUDEDIR=${PREFIX}/include
 
 CFLAGS='-O2 -g'
 CPPFLAGS=''
+LDFLAGS=''
 
 STATICDIR="$(pwd)/src/static"
 ISODIR="$(pwd)/build/isodir"
