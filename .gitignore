@@ -122,13 +122,13 @@ logs
 
 # System root directory to be.
 #
-build/sysroot/
+/build/sysroot/
 
 # Root directory for the actual iso.
 #
-build/isodir/
+/build/isodir/
 
-# CD-ROM image.
+# CD-ROM images.
 #
 *.iso
 
@@ -139,7 +139,10 @@ build/isodir/
 # IDE files.
 #
 .idea/
+*.cbp
+
 
 # CMake stuff.
 #
 cmake-build-default/
+/Makefile
