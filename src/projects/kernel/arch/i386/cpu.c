@@ -26,5 +26,5 @@
  * Set up CPU-specific features.
  */
 void processor_initialize(void) {
-    _setGDT(&_gdt_start, ((void*) &_gdt_end) - ((void*) &_gdt_start));
+    _gdt_set(&_gdt_start, ((void*) &_gdt_end) - ((void*) &_gdt_start));
 }

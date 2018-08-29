@@ -37,9 +37,9 @@ _gdt_end:
 .section .text
 
 # Set the GDT frome a given pointer and size (on the stack in that order).
-.global _setGDT
-.type _setGDT, @function
-_setGDT:
+.global _gdt_set
+.type _gdt_set, @function
+_gdt_set:
     push %ebp                                                           # Set up the stack.
     movl %esp, %ebp                                                     #
     movl 8(%esp), %eax                                                  # Put the GDT pointer on the stack.
@@ -47,15 +47,15 @@ _setGDT:
     movw 12(%esp), %ax                                                  # Put the size on the stack as a 16 bit value
     push %ax                                                            # directly below the GDT pointer.
     lgdt (%esp)                                                         # Load the GDT using the 6 bytes just written.
-    call reloadSegments                                                 # Reload the segments.
+    call cs_reload
     movl %ebp, %esp                                                     #
     pop %ebp                                                            # Restore the stack and return.
     ret                                                                 #
 
 # Reload the segments. This is run after the GDT is loaded and will load the new supervisor code and data segments.
-reloadSegments:
-    ljmp $0x08, $reloadDS                                               # Long jump into the supervisor code segment
-reloadDS:
+cs_reload:
+    ljmp $0x08, $ds_reload                                              # Long jump into the supervisor code segment
+ds_reload:
     movw $0x10, %ax                                                     # Load the supervisor data segment, as data
     movw %ax, %ds                                                       # (d, e, f, and g) and stack (s) segments.
     movw %ax, %es                                                       #

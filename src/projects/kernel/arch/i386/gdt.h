@@ -25,6 +25,6 @@
 
 extern uint64_t _gdt_start;
 extern void _gdt_end;
-extern void _setGDT(uint64_t*, uint16_t);
+extern void _gdt_set(uint64_t*, uint16_t);
 
 #endif // ARCH_I386_GDT_H
