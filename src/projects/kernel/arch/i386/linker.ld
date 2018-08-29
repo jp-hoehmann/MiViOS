@@ -86,5 +86,5 @@ SECTIONS
 	 * End of Kernel.
 	 */
 	 . = ALIGN(4M);
-	 _KERNEL_END = .;
+	 _kernel_end = .;
 }
