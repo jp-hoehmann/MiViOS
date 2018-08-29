@@ -27,10 +27,8 @@ set -euxo pipefail
 #
 
 . ./config.sh
-. ./clean.sh
 
-
-mkdir "$SYSROOT"
+mkdir -p "$SYSROOT"
 
 for project in ${PROJECTS}
 do

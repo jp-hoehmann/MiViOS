@@ -28,7 +28,7 @@ set -euxo pipefail
 
 . ./config.sh
 
-mkdir ${ISODIR}
+mkdir -p ${ISODIR}
 
 for file in $FILES
 do

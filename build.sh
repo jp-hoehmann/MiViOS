@@ -27,7 +27,6 @@ set -euxo pipefail
 #
 
 . ./config.sh
-. ./clean.sh
 . ./headers.sh
 
 cp -rT ${STATICDIR} ${SYSROOT}
