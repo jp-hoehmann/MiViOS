@@ -57,3 +57,5 @@ _start:
     jmp 1b                                                              # due to a non-maskable interrupt.
 
 .size _start, . - _start                                                # Set the size of _start.
+
+.end
