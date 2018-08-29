@@ -18,7 +18,6 @@
  * limitations under the License.
  */
 
-#include <stdio.h>
 #include <kernel/cpu.h>
 
 #include "gdt.h"
