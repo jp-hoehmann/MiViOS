@@ -25,11 +25,7 @@
 .global _gdt_start
 .type _gdt_start, @object
 _gdt_start:
-.quad 0x0000000000000000
-.quad 0x00CF9A000000FFFF
-.quad 0x00CF92000000FFFF
-.quad 0x00CFFA000000FFFF
-.quad 0x00CFF2000000FFFF
+.quad 0x0000000000000000, 0x00CF9A000000FFFF, 0x00CF92000000FFFF, 0x00CFFA000000FFFF, 0x00CFF2000000FFFF
 .global _gdt_end
 .type _gdt_end, @notype
 _gdt_end:
