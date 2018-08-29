@@ -22,4 +22,9 @@
 # ToDos for the OS.
 #
 
-# TODO Add strcmp().
+# TODO Try $CC -ffast-math
+# TODO Try $CC -Ofast
+# TODO Try $CC -flto
+# TODO Try $CC -funroll-loops
+# TODO Try $CC -fno-unwind-tables
+# TODO Try $CC -fno-exceptions
