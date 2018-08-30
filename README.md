@@ -38,3 +38,4 @@ There are two additional scripts that might be useful in certain situations:
 
 * Copy all the headers into the `sysroot` (without compiling anything) by invoking `$ ./headers.sh`.
 * Clean up the source tree by invoking `$ ./clean.sh`.
+* Start the OS in qemu in the background, waiting for GDB to attach by invoking `$ ./debug.sh`.

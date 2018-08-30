@@ -29,6 +29,13 @@ set -euxo pipefail
 . ./config.sh
 . ./headers.sh
 
+# Compile grubenv
+mkdir -p ${SYSROOT}/boot/grub
+grub-editenv ${SYSROOT}/boot/grub/grubenv create
+for var in ${GRUBENV}
+do grub-editenv ${SYSROOT}/boot/grub/grubenv set $var
+done
+
 cp -rT ${STATICDIR} ${SYSROOT}
 
 for project in ${PROJECTS}
@@ -37,4 +44,3 @@ do
     DESTDIR=${SYSROOT} ${MAKE} install
     cd ../../../
 done
-

@@ -95,6 +95,7 @@ dkms.conf
 # Temporary files
 #
 *~
+tmp/
 
 # Backup files
 #
@@ -115,6 +116,18 @@ logs
 # Generic log files.
 #
 *.log
+
+#
+# Runtime data
+#
+
+# PID file directory.
+#
+pids/
+
+# Process IDs.
+#
+*.pid
 
 #
 # Build artifacts

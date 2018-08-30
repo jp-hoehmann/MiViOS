@@ -26,10 +26,12 @@ set -euxo pipefail
 # Build configuration.
 #
 
-# FIXME None of STATICDIR ISODIR ISOFILE SYSROOT PROJECTDIR PROJECTS FILES can contain spaces.
+# FIXME None of STATICDIR ISODIR ISOFILE TMPDIR PIDDIR SYSROOT PROJECTDIR can contain spaces.
+# FIXME The individual file names in FILES, as well as the individual project names in PROJECTS cannot contain spaces.
 
 PROJECTS="${PROJECTS:-$(./txt.pl build-order.txt)}"
 FILES="${FILES:-$(./txt.pl files-to-install.txt)}"
+GRUBENV="${GRUBENV:-$(./txt.pl grub.env)}"
 
 MAKE=${MAKE:-make}
 HOST=${HOST:-$(./txt.pl default-host.txt)}
@@ -51,6 +53,8 @@ LDFLAGS=''
 STATICDIR="$(pwd)/src/static"
 ISODIR="$(pwd)/build/isodir"
 ISOFILE="$(pwd)/mivios.iso"
+TMPDIR="$(pwd)/tmp"
+PIDDIR="$(pwd)/pids"
 
 # Configure the cross-compiler to use the desired system root.
 SYSROOT="$(pwd)/build/sysroot"

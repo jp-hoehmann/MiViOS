@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
 #
-# install.sh
+# debug.sh
 #
-# Created by Jean-Pierre Höhmann on 25.08.18.
+# Created by Jean-Pierre Höhmann on 30.08.18.
 #
 # Copyright 2018 Jean-Pierre Höhmann (@NuvandaPV) <jean-pierre@höhmann.info>
 #
@@ -23,17 +23,24 @@
 set -euxo pipefail
 
 #
-# Install the prebuilt OS into an ISO image.
+# Background a debuggable instance of qemu running mivios.
 #
 
 . ./config.sh
 
-mkdir -p ${TMPDIR} ${ISODIR}
+mkdir -p ${PIDDIR}
 
-for file in $FILES
-do
-    mkdir -p ${ISODIR}/$(dirname ${file})
-    cp ${SYSROOT}/${file} ${ISODIR}/${file}
-done
+# Workaround: kill existing qemu's
+if [[ -f ${PIDDIR}/dbg.pid ]]
+then
+    ps -p $(<${PIDDIR}/dbg.pid) &> /dev/null \
+        && kill -INT $(<${PIDDIR}/dbg.pid)
+    rm ${PIDDIR}/dbg.pid
+fi
 
-grub-mkrescue -o ${ISOFILE} ${ISODIR}
+# Run in qemu, stop the CPU and listen for a debugger on :1234.
+./run.sh -S -s &
+echo $! > ${PIDDIR}/dbg.pid
+
+# Wait to give qemu some time to start.
+sleep 2

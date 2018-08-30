@@ -25,6 +25,8 @@ set -euxo pipefail
 #
 # Build a bootable CD-ROM image and run it in qemu.
 #
+# The command line will be passed verbatim to qemu. Exit code will be passed from qemu.
+#
 
 . ./iso.sh
 . ./run.sh

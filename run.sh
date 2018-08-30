@@ -25,7 +25,9 @@ set -euxo pipefail
 #
 # Run the previously installed OS in Qemu.
 #
+# The command line will be passed verbatim to qemu. Exit code will be passed from qemu.
+#
 
 . ./config.sh
 
-qemu-system-$(./target-triplet-to-arch.sh ${HOST}) -cdrom ${ISOFILE}
+exec qemu-system-$(./target-triplet-to-arch.sh ${HOST}) -cdrom ${ISOFILE} "$@"

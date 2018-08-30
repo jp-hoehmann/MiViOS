@@ -24,3 +24,4 @@
 
 boot/mivios.kernel
 boot/grub/grub.cfg
+boot/grub/grubenv
