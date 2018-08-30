@@ -22,6 +22,7 @@
 
 #include <kernel/tty.h>
 #include <kernel/cpu.h>
+#include <kernel/mmu.h>
 
 /*
  * MiViOS Kernel.
@@ -35,5 +36,6 @@
 void kernel_main(void) {
 	terminal_initialize();
 	processor_initialize();
+	memory_initialize();
 	printf("Hello, kernel World!\n");
 }
