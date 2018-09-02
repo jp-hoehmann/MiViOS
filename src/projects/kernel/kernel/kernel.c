@@ -38,7 +38,8 @@ void kernel_main(void) {
 	terminal_initialize();
 	processor_initialize();
 	memory_initialize();
+
 	char* ptr = (char*) pfalloc(0x800000, 0x400000, 0b100000011);
-	memcpy(ptr, "Hello, kernel World!\n", 22);
+	strcpy(ptr, "Hello, kernel World!\n");
 	printf(ptr);
 }
