@@ -21,6 +21,9 @@
 #ifndef _KERNEL_MMU_H
 #define _KERNEL_MMU_H 1
 
+#include <stdint.h>
+
 void memory_initialize(void);
+void* pfalloc(uint32_t, uint32_t, uint16_t);
 
 #endif // _KERNEL_MMU_H

@@ -18,6 +18,8 @@
  * limitations under the License.
  */
 
+#include <string.h>
+
 #include <kernel/mmu.h>
 
 #include "boot.h"
@@ -29,4 +31,17 @@
 void memory_initialize(void) {
     _pd_set(&_kernel_end);
     _pg_set();
+}
+
+/*
+ * Allocate a page frame.
+ *
+ * This will allocate a given physical page to a given virtual page using given flags, returning a pointer to the
+ * newly mapped memory. The physical page is specified as a 32-bit unsigned int, that would point to the page, were it
+ * identity mapped. The virtual page is specified as a 32-bit unsigned int, that would point to the new page, were it
+ * already mapped in the desired way.
+ */
+void* pfalloc(uint32_t phys, uint32_t virt, uint16_t flags) {
+    *(uint32_t*) (PAGE_DIRECTORY + (virt >> 10)) = phys | flags;
+    return (void*) virt;
 }

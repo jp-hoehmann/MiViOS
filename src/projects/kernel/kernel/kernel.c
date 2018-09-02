@@ -19,6 +19,7 @@
  */
 
 #include <stdio.h>
+#include <string.h>
 
 #include <kernel/tty.h>
 #include <kernel/cpu.h>
@@ -37,5 +38,7 @@ void kernel_main(void) {
 	terminal_initialize();
 	processor_initialize();
 	memory_initialize();
-	printf("Hello, kernel World!\n");
+	char* ptr = (char*) pfalloc(0x800000, 0x400000, 0b100000011);
+	memcpy(ptr, "Hello, kernel World!\n", 22);
+	printf(ptr);
 }

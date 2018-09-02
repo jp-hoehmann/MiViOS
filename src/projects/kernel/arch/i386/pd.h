@@ -21,6 +21,8 @@
 #ifndef ARCH_I386_PD_H
 #define ARCH_I386_PD_H 1
 
+#define PAGE_DIRECTORY 0x7fc00000
+
 #include <stdint.h>
 
 extern void _pd_set(uint32_t);
