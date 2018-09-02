@@ -39,3 +39,6 @@ There are two additional scripts that might be useful in certain situations:
 * Copy all the headers into the `sysroot` (without compiling anything) by invoking `$ ./headers.sh`.
 * Clean up the source tree by invoking `$ ./clean.sh`.
 * Start the OS in qemu in the background, waiting for GDB to attach by invoking `$ ./debug.sh`.
+
+You may pass `TARGET` as one of `Default`, `Debug`, or `Release` to set the build type. This currently only affects
+`build.sh` and all scripts that have to invoke the build process as part of their operation.

@@ -29,6 +29,18 @@ set -euxo pipefail
 # FIXME None of STATICDIR ISODIR ISOFILE TMPDIR PIDDIR SYSROOT PROJECTDIR can contain spaces.
 # FIXME The individual file names in FILES, as well as the individual project names in PROJECTS cannot contain spaces.
 
+TARGET="${TARGET:-Default}"
+
+DEFAULT_CFLAGS='-O2 -g'
+DEFAULT_CPPFLAGS=''
+DEFAULT_LDFLAGS=''
+DEBUG_CFLAGS='-O0 -g'
+DEBUG_CPPFLAGS=''
+DEBUG_LDFLAGS=''
+RELEASE_CFLAGS='-O3 -g'
+RELEASE_CPPFLAGS=''
+RELEASE_LDFLAGS=''
+
 PROJECTS="${PROJECTS:-$(./txt.pl build-order.txt)}"
 FILES="${FILES:-$(./txt.pl files-to-install.txt)}"
 GRUBENV="${GRUBENV:-$(./txt.pl grub.env)}"
@@ -46,9 +58,13 @@ BOOTDIR=/boot
 LIBDIR=${EXEC_PREFIX}/lib
 INCLUDEDIR=${PREFIX}/include
 
-CFLAGS='-O2 -g'
-CPPFLAGS=''
-LDFLAGS=''
+TARGET="${TARGET^^*}"
+CFLAGS="${TARGET}_CFLAGS"
+CPPFLAGS="${TARGET}_CPPFLAGS"
+LDFLAGS="${TARGET}_LDFLAGS"
+CFLAGS="${!CFLAGS}"
+CPPFLAGS="${!CPPFLAGS}"
+LDFLAGS="${!LDFLAGS}"
 
 STATICDIR="$(pwd)/src/static"
 ISODIR="$(pwd)/build/isodir"

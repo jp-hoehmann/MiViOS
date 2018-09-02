@@ -27,11 +27,10 @@ cmake_minimum_required(VERSION 2.8.4)
 
 set(CMAKE_C_FLAGS "-std=c99")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
-set(CMAKE_BUILD_TYPE Release)
 
 # CMake will complain, that “install” and “clean” are reserved, but it will run fine.
 # TODO Maybe make this pretty some day, if i feel like figuring out CMake.
 # FIXME Many IDE features will not work since this file does not provide the IDE with any useful info whatsoever.
-add_custom_target(${PROJECT_NAME} COMMAND cd ${${PROJECT_NAME}_SOURCE_DIR} && ./build.sh)
-add_custom_target(install COMMAND cd ${${PROJECT_NAME}_SOURCE_DIR} && ./install.sh)
-add_custom_target(clean COMMAND cd ${${PROJECT_NAME}_SOURCE_DIR} && ./clean.sh)
+add_custom_target(${PROJECT_NAME} COMMAND cd ${${PROJECT_NAME}_SOURCE_DIR} && TARGET=${CMAKE_BUILD_TYPE} ./build.sh)
+add_custom_target(install COMMAND cd ${${PROJECT_NAME}_SOURCE_DIR} && TARGET=${CMAKE_BUILD_TYPE} ./install.sh)
+add_custom_target(clean COMMAND cd ${${PROJECT_NAME}_SOURCE_DIR} && TARGET=${CMAKE_BUILD_TYPE} ./clean.sh)

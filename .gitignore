@@ -157,5 +157,7 @@ pids/
 
 # CMake stuff.
 #
-cmake-build-default/
+/cmake-build-default/
+/cmake-build-debug/
+/cmake-build-release/
 /Makefile
