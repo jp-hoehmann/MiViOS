@@ -196,53 +196,53 @@ _PAGE_DIRECTORY_SIZE:
 .global _pd_set
 .type _pd_set, @function
 _pd_set:
-    movl 4(%esp), %ebx
-    movl $0, %ecx
-    movl %ebx, %edx
-    shrl $22, %edx
+    movl 4(%esp), %ebx                                                  # Load base pointer.
+    movl $0, %ecx                                                       # Load counter.
+    movl %ebx, %edx                                                     # Calculate the number of huge pages that need
+    shrl $22, %edx                                                      # to be identity mapped for the kernel.
 1:
-    movl %ecx, %eax
-    shll $22, %eax
-    orl $KERNEL_HUGE_PAGE, %eax
-    movl %eax, (%ebx, %ecx, 4)
-    incl %ecx
-    cmp %edx, %ecx
-    jne 1b
+    movl %ecx, %eax                                                     # Calculate the address of the current block as
+    shll $22, %eax                                                      # counter * 4MiB.
+    orl $KERNEL_HUGE_PAGE, %eax                                         # Add flags.
+    movl %eax, (%ebx, %ecx, 4)                                          # Store the entry in the page directory.
+    incl %ecx                                                           # Increment the counter.
+    cmp %edx, %ecx                                                      # Check if enough blocks have been mapped for
+    jne 1b                                                              # the kernel and rerun the loop if necessary.
 1:
-    movl %ecx, %eax
-    shll $12, %eax
-    orl %ebx, %eax
-    orl $KERNEL_PAGE_TABLE, %eax
-    movl %eax, (%ebx, %ecx, 4)
-    incl %ecx
-    cmp $KERNEL_PAGE_DIR_END, %ecx
-    jne 1b
+    movl %ecx, %eax                                                     # Calculate the offset for the page table for
+    shll $12, %eax                                                      # the current entry as counter * 4KiB.
+    orl %ebx, %eax                                                      # Add base to get the address for the table.
+    orl $KERNEL_PAGE_TABLE, %eax                                        # Add flags.
+    movl %eax, (%ebx, %ecx, 4)                                          # Store the entry in the page directory.
+    incl %ecx                                                           # Increment the counter.
+    cmp $KERNEL_PAGE_DIR_END, %ecx                                      # Check if enough page tables have been mapped
+    jne 1b                                                              # for the kernel.
 
-    movl %ebx, %eax
-    orl $KERNEL_HUGE_PAGE, %eax
-    movl %eax, (%ebx, %ecx, 4)
-    incl %ecx
+    movl %ebx, %eax                                                     # Load pointer to page directory.
+    orl $KERNEL_HUGE_PAGE, %eax                                         # Add flags.
+    movl %eax, (%ebx, %ecx, 4)                                          # Store the self-referencing entry in the dir.
+    incl %ecx                                                           # Increment the counter.
 1:
-    movl %ecx, %eax
-    shll $12, %eax
-    orl %ebx, %eax
-    orl $USER_PAGE_TABLE, %eax
-    movl %eax, (%ebx, %ecx, 4)
-    incl %ecx
-    cmp $0x400, %ecx
-    jne 1b
+    movl %ecx, %eax                                                     #
+    shll $12, %eax                                                      # This is basically the same thing as above,
+    orl %ebx, %eax                                                      # except it is user page tables this time and
+    orl $USER_PAGE_TABLE, %eax                                          # goes all the way to the end of the directory
+    movl %eax, (%ebx, %ecx, 4)                                          # instead of some arbitrary cutoff in the
+    incl %ecx                                                           # middle. It would be nicer to have this be a
+    cmp $0x400, %ecx                                                    # f() called twice, but eh, this is asm.
+    jne 1b                                                              #
 
-    movl $KERNEL_DUMMY_PAGE, %eax
-    movl %ebx, %ecx
-    shrl $12, %ecx
-    movl $KERNEL_PAGE_DIR_END, %edx
-    shll $10, %edx
-    call pt_fill
+    movl $KERNEL_DUMMY_PAGE, %eax                                       # Load flags for an unused kernel page.
+    movl %ebx, %ecx                                                     # Calc num of table entries not needed at the
+    shrl $12, %ecx                                                      # start due to huge pages.
+    movl $KERNEL_PAGE_DIR_END, %edx                                     # Calculate the number of page table entries
+    shll $10, %edx                                                      # to be made for the kernel.
+    call pt_fill                                                        # Call pt_fill().
 
-    movl $USER_DUMMY_PAGE, %eax
-    addl $0x400, %ecx
-    movl $0x100000, %edx
-    call pt_fill
+    movl $USER_DUMMY_PAGE, %eax                                         # Load flags for an unused user page.
+    addl $0x400, %ecx                                                   # Skip 1024 entries (there's a huge page here).
+    movl $0x100000, %edx                                                # Load the total number of page tables to be
+    call pt_fill                                                        # made and call pt_fill() again.
 
     ret
 
@@ -251,13 +251,13 @@ _pd_set:
 .global _pg_set
 .type _pg_set, @function
 _pg_set:
-    movl %cr4, %eax
-    orl $CR4, %eax
-    movl %eax, %cr4
-    movl %ebx, %cr3
-    movl %cr0, %eax
-    orl $CR0, %eax
-    movl %eax, %cr0
+    movl %cr4, %eax                                                     # Load control register 4,
+    orl $CR4, %eax                                                      # set the flags for advanced paging options
+    movl %eax, %cr4                                                     # and store the value back in CR4.
+    movl %ebx, %cr3                                                     # Point CR3 to the page directory.
+    movl %cr0, %eax                                                     # Load control register 0,
+    orl $CR0, %eax                                                      # Set the flags for basic paging options,
+    movl %eax, %cr0                                                     # and store the valoe back in CR0.
     ret
 
 # Generate dummy page table entries.
@@ -266,8 +266,8 @@ _pg_set:
 # starting form %ebx. It will do so by recursively running itself passing the current index in %ecx.
 #
 pt_fill:
-    movl %eax, (%ebx, %ecx, 4)
-    incl %ecx
-    cmp %edx, %ecx
-    jne pt_fill
+    movl %eax, (%ebx, %ecx, 4)                                          # Write page table entry.
+    incl %ecx                                                           # Move to the next entry.
+    cmp %edx, %ecx                                                      # If more entries should be written,
+    jne pt_fill                                                         # recurse, otherwise return.
     ret
