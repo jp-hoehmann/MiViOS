@@ -115,6 +115,22 @@
 .set CR4, PSE | PGE
 
 #
+# Architecture specific information about the pageing.
+#
+
+# The size of each page in bytes.
+#
+.set PAGE_SIZE, 0x1000
+
+# The location in virtual memory the PD will be mapped to (assumed to be followed by the page tables).
+#
+.set PAGE_DIRECTORY, 0x7fc00000
+
+# The amount of physical memory used for page management (continuous, directly following the kernel).
+#
+.set PAGE_DIRECTORY_SIZE, 0x400000
+
+#
 # Globals used to implement kpalloc(), cpalloc() and dpalloc().
 #
 
@@ -141,6 +157,27 @@ _USER_CODE_PAGE:
 .type _USER_DATA_PAGE, @object
 _USER_DATA_PAGE:
 .long USER_DATA_PAGE
+
+# Page size in bytes.
+#
+.global _PAGE_SIZE
+.type _PAGE_SIZE, @object
+_PAGE_SIZE:
+.long PAGE_SIZE
+
+# Pointer to PD and PT.
+#
+.global _PAGE_DIRECTORY
+.type _PAGE_DIRECTORY, @object
+_PAGE_DIRECTORY:
+.long PAGE_DIRECTORY
+
+# Combined size of page directory and page tables in bytes.
+#
+.global _PAGE_DIRECTORY_SIZE
+.type _PAGE_DIRECTORY_SIZE, @object
+_PAGE_DIRECTORY_SIZE:
+.long PAGE_DIRECTORY_SIZE
 
 .section .text
 

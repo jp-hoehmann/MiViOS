@@ -1,7 +1,7 @@
 /*
- * mmu.h
+ * mm.c
  *
- * Created by Jean-Pierre Höhmann on 29.08.18.
+ * Created by Jean-Pierre Höhmann on 02.09.18.
  *
  * Copyright 2018 Jean-Pierre Höhmann (@NuvandaPV) <jean-pierre@höhmann.info>
  *
@@ -18,17 +18,14 @@
  * limitations under the License.
  */
 
-#ifndef _KERNEL_MMU_H
-#define _KERNEL_MMU_H 1
+#include <kernel/mm.h>
+#include <kernel/mmu.h>
 
-#include <stdint.h>
-
-extern uint32_t _KERNEL_DATA_PAGE;
-extern uint32_t _USER_CODE_PAGE;
-extern uint32_t _USER_DATA_PAGE;
-extern uint32_t _PAGE_SIZE;
-
-void memory_initialize(void);
-void* pfalloc(uint32_t, uint32_t);
-
-#endif // _KERNEL_MMU_H
+/*
+ * Allocate a kernel page.
+ *
+ * This will allocate a kernel page at the given virtual address, returning a pointer to the page.
+ */
+void* kpalloc(uint32_t addr) {
+    return pfalloc(_KERNEL_DATA_PAGE, addr);
+}

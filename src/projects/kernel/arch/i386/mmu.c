@@ -25,12 +25,15 @@
 #include "boot.h"
 #include "pd.h"
 
+static uint32_t memory_used = 0;
+
 /*
  * Set up the MMU.
  */
 void memory_initialize(void) {
     _pd_set(&_kernel_end);
     _pg_set();
+    memory_used = &_kernel_end + _PAGE_DIRECTORY_SIZE;
 }
 
 /*
@@ -41,7 +44,21 @@ void memory_initialize(void) {
  * identity mapped. The virtual page is specified as a 32-bit unsigned int, that would point to the new page, were it
  * already mapped in the desired way.
  */
-void* pfalloc(uint32_t phys, uint32_t virt, uint16_t flags) {
-    *(uint32_t*) (PAGE_DIRECTORY + (virt >> 10)) = phys | flags;
+void* _pfalloc(uint32_t flags, uint32_t virt, uint32_t phys) {
+    *(uint32_t*) (_PAGE_DIRECTORY + (virt >> 10)) = phys | flags;
     return (void*) virt;
 }
+
+/*
+ * Allocate a page frame.
+ *
+ * This will allocate a given virtual page using given flags, returning a pointer to the newly mapped memory. The
+ * virtual page is specified as a 32-bit unsigned int, that would point to the new page, were it already mapped as
+ * desired.
+ */
+void* pfalloc(uint32_t flags, uint32_t virt) {
+    void* result = _pfalloc(flags, virt, memory_used);
+    memory_used += _PAGE_SIZE;
+    return result;
+}
+
