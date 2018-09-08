@@ -19,24 +19,29 @@
  */
 
 #ifndef _STDLIB_H
-
 #define _STDLIB_H 1
 
 #include "sys/cdefs.h"
+
+#include <stddef.h>
 
 /*
  * Stdlib interface.
  */
 
 #ifdef __cplusplus
-    extern "C" {
+extern "C" {
 #endif // __cplusplus
 
 __attribute__((__noreturn__))
 void abort(void);
 
+void* alloc_page(size_t);
+
+void free_page(void*, size_t);
+
 #ifdef __cplusplus
-    }
+}
 #endif // __cplusplus
 
 #endif // _STDLIB_H

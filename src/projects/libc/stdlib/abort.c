@@ -29,16 +29,18 @@
  */
 __attribute__((__noreturn__))
 void abort(void) {
-    #if defined(__is_libk)
-        // TODO: Add proper kernel panic.
-        printf("kernel: panic: abort()\n");
-    #else
-        // TODO: Abnormally terminate the process as if by SIGABRT.
-        printf("abort()\n");
-    #endif
-    while (1) { }
-    #pragma clang diagnostic push
-        #pragma ide diagnostic ignored "OCDFAInspection"
-        __builtin_unreachable();
-    #pragma clang diagnostic pop
+#pragma clang diagnostic push
+#pragma ide diagnostic ignored "OCDFAInspection"
+#ifdef __is_libk
+    // TODO Add proper kernel panic.
+    printf("kernel: panic: abort()\n");
+    while (1) {}
+    __builtin_unreachable();
+#else // __is_libk
+    // TODO Abnormally terminate the process as if by SIGABRT.
+    printf("abort()\n");
+    while (1) {}
+    __builtin_unreachable();
+#endif // __is_libk
+#pragma clang diagnostic pop
 }

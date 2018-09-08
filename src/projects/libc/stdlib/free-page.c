@@ -1,5 +1,5 @@
 /*
- * ma.h
+ * free-page.c
  *
  * Created by Jean-Pierre Höhmann on 08.09.18.
  *
@@ -18,37 +18,20 @@
  * limitations under the License.
  */
 
-#ifndef _KERNEL_MA_H
-#define _KERNEL_MA_H 1
+#include <stdlib.h>
 
-#include <stddef.h>
+#ifdef __is_libk
+#include <kernel/ma.h>
+#endif // __is_libk
 
-void* alloc_kpage(size_t);
-
-void* alloc_cpage(size_t);
-
-void* alloc_dpage(size_t);
-
-void* alloc_epage(size_t);
-
-void* alloc_fpage(size_t);
-
-void* alloc_gpage(size_t);
-
-void* alloc_spage(size_t);
-
-void free_kpage(void*, size_t);
-
-void free_cpage(void*, size_t);
-
-void free_dpage(void*, size_t);
-
-void free_epage(void*, size_t);
-
-void free_fpage(void*, size_t);
-
-void free_gpage(void*, size_t);
-
-void free_spage(void*, size_t);
-
-#endif // _KERNEL_MA_H
+/*
+ * Free a given number of previously allocated pages starting at a given pointer.
+ */
+void free_page(void* start, size_t pages) {
+#ifdef __is_libk
+    // FIXME Unimplemented
+    free_kpage(start, pages);
+#else // __is_libk
+    // TODO Make a syscall to free_epage() here.
+#endif // __is_libk
+}

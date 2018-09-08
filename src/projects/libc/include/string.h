@@ -23,11 +23,11 @@
 
 #include "sys/cdefs.h"
 
+#include <stddef.h>
+
 /*
  * String interface.
  */
-
-#include <stddef.h>
 
 #ifdef __cplusplus
     extern "C" {

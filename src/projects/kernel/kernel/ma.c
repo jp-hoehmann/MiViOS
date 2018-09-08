@@ -73,6 +73,131 @@ void* _alloc_page(size_t pages, void** fbase, void** ftop, void* palloc(uint32_t
     return d;
 }
 
+/*
+ * Allocate a given number of kernel data pages.
+ *
+ * This will allocate pages consecutive kernel data pages, returning a pointer to the start of the newly mapped memory.
+ */
 void* alloc_kpage(size_t pages) {
     return _alloc_page(pages, &kfbase, &kftop, kpalloc);
+}
+
+/*
+ * Allocate a given number of user code pages.
+ *
+ * This will allocate pages consecutive user code pages, returning a pointer to the start of the newly mapped memory.
+ */
+void* alloc_cpage(size_t pages) {
+    return _alloc_page(pages, &cfbase, &cftop, cpalloc);
+}
+
+/*
+ * Allocate a given number of user data pages.
+ *
+ * This will allocate pages consecutive user data pages, returning a pointer to the start of the newly mapped memory.
+ */
+void* alloc_dpage(size_t pages) {
+    return _alloc_page(pages, &dfbase, &dftop, dpalloc);
+}
+
+/*
+ * Allocate a given number of user extra data pages.
+ *
+ * This will allocate pages consecutive user extra data pages, returning a pointer to the start of the newly mapped
+ * memory.
+ */
+void* alloc_epage(size_t pages) {
+    return _alloc_page(pages, &efbase, &eftop, dpalloc);
+}
+
+/*
+ * Allocate a given number of user file data pages.
+ *
+ * This will allocate pages consecutive user file data pages, returning a pointer to the start of the newly mapped
+ * memory.
+ */
+void* alloc_fpage(size_t pages) {
+    return _alloc_page(pages, &ffbase, &fftop, dpalloc);
+}
+
+/*
+ * Allocate a given number of user generic data pages.
+ *
+ * This will allocate pages consecutive user generic data pages, returning a pointer to the start of the newly mapped
+ * memory.
+ */
+void* alloc_gpage(size_t pages) {
+    return _alloc_page(pages, &gfbase, &gftop, dpalloc);
+}
+
+/*
+ * Allocate a given number of user stack pages.
+ *
+ * This will allocate pages consecutive user stack pages, returning a pointer to the start of the newly mapped memory.
+ */
+void* alloc_spage(size_t pages) {
+    return _alloc_page(pages, &sfbase, &sftop, dpalloc);
+}
+
+/*
+ * Free a given number of kernel data pages starting from a given address.
+ *
+ * Once properly implemented, this will free pages consecutive kernel data pages starting at start.
+ */
+void free_kpage(void* start, size_t pages) {
+    // TODO Implement
+}
+
+/*
+ * Free a given number of user code pages starting from a given address.
+ *
+ * Once properly implemented, this will free pages consecutive user code pages starting at start.
+ */
+void free_cpage(void* start, size_t pages) {
+    // TODO Implement
+}
+
+/*
+ * Free a given number of user data pages starting from a given address.
+ *
+ * Once properly implemented, this will free pages consecutive user data pages starting at start.
+ */
+void free_dpage(void* start, size_t pages) {
+    // TODO Implement
+}
+
+/*
+ * Free a given number of user extra data pages starting from a given address.
+ *
+ * Once properly implemented, this will free pages consecutive user extra data pages starting at start.
+ */
+void free_epage(void* start, size_t pages) {
+    // TODO Implement
+}
+
+/*
+ * Free a given number of user file data pages starting from a given address.
+ *
+ * Once properly implemented, this will free pages consecutive user file data pages starting at start.
+ */
+void free_fpage(void* start, size_t pages) {
+    // TODO Implement
+}
+
+/*
+ * Free a given number of user generic data pages starting from a given address.
+ *
+ * Once properly implemented, this will free pages consecutive user generic data pages starting at start.
+ */
+void free_gpage(void* start, size_t pages) {
+    // TODO Implement
+}
+
+/*
+ * Free a given number of user stack pages starting from a given address.
+ *
+ * Once properly implemented, this will free pages consecutive user stack pages starting at start.
+ */
+void free_spage(void* start, size_t pages) {
+    // TODO Implement
 }
