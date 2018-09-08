@@ -36,4 +36,4 @@ do
 done
 
 # Force used to keep the script from aborting if something could not be deleted.
-rm -rf ${SYSROOT} ${ISODIR} ${TMPDIR} ${PIDDIR} ${ISOFILE}
+rm -rf ${SYSROOT} ${ISODIR} ${TMPDIR} ${ISOFILE}
