@@ -31,7 +31,6 @@
 char* strcpy(char* restrict dststr, const char* restrict srcstr) {
     unsigned char* dst = (unsigned char*) dststr;
     const unsigned char* src = (const unsigned char*) srcstr;
-    for (size_t i = 0; src[i]; i++)
-        dst[i] = src[i];
+    for (size_t i = 0; dst[i] = src[i]; i++) {}
     return dststr;
 }
