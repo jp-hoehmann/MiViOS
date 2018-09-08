@@ -1,7 +1,7 @@
 /*
- * stdlib.h
+ * calloc.c
  *
- * Created by Jean-Pierre Höhmann on 25.08.18.
+ * Created by Jean-Pierre Höhmann on 08.09.18.
  *
  * Copyright 2018 Jean-Pierre Höhmann (@NuvandaPV) <jean-pierre@höhmann.info>
  *
@@ -9,7 +9,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *   http://www.apache.org/licenses/LICENSE-2.0
+ *  http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -18,40 +18,18 @@
  * limitations under the License.
  */
 
-#ifndef _STDLIB_H
-#define _STDLIB_H 1
-
-#include "sys/cdefs.h"
-
-#include <stddef.h>
+#include <stdlib.h>
+#include <string.h>
 
 /*
- * Stdlib interface.
+ * Allocate and zero-initialize an array.
+ *
+ * Allocates a block of memory for an array of num elements, each of them size bytes long, and initializes all its
+ * bits to zero.
  */
-
-#define NULL 0
-
-#ifdef __cplusplus
-extern "C" {
-#endif // __cplusplus
-
-__attribute__((__noreturn__))
-void abort(void);
-
-void* alloc_page(size_t);
-
-void free_page(void*, size_t);
-
-void* malloc(size_t);
-
-void* calloc(size_t, size_t);
-
-void* realloc(void*, size_t);
-
-void free(void*);
-
-#ifdef __cplusplus
+void* calloc(size_t num, size_t size) {
+    size_t amount = num * size;
+    void* result = malloc(amount);
+    memset(result, NULL, amount);
+    return result;
 }
-#endif // __cplusplus
-
-#endif // _STDLIB_H

@@ -59,6 +59,12 @@ stdio/printf.o \
 stdio/putchar.o \
 stdio/puts.o \
 stdlib/abort.o \
+stdlib/alloc-page.o \
+stdlib/calloc.o \
+stdlib/free.o \
+stdlib/free-page.o \
+stdlib/malloc.o \
+stdlib/realloc.o \
 string/memcmp.o \
 string/memcpy.o \
 string/memmove.o \

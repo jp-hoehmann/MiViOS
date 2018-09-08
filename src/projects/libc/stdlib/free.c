@@ -1,7 +1,7 @@
 /*
- * stdlib.h
+ * free.c
  *
- * Created by Jean-Pierre Höhmann on 25.08.18.
+ * Created by Jean-Pierre Höhmann on 08.09.18.
  *
  * Copyright 2018 Jean-Pierre Höhmann (@NuvandaPV) <jean-pierre@höhmann.info>
  *
@@ -9,7 +9,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *   http://www.apache.org/licenses/LICENSE-2.0
+ *  http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -18,40 +18,14 @@
  * limitations under the License.
  */
 
-#ifndef _STDLIB_H
-#define _STDLIB_H 1
-
-#include "sys/cdefs.h"
-
-#include <stddef.h>
+#include <stdlib.h>
 
 /*
- * Stdlib interface.
+ * Deallocate a memory block.
+ *
+ * A block of memory previously allocated by a call to malloc, calloc or realloc is deallocated, making it available
+ * again for further allocations.
  */
-
-#define NULL 0
-
-#ifdef __cplusplus
-extern "C" {
-#endif // __cplusplus
-
-__attribute__((__noreturn__))
-void abort(void);
-
-void* alloc_page(size_t);
-
-void free_page(void*, size_t);
-
-void* malloc(size_t);
-
-void* calloc(size_t, size_t);
-
-void* realloc(void*, size_t);
-
-void free(void*);
-
-#ifdef __cplusplus
+void free(void* ptr) {
+    // TODO Implement a memory allocation scheme that can actually support this.
 }
-#endif // __cplusplus
-
-#endif // _STDLIB_H

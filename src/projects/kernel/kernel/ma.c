@@ -62,7 +62,7 @@ void init(void) {
 }
 
 void* _alloc_page(size_t pages, void** fbase, void** ftop, void* palloc(uint32_t)) {
-    void* d = *fbase;
+    void* result = *fbase;
     for (size_t i = 0; i < pages; i++) {
         palloc(*fbase);
         *fbase += _PAGE_SIZE;
@@ -70,7 +70,7 @@ void* _alloc_page(size_t pages, void** fbase, void** ftop, void* palloc(uint32_t
             abort();
         }
     }
-    return d;
+    return result;
 }
 
 /*
