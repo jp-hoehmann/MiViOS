@@ -24,6 +24,7 @@
 #include <kernel/tty.h>
 #include <kernel/cpu.h>
 #include <kernel/mmu.h>
+#include <kernel/ma.h>
 
 /*
  * MiViOS Kernel.
@@ -39,7 +40,7 @@ void kernel_main(void) {
 	processor_initialize();
 	memory_initialize();
 
-	char* ptr = (char*) kpalloc(0x400000);
+	char* ptr = (char*) alloc_kpage(1);
 	strcpy(ptr, "Hello, kernel World!\n");
 	printf(ptr);
 }

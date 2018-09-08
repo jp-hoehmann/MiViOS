@@ -19,6 +19,7 @@
  */
 
 #include <kernel/mm.h>
+#include <kernel/pfa.h>
 #include <kernel/mmu.h>
 
 /*
@@ -28,4 +29,52 @@
  */
 void* kpalloc(uint32_t addr) {
     return pfalloc(_KERNEL_DATA_PAGE, addr);
+}
+
+/*
+ * Allocate a user code page.
+ *
+ * This will allocate a user code page at the given virtual address, returning a pointer to the page.
+ */
+void* cpalloc(uint32_t addr) {
+    return pfalloc(_USER_CODE_PAGE, addr);
+}
+
+/*
+ * Allocate a user data page.
+ *
+ * This will allocate a user data page at the given virtual address, returning a pointer to the page.
+ */
+void* dpalloc(uint32_t addr) {
+    return pfalloc(_USER_DATA_PAGE, addr);
+}
+
+/*
+ * Free a kernel page.
+ *
+ * This will free a kernel page, once implemented.
+ */
+int kpfree(uint32_t addr) {
+    // FIXME Unimplemented
+    return pffree(addr);
+}
+
+/*
+ * Free a user code page.
+ *
+ * This will free a user code page, once implemented.
+ */
+int cpfree(uint32_t addr) {
+    // FIXME Unimplemented
+    return pffree(addr);
+}
+
+/*
+ * Free a user data page.
+ *
+ * This will free a user data page, once implemented.
+ */
+int dpfree(uint32_t addr) {
+    // FIXME Unimplemented
+    return pffree(addr);
 }

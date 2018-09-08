@@ -21,7 +21,5 @@
 #ifndef ARCH_I386_BOOT_H
 #define ARCH_I386_BOOT_H 1
 
-extern void _kernel_end;
-
 #endif // ARCH_I386_BOOT_H
 

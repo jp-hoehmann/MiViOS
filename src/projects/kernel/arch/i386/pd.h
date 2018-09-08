@@ -23,8 +23,8 @@
 
 #include <stdint.h>
 
-extern uint32_t _PAGE_DIRECTORY;
-extern uint32_t _PAGE_DIRECTORY_SIZE;
+extern uint32_t _page_dir_start;
+extern uint32_t _PAGE_DIR_SIZE;
 
 extern void _pd_set(uint32_t);
 extern void _pg_set(void);

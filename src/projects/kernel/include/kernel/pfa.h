@@ -1,7 +1,7 @@
 /*
- * mmu.c
+ * pfa.h
  *
- * Created by Jean-Pierre Höhmann on 29.08.18.
+ * Created by Jean-Pierre Höhmann on 08.09.18.
  *
  * Copyright 2018 Jean-Pierre Höhmann (@NuvandaPV) <jean-pierre@höhmann.info>
  *
@@ -18,19 +18,11 @@
  * limitations under the License.
  */
 
-#include <string.h>
+#ifndef _KERNEL_PFA_H
+#define _KERNEL_PFA_H 1
 
-#include <kernel/mmu.h>
-#include <kernel/kernel.h>
+void* pfalloc(uint32_t, uint32_t);
+int pffree(uint32_t);
 
-#include "pd.h"
-
-/*
- * Set up the MMU.
- */
-void memory_initialize(void) {
-    _pd_set(&_kernel_end);
-    _pg_set();
-    watermark = &_kernel_end + _PAGE_DIR_SIZE;
-}
+#endif // _KERNEL_PFA_H
 

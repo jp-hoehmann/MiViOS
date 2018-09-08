@@ -26,9 +26,36 @@
 extern uint32_t _KERNEL_DATA_PAGE;
 extern uint32_t _USER_CODE_PAGE;
 extern uint32_t _USER_DATA_PAGE;
+
+extern void* _kernel_space_start;
+extern void* _kernel_space_end;
+extern void* _user_space_start;
+extern void* _user_space_end;
+extern void* _c_space_start;
+extern void* _c_space_end;
+extern void* _d_space_start;
+extern void* _d_space_end;
+extern void* _e_space_start;
+extern void* _e_space_end;
+extern void* _f_space_start;
+extern void* _f_space_end;
+extern void* _g_space_start;
+extern void* _g_space_end;
+extern void* _s_space_start;
+extern void* _s_space_end;
+
 extern uint32_t _PAGE_SIZE;
+extern uint32_t _KERNEL_SPACE_SIZE;
+extern uint32_t _USER_SPACE_SIZE;
+extern uint32_t _C_SPACE_SIZE;
+extern uint32_t _D_SPACE_SIZE;
+extern uint32_t _E_SPACE_SIZE;
+extern uint32_t _F_SPACE_SIZE;
+extern uint32_t _G_SPACE_SIZE;
+extern uint32_t _S_SPACE_SIZE;
+
+static uint32_t watermark;
 
 void memory_initialize(void);
-void* pfalloc(uint32_t, uint32_t);
 
 #endif // _KERNEL_MMU_H
