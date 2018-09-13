@@ -30,7 +30,7 @@
  */
 void memory_initialize(void) {
     _pd_set(&_kernel_end);
-    _pg_set();
+    _pg_set(&_kernel_end);
     watermark = &_kernel_end + _PAGE_DIR_SIZE;
 }
 

@@ -38,9 +38,9 @@ _gdt_end:
 _gdt_set:
     push %ebp                                                           # Set up the stack.
     movl %esp, %ebp                                                     #
-    movl 8(%esp), %eax                                                  # Put the GDT pointer on the stack.
+    movl 8(%ebp), %eax                                                  # Put the GDT pointer on the stack.
     push %eax                                                           #
-    movw 12(%esp), %ax                                                  # Put the size on the stack as a 16 bit value
+    movw 12(%ebp), %ax                                                  # Put the size on the stack as a 16 bit value
     push %ax                                                            # directly below the GDT pointer.
     lgdt (%esp)                                                         # Load the GDT using the 6 bytes just written.
     call cs_reload

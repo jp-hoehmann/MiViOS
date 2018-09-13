@@ -27,6 +27,6 @@ extern uint32_t _page_dir_start;
 extern uint32_t _PAGE_DIR_SIZE;
 
 extern void _pd_set(uint32_t);
-extern void _pg_set(void);
+extern void _pg_set(uint32_t);
 
 #endif // ARCH_I386_PD_H

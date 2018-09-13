@@ -615,7 +615,11 @@ _S_SPACE_SIZE:
 .global _pd_set
 .type _pd_set, @function
 _pd_set:
-    movl 4(%esp), %ebx                                                  # Load base pointer.
+    push %ebp                                                           # Enter the function and
+    movl %esp, %ebp                                                     # store %ebx, because the
+    push %ebx                                                           # routine will clobber it.
+
+    movl 8(%ebp), %ebx                                                  # Load base pointer.
     movl $0, %ecx                                                       # Load counter.
     movl %ebx, %edx                                                     # Calculate the number of huge pages that need
     shrl $22, %edx                                                      # to be identity mapped for the kernel.
@@ -663,21 +667,31 @@ _pd_set:
     movl $PAGE_COUNT, %edx                                              # Load the total number of page tables to be
     call pt_fill                                                        # made and call pt_fill() again.
 
-    ret
+    popl %ebx                                                           # Restore %ebx,
+    popl %ebp                                                           # leave the function
+    ret                                                                 # and return.
 
 # Turn on paging.
+#
+# This will enable paging. It is passed a pointer to a previously set up page directory.
 #
 .global _pg_set
 .type _pg_set, @function
 _pg_set:
+    push %ebp                                                           # Set up
+    movl %esp, %ebp                                                     # the stack.
+
     movl %cr4, %eax                                                     # Load control register 4,
     orl $CR4, %eax                                                      # set the flags for advanced paging options
     movl %eax, %cr4                                                     # and store the value back in CR4.
-    movl %ebx, %cr3                                                     # Point CR3 to the page directory.
+    movl 8(%ebp), %eax                                                  # Load the pointer to the page directory
+    movl %eax, %cr3                                                     # and store it in CR3.
     movl %cr0, %eax                                                     # Load control register 0,
     orl $CR0, %eax                                                      # Set the flags for basic paging options,
     movl %eax, %cr0                                                     # and store the valoe back in CR0.
-    ret
+
+    popl %ebp                                                           # Leave the function
+    ret                                                                 # and return to the caller.
 
 # Generate dummy page table entries.
 #
@@ -688,5 +702,5 @@ pt_fill:
     movl %eax, (%ebx, %ecx, 4)                                          # Write page table entry.
     incl %ecx                                                           # Move to the next entry.
     cmp %edx, %ecx                                                      # If more entries should be written,
-    jne pt_fill                                                         # recurse, otherwise return.
-    ret
+    jne pt_fill                                                         # recurse, otherwise return
+    ret                                                                 # to the caller.
