@@ -22,20 +22,14 @@
 # More constructor magic for i386.
 #
 
-# Global constructor footer.
-#
-# This acts as the footer for the global constructor. It is combined with some GCC magic and a footer to make the
-# complete global constructor.
-#
 .section .init
-	popl %ebp
-	ret
+
+# Global constructor footer.
+	popl %ebp                                                           # This is the footer for _init(). Basically all
+	ret                                                                 # it does is LEAVE.
+
+.section .fini
 
 # Global destructor footer.
-#
-# This acts as the footer for the global destructor. It is combined with some GCC magic and a footer to make the
-# complete global destructor.
-#
-.section .fini
-	popl %ebp
-	ret
+	popl %ebp                                                           # This is the footer for _fini(). Basically all
+	ret                                                                 # it does is LEAVE.

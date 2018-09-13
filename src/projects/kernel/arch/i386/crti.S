@@ -22,26 +22,28 @@
 # Constructor magic for i386.
 #
 
+.section .init
+
 # Global constructor header.
 #
 # This acts as the header for the global constructor. It is combined with some GCC magic and a footer to make the
 # complete global constructor.
 #
-.section .init
 .global _init
 .type _init, @function
 _init:
-	push %ebp
-	movl %esp, %ebp
+	push %ebp                                                           # Set up
+	movl %esp, %ebp                                                     # the stack.
+
+.section .fini
 
 # Global destructor header.
 #
-# This acts as the footer for the global destructor. It is combined with some GCC magic and a footer to make the
+# This acts as the header for the global destructor. It is combined with some GCC magic and a footer to make the
 # complete global destructor.
 #
-.section .fini
 .global _fini
 .type _fini, @function
 _fini:
-	push %ebp
-	movl %esp, %ebp
+	push %ebp                                                           # Set up
+	movl %esp, %ebp                                                     # the stack.

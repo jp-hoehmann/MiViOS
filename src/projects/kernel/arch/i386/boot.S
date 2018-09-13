@@ -22,14 +22,27 @@
 # Set up everything the kernel needs to execute on i386.
 #
 
-# Declare constants for the multiboot header.
-.set ALIGN, 1<<0                                                        # Align loaded modules on page boundaries.
-.set MEMINFO, 1<<1                                                      # Provide memory map.
-.set FLAGS, ALIGN | MEMINFO                                             # This is the Multiboot 'flag' field.
-.set MAGIC, 0x1BADB002                                                  # Magic letting bootloader find the header.
-.set CHECKSUM, -(MAGIC + FLAGS)                                         # Checksum of the above.
+# Align loaded modules on page boundaries.
+#
+.set ALIGN, 1<<0
 
-# Declare a header as in the Multiboot Standard.
+# Provide memory map.
+#
+.set MEMINFO, 1<<1
+
+# This is the Multiboot 'flag' field.
+#
+.set FLAGS, ALIGN | MEMINFO
+
+# Magic letting bootloader find the header.
+#
+.set MAGIC, 0x1BADB002
+
+# Checksum of the above.
+#
+.set CHECKSUM, -(MAGIC + FLAGS)
+
+# Multiboot header.
 .section .multiboot
 .align 4
 .long MAGIC
@@ -40,11 +53,13 @@
 .section .bss
 .align 16
 stack_bottom:
-.skip 16384 # 16 KiB
+.skip 16384
 stack_top:
 
-# The kernel entry point.
 .section .text
+
+# The kernel entry point.
+#
 .global _start
 .type _start, @function
 _start:
@@ -56,6 +71,6 @@ _start:
     hlt                                                                 # halt the system again, if it wakes back up
     jmp 1b                                                              # due to a non-maskable interrupt.
 
-.size _start, . - _start                                                # Set the size of _start.
+.size _start, . - _start
 
 .end
