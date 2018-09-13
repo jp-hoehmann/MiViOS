@@ -1,7 +1,7 @@
 /*
  * strcpy.c
  *
- * Created by Jean-Pierre Höhmann on 02.09.18.
+ * Created by Jean-Pierre Höhmann on 18-09-02.
  *
  * Copyright 2018 Jean-Pierre Höhmann (@NuvandaPV) <jean-pierre@höhmann.info>
  *

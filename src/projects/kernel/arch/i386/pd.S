@@ -1,7 +1,7 @@
 #
 # pd.S
 #
-# Created by Jean-Pierre Höhmann on 29.08.18.
+# Created by Jean-Pierre Höhmann on 18-08-29.
 #
 # Copyright 2018 Jean-Pierre Höhmann (@NuvandaPV) <jean-pierre@höhmann.info>
 #
