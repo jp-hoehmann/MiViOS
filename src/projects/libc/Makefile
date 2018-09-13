@@ -22,8 +22,6 @@
 # Make instructions for the libc.
 #
 
-# TODO Simplify
-
 DEFAULT_HOST?=i686-elf
 HOST?=DEFAULT_HOST
 HOSTARCH!=../../../target-triplet-to-arch.sh $(HOST)
