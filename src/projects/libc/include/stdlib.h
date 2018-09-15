@@ -19,7 +19,7 @@
  */
 
 #ifndef _STDLIB_H
-#define _STDLIB_H 1
+#define _STDLIB_H
 
 #include "sys/cdefs.h"
 
@@ -29,18 +29,16 @@
  * Stdlib interface.
  */
 
-#define NULL 0
+#define EXIT_SUCCESS 0
+#define EXIT_FAILURE 1
 
 #ifdef __cplusplus
 extern "C" {
 #endif // __cplusplus
 
-__attribute__((__noreturn__))
-void abort(void);
-
-void* alloc_page(size_t);
-
-void free_page(void*, size_t);
+/*
+ * Dynamic memory management.
+ */
 
 void* malloc(size_t);
 
@@ -49,6 +47,21 @@ void* calloc(size_t, size_t);
 void* realloc(void*, size_t);
 
 void free(void*);
+
+/*
+ * Environment.
+ */
+
+__attribute__((__noreturn__))
+void abort(void);
+
+__attribute__((__noreturn__))
+void exit(int status);
+
+int atexit(void (*func)(void));
+
+__attribute__((__noreturn__))
+void _Exit(int status);
 
 #ifdef __cplusplus
 }

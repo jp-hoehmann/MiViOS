@@ -43,21 +43,17 @@ _gdt_set:
     movw 12(%ebp), %ax                                                  # Put the size on the stack as a 16 bit value
     push %ax                                                            # directly below the GDT pointer.
     lgdt (%esp)                                                         # Load the GDT using the 6 bytes just written.
-    call cs_reload
-    movl %ebp, %esp                                                     #
-    pop %ebp                                                            # Restore the stack and return.
-    ret                                                                 #
-
-# Reload the segments. This is run after the GDT is loaded and will load the new supervisor code and data segments.
-cs_reload:
-    ljmp $0x08, $ds_reload                                              # Long jump into the supervisor code segment
-ds_reload:
+    ljmp $0x08, $x                                                      # Long jump into the supervisor code segment
+x:
     movw $0x10, %ax                                                     # Load the supervisor data segment, as data
     movw %ax, %ds                                                       # (d, e, f, and g) and stack (s) segments.
     movw %ax, %es                                                       #
     movw %ax, %fs                                                       # Kernel code: 0b 0000000000001 0 00
     movw %ax, %gs                                                       # (index 1, segmentation on, ring 0)
     movw %ax, %ss                                                       # Kernel data: 0b 0000000000010 0 00
-    ret                                                                 # (index 2, segmentation on, ring 0)
+    movl %ebp, %esp                                                     #
+    pop %ebp                                                            # Restore the stack and return.
+    ret                                                                 #
+.size _gdt_set, . - _gdt_set
 
 .end

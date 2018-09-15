@@ -1,7 +1,7 @@
 /*
- * mmu.c
+ * initialize.h
  *
- * Created by Jean-Pierre Höhmann on 18-08-29.
+ * Created by Jean-Pierre Höhmann on 2018-09-14.
  *
  * Copyright 2018 Jean-Pierre Höhmann (@NuvandaPV) <jean-pierre@höhmann.info>
  *
@@ -18,22 +18,13 @@
  * limitations under the License.
  */
 
-#include <string.h>
+#ifndef INITIALIZE_H
+#define INITIALIZE_H
 
-#include <kernel/mmu.h>
-#include <kernel/kernel.h>
+#include <stdint.h>
 
-/*
- * Initialize the MMU.
- */
-void kernel_mmu_initialize(void) {
-    _pd_set(&_kernel_end);
-    _pg_set(&_kernel_end);
-}
+extern uint8_t _MAGIC[16];
 
-/*
- * Finalize the MMU.
- */
-void kernel_mmu_finalize(void) {
-    // Stub
-}
+extern void* MAGIC;
+
+#endif // INITIALIZE_H

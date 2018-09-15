@@ -19,7 +19,7 @@
  */
 
 #ifndef _KERNEL_MMU_H
-#define _KERNEL_MMU_H 1
+#define _KERNEL_MMU_H
 
 #include <stdint.h>
 
@@ -54,8 +54,8 @@ extern uint32_t _F_SPACE_SIZE;
 extern uint32_t _G_SPACE_SIZE;
 extern uint32_t _S_SPACE_SIZE;
 
-static uint32_t watermark;
+void kernel_mmu_initialize(void);
 
-void memory_initialize(void);
+void kernel_mmu_finalize(void);
 
 #endif // _KERNEL_MMU_H

@@ -19,9 +19,13 @@
  */
 
 #ifndef _KERNEL_MA_H
-#define _KERNEL_MA_H 1
+#define _KERNEL_MA_H
 
 #include <stddef.h>
+
+void kernel_ma_initialize(void);
+
+void kernel_ma_finalize(void);
 
 void* alloc_kpage(size_t);
 

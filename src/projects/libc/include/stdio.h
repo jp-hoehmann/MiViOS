@@ -19,7 +19,7 @@
  */
 
 #ifndef _STDIO_H
-#define _STDIO_H 1
+#define _STDIO_H
 
 #include "sys/cdefs.h"
 
@@ -34,7 +34,9 @@
 #endif // __cplusplus
 
 int printf(const char* __restrict, ...);
+
 int putchar(int);
+
 int puts(const char*);
 
 #ifdef __cplusplus

@@ -22,6 +22,8 @@
 
 #ifdef __is_libk
 #include <kernel/ma.h>
+#else // __is_libk
+// TODO Implement syscalls.
 #endif // __is_libk
 
 /*

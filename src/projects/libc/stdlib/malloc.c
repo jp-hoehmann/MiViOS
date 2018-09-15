@@ -20,10 +20,34 @@
 
 #include <stdlib.h>
 
-static void* freebase = 0;
-static void* freetop = 0;
+#include "alloc-page.h"
+#include "malloc.h"
+
+static void* freebase = NULL;
+static void* freetop = NULL;
 
 static size_t PAGE_SIZE = 0;
+
+/*
+ * Set up malloc().
+ */
+void malloc_setup(void) {
+    // Let's get some memory.
+    freebase = alloc_page(1);
+
+    // Hack to determine the page size (can't just #define it, since it is potentially dependent on the
+    // architecture).
+    freetop = alloc_page(1);
+    PAGE_SIZE = freetop - freebase;
+    freetop += PAGE_SIZE;
+}
+
+/*
+ * Tear down malloc().
+ */
+void malloc_teardown(void) {
+    // Stub
+}
 
 /*
  * Allocate a memory block.
@@ -32,17 +56,6 @@ static size_t PAGE_SIZE = 0;
  * newly allocated block of memory is not initialized, remaining with indeterminate values.
  */
 void* malloc(size_t size) {
-    if (!freebase) {
-        // First run of malloc(), let's get some memory.
-        freebase = alloc_page(1);
-
-        // Hack to determine the page size (can't just #define it, since it is potentially dependent on the
-        // architecture).
-        freetop = alloc_page(1);
-        PAGE_SIZE = freetop - freebase;
-        freetop += PAGE_SIZE;
-    }
-
     void* result = freebase;
     freebase += size;
     if (freebase >= freetop) {

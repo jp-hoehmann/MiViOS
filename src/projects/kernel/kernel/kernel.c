@@ -21,26 +21,34 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <stddef.h>
 
 #include <kernel/tty.h>
 #include <kernel/cpu.h>
 #include <kernel/mmu.h>
 
 /*
+ * Initialize the kernel.
+ */
+void kernel_initialize(size_t argc, char* args[]) {
+    // Stub
+}
+
+/*
+ * Finalize the kernel.
+ */
+void kernel_finalize(int status) {
+    // Stub
+}
+
+/*
  * MiViOS Kernel.
  *
- * The main routine for the kernel, this is where the magic happens. This is called early in the boot process, as soon
- * as the stack is set up (which is required for C to be able to run). Everything else is orchestrated from here. This
- * means nothing can be relied upon at the beginning of this function. There is no paging, no segmentation, no
- * interrupt handling, and no memory management. Just some C-code, a stack and the vast and empty kernel space,
- * stretching from horizon to horizon.
+ * This is called as soon as the libk is fully operational.
  */
-void kernel_main(void) {
-	terminal_initialize();
-	processor_initialize();
-	memory_initialize();
-
+int kernel_main(size_t argc, char* args[]) {
 	char* ptr = (char*) calloc(72, 1);
 	strcpy(ptr, "Hello, kernel World!\n");
 	printf(ptr);
+	return 0;
 }

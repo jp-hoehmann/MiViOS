@@ -387,6 +387,7 @@
 .type _KERNEL_DATA_PAGE, @object
 _KERNEL_DATA_PAGE:
 .long KERNEL_DATA_PAGE
+.size _KERNEL_DATA_PAGE, . - _KERNEL_DATA_PAGE
 
 # Flags for a page table entry for a new code page for an application.
 #
@@ -394,6 +395,7 @@ _KERNEL_DATA_PAGE:
 .type _USER_CODE_PAGE, @object
 _USER_CODE_PAGE:
 .long USER_CODE_PAGE
+.size _USER_CODE_PAGE, . - _USER_CODE_PAGE
 
 # Flags for a page table entry for a new data page for an application.
 #
@@ -401,6 +403,7 @@ _USER_CODE_PAGE:
 .type _USER_DATA_PAGE, @object
 _USER_DATA_PAGE:
 .long USER_DATA_PAGE
+.size _USER_DATA_PAGE, . - _USER_DATA_PAGE
 
 # Pointer to the start of the kernel space.
 #
@@ -408,6 +411,7 @@ _USER_DATA_PAGE:
 .type _kernel_space_start, @object
 _kernel_space_start:
 .long KERNEL_SPACE_START
+.size _kernel_space_start, . - _kernel_space_start
 
 # Pointer to the end of the kernel space.
 #
@@ -415,6 +419,7 @@ _kernel_space_start:
 .type _kernel_space_end, @object
 _kernel_space_end:
 .long KERNEL_SPACE_END
+.size _kernel_space_end, . - _kernel_space_end
 
 # Pointer to the start of the PD.
 #
@@ -422,6 +427,7 @@ _kernel_space_end:
 .type _page_dir_start, @object
 _page_dir_start:
 .long PAGE_DIR_START
+.size _page_dir_start, . - _page_dir_start
 
 # Pointer to the end of the PTs.
 #
@@ -429,6 +435,7 @@ _page_dir_start:
 .type _page_dir_end, @object
 _page_dir_end:
 .long PAGE_DIR_END
+.size _page_dir_end, . - _page_dir_end
 
 # Pointer to the start of the user space.
 #
@@ -436,6 +443,7 @@ _page_dir_end:
 .type _user_space_start, @object
 _user_space_start:
 .long USER_SPACE_START
+.size _user_space_start, . - _user_space_start
 
 # Pointer to the end of the user space.
 #
@@ -443,6 +451,7 @@ _user_space_start:
 .type _user_space_end, @object
 _user_space_end:
 .long USER_SPACE_END
+.size _user_space_end, . - _user_space_end
 
 # Pointer to the start of the user code space.
 #
@@ -450,6 +459,7 @@ _user_space_end:
 .type _c_space_start, @object
 _c_space_start:
 .long C_SPACE_START
+.size _c_space_start, . - _c_space_start
 
 # Pointer to the end of the user code space.
 #
@@ -457,6 +467,7 @@ _c_space_start:
 .type _c_space_end, @object
 _c_space_end:
 .long C_SPACE_END
+.size _c_space_end, . - _c_space_end
 
 # Pointer to the start of the user data space.
 #
@@ -464,6 +475,7 @@ _c_space_end:
 .type _d_space_start, @object
 _d_space_start:
 .long D_SPACE_START
+.size _d_space_start, . - _d_space_start
 
 # Pointer to the end of the user data space.
 #
@@ -471,6 +483,7 @@ _d_space_start:
 .type _d_space_end, @object
 _d_space_end:
 .long D_SPACE_END
+.size _d_space_end, . - _d_space_end
 
 # Pointer to the start of the user extra data space.
 #
@@ -478,6 +491,7 @@ _d_space_end:
 .type _e_space_start, @object
 _e_space_start:
 .long E_SPACE_START
+.size _e_space_start, . - _e_space_start
 
 # Pointer to the end of the user extra data space.
 #
@@ -485,6 +499,7 @@ _e_space_start:
 .type _e_space_end, @object
 _e_space_end:
 .long E_SPACE_END
+.size _e_space_end, . - _e_space_end
 
 # Pointer to the start of the user file data space.
 #
@@ -492,6 +507,7 @@ _e_space_end:
 .type _f_space_start, @object
 _f_space_start:
 .long F_SPACE_START
+.size _f_space_start, . - _f_space_start
 
 # Pointer to the end of the user file data space.
 #
@@ -499,6 +515,7 @@ _f_space_start:
 .type _f_space_end, @object
 _f_space_end:
 .long F_SPACE_END
+.size _f_space_end, . - _f_space_end
 
 # Pointer to the start of the user generic data space.
 #
@@ -506,6 +523,7 @@ _f_space_end:
 .type _g_space_start, @object
 _g_space_start:
 .long G_SPACE_START
+.size _g_space_start, . - _g_space_start
 
 # Pointer to the end of the user generic data space.
 #
@@ -513,6 +531,7 @@ _g_space_start:
 .type _g_space_end, @object
 _g_space_end:
 .long G_SPACE_END
+.size _g_space_end, . - _g_space_end
 
 # Pointer to the start of the user stack space.
 #
@@ -520,6 +539,7 @@ _g_space_end:
 .type _s_space_start, @object
 _s_space_start:
 .long S_SPACE_START
+.size _s_space_start, . - _s_space_start
 
 # Pointer to the end of the user stack space.
 #
@@ -527,6 +547,7 @@ _s_space_start:
 .type _s_space_end, @object
 _s_space_end:
 .long S_SPACE_END
+.size _s_space_end, . - _s_space_end
 
 # Page size in bytes.
 #
@@ -534,6 +555,7 @@ _s_space_end:
 .type _PAGE_SIZE, @object
 _PAGE_SIZE:
 .long PAGE_SIZE
+.size _PAGE_SIZE, . - _PAGE_SIZE
 
 # Kernel space size in bytes.
 #
@@ -541,6 +563,7 @@ _PAGE_SIZE:
 .type _KERNEL_SPACE_SIZE, @object
 _KERNEL_SPACE_SIZE:
 .long KERNEL_SPACE_SIZE
+.size _KERNEL_SPACE_SIZE, . - _KERNEL_SPACE_SIZE
 
 # Combined size of page directory and page tables in bytes.
 #
@@ -548,6 +571,7 @@ _KERNEL_SPACE_SIZE:
 .type _PAGE_DIR_SIZE, @object
 _PAGE_DIR_SIZE:
 .long PAGE_DIR_SIZE
+.size _PAGE_DIR_SIZE, . - _PAGE_DIR_SIZE
 
 # User space size in bytes.
 #
@@ -555,6 +579,7 @@ _PAGE_DIR_SIZE:
 .type _USER_SPACE_SIZE, @object
 _USER_SPACE_SIZE:
 .long USER_SPACE_SIZE
+.size _USER_SPACE_SIZE, . - _USER_SPACE_SIZE
 
 # User code space size in bytes.
 #
@@ -562,6 +587,7 @@ _USER_SPACE_SIZE:
 .type _C_SPACE_SIZE, @object
 _C_SPACE_SIZE:
 .long C_SPACE_SIZE
+.size _C_SPACE_SIZE, . - _C_SPACE_SIZE
 
 # User data space size in bytes.
 #
@@ -569,6 +595,7 @@ _C_SPACE_SIZE:
 .type _D_SPACE_SIZE, @object
 _D_SPACE_SIZE:
 .long D_SPACE_SIZE
+.size _D_SPACE_SIZE, . - _D_SPACE_SIZE
 
 # User extra data space size in bytes.
 #
@@ -576,6 +603,7 @@ _D_SPACE_SIZE:
 .type _E_SPACE_SIZE, @object
 _E_SPACE_SIZE:
 .long E_SPACE_SIZE
+.size _E_SPACE_SIZE, . - _E_SPACE_SIZE
 
 # User file data space size in bytes.
 #
@@ -583,6 +611,7 @@ _E_SPACE_SIZE:
 .type _F_SPACE_SIZE, @object
 _F_SPACE_SIZE:
 .long F_SPACE_SIZE
+.size _F_SPACE_SIZE, . - _F_SPACE_SIZE
 
 # User generic data space size in bytes.
 #
@@ -590,6 +619,7 @@ _F_SPACE_SIZE:
 .type _G_SPACE_SIZE, @object
 _G_SPACE_SIZE:
 .long G_SPACE_SIZE
+.size _G_SPACE_SIZE, . - _G_SPACE_SIZE
 
 # User stack space size in bytes.
 #
@@ -597,6 +627,7 @@ _G_SPACE_SIZE:
 .type _S_SPACE_SIZE, @object
 _S_SPACE_SIZE:
 .long S_SPACE_SIZE
+.size _S_SPACE_SIZE, . - _S_SPACE_SIZE
 
 .section .text
 
@@ -670,6 +701,7 @@ _pd_set:
     popl %ebx                                                           # Restore %ebx,
     popl %ebp                                                           # leave the function
     ret                                                                 # and return.
+.size _pd_set, . - _pd_set
 
 # Turn on paging.
 #
@@ -692,6 +724,7 @@ _pg_set:
 
     popl %ebp                                                           # Leave the function
     ret                                                                 # and return to the caller.
+.size _pd_set, . - _pd_set
 
 # Generate dummy page table entries.
 #
@@ -704,3 +737,5 @@ pt_fill:
     cmp %edx, %ecx                                                      # If more entries should be written,
     jne pt_fill                                                         # recurse, otherwise return
     ret                                                                 # to the caller.
+
+.end

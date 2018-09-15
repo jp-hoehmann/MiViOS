@@ -20,6 +20,8 @@
 
 #include <stdlib.h>
 
+#include "free-page.h"
+
 /*
  * Deallocate a memory block.
  *

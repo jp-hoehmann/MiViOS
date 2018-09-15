@@ -19,9 +19,17 @@
  */
 
 #ifndef _KERNEL_KERNEL_H
-#define _KERNEL_KERNEL_H 1
+#define _KERNEL_KERNEL_H
+
+#include <stddef.h>
 
 extern void _kernel_start;
 extern void _kernel_end;
+
+void kernel_initialize(size_t argc, char* argv[]);
+
+void kernel_finalize(int status);
+
+void kernel_main(size_t argc, char* argv[]);
 
 #endif // _KERNEL_KERNEL_H

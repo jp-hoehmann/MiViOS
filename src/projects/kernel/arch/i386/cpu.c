@@ -23,8 +23,15 @@
 #include "gdt.h"
 
 /*
- * Set up CPU-specific features.
+ * Initialize CPU-specific features.
  */
-void processor_initialize(void) {
+void kernel_cpu_initialize(void) {
     _gdt_set(&_gdt_start, ((void*) &_gdt_end) - ((void*) &_gdt_start));
+}
+
+/*
+ * Finalize CPU-specific features.
+ */
+void kernel_cpu_finalize(void) {
+    // Stub
 }

@@ -53,6 +53,8 @@ LIBK_CPPFLAGS:=$(LIBK_CPPFLAGS) $(KERNEL_ARCH_CPPFLAGS)
 
 FREEOBJS=\
 $(ARCH_FREEOBJS) \
+initialize.o \
+finalize.o \
 stdio/printf.o \
 stdio/putchar.o \
 stdio/puts.o \
@@ -63,6 +65,8 @@ stdlib/free.o \
 stdlib/free-page.o \
 stdlib/malloc.o \
 stdlib/realloc.o \
+stdlib/exit.o \
+stdlib/atexit.o \
 string/memcmp.o \
 string/memcpy.o \
 string/memmove.o \

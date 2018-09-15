@@ -19,7 +19,7 @@
  */
 
 #ifndef ARCH_I386_VGA_H
-#define ARCH_I386_VGA_H 1
+#define ARCH_I386_VGA_H
 
 #include <stdint.h>
 

@@ -19,9 +19,14 @@
  */
 
 #ifndef _KERNEL_PFA_H
-#define _KERNEL_PFA_H 1
+#define _KERNEL_PFA_H
+
+void kernel_pfa_initialize(void);
+
+void kernel_pfa_finalize(void);
 
 void* pfalloc(uint32_t, uint32_t);
+
 int pffree(uint32_t);
 
 #endif // _KERNEL_PFA_H

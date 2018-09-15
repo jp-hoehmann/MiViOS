@@ -19,9 +19,11 @@
  */
 
 #ifndef _KERNEL_CPU_H
-#define _KERNEL_CPU_H 1
+#define _KERNEL_CPU_H
 
-void processor_initialize(void);
+void kernel_cpu_initialize(void);
+
+void kernel_cpu_finalize(void);
 
 #endif // _KERNEL_CPU_H
 

@@ -1,7 +1,7 @@
 /*
- * mmu.c
+ * malloc.h
  *
- * Created by Jean-Pierre Höhmann on 18-08-29.
+ * Created by Jean-Pierre Höhmann on 2018-09-15.
  *
  * Copyright 2018 Jean-Pierre Höhmann (@NuvandaPV) <jean-pierre@höhmann.info>
  *
@@ -18,22 +18,6 @@
  * limitations under the License.
  */
 
-#include <string.h>
+void malloc_setup(void);
 
-#include <kernel/mmu.h>
-#include <kernel/kernel.h>
-
-/*
- * Initialize the MMU.
- */
-void kernel_mmu_initialize(void) {
-    _pd_set(&_kernel_end);
-    _pg_set(&_kernel_end);
-}
-
-/*
- * Finalize the MMU.
- */
-void kernel_mmu_finalize(void) {
-    // Stub
-}
+void malloc_teardown(void);

@@ -30,6 +30,6 @@
 void* calloc(size_t num, size_t size) {
     size_t amount = num * size;
     void* result = malloc(amount);
-    memset(result, NULL, amount);
+    memset(result, 0, amount);
     return result;
 }

@@ -42,7 +42,10 @@ static size_t terminal_column;
 static uint8_t terminal_color;
 static uint16_t* terminal_buffer;
 
-void terminal_initialize(void) {
+/*
+ * Initialize the terminal.
+ */
+void kernel_tty_initialize(void) {
 	terminal_row = 0;
 	terminal_column = 0;
 	terminal_color = vga_entry_color(VGA_COLOR_LIGHT_GREY, VGA_COLOR_BLACK);
@@ -55,6 +58,13 @@ void terminal_initialize(void) {
 	}
 }
 
+/*
+ * Finalize the terminal.
+ */
+void kernel_tty_finalize(void) {
+    // Stub
+}
+
 void terminal_setcolor(uint8_t color) {
 	terminal_color = color;
 }
@@ -64,6 +74,9 @@ void terminal_putentryat(unsigned char c, uint8_t color, size_t x, size_t y) {
 	terminal_buffer[index] = vga_entry(c, color);
 }
 
+/*
+ * Print out a character.
+ */
 void terminal_putchar(char c) {
 	unsigned char uc = c;
 	terminal_putentryat(uc, terminal_color, terminal_column, terminal_row);
@@ -74,11 +87,17 @@ void terminal_putchar(char c) {
 	}
 }
 
+/*
+ * Print out a character array of given size.
+ */
 void terminal_write(const char* data, size_t size) {
 	for (size_t i = 0; i < size; i++)
 		terminal_putchar(data[i]);
 }
 
+/*
+ * Print out a string.
+ */
 void terminal_writestring(const char* data) {
 	terminal_write(data, strlen(data));
 }

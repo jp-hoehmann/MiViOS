@@ -33,3 +33,5 @@
 # Global destructor footer.
 	popl %ebp                                                           # This is the footer for _fini(). Basically all
 	ret                                                                 # it does is LEAVE.
+
+.end

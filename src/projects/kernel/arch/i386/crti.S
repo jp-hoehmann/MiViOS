@@ -47,3 +47,5 @@ _init:
 _fini:
 	push %ebp                                                           # Set up
 	movl %esp, %ebp                                                     # the stack.
+
+.end

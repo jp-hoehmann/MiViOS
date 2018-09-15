@@ -42,8 +42,10 @@ static void* fftop;
 static void* gftop;
 static void* sftop;
 
-__attribute__((constructor))
-void init(void) {
+/*
+ * Initialize the memory allocator.
+ */
+void kernel_ma_initialize(void) {
     kfbase = &_kernel_end;
     cfbase = _c_space_start;
     dfbase = _d_space_start;
@@ -59,6 +61,13 @@ void init(void) {
     fftop = _f_space_end;
     gftop = _g_space_end;
     sftop = _s_space_end;
+}
+
+/*
+ * Finalize the memory allocator.
+ */
+void kernel_ma_finalize(void) {
+    // Stub
 }
 
 void* _alloc_page(size_t pages, void** fbase, void** ftop, void* palloc(uint32_t)) {

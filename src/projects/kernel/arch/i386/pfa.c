@@ -22,6 +22,23 @@
 
 #include <kernel/pfa.h>
 #include <kernel/mmu.h>
+#include <kernel/kernel.h>
+
+static uint32_t watermark;
+
+/*
+ * Initialize the page frame allocator.
+ */
+void kernel_pfa_initialize(void) {
+    watermark = &_kernel_end + _PAGE_DIR_SIZE;
+}
+
+/*
+ * Finalize the page frame allocator.
+ */
+void kernel_pfa_finalize(void) {
+    // Stub
+}
 
 /*
  * Allocate a page frame.

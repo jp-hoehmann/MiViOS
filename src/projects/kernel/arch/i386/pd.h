@@ -19,7 +19,7 @@
  */
 
 #ifndef ARCH_I386_PD_H
-#define ARCH_I386_PD_H 1
+#define ARCH_I386_PD_H
 
 #include <stdint.h>
 

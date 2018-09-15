@@ -1,7 +1,7 @@
 /*
- * mmu.c
+ * alloc-page.h
  *
- * Created by Jean-Pierre Höhmann on 18-08-29.
+ * Created by Jean-Pierre Höhmann on 2018-09-14.
  *
  * Copyright 2018 Jean-Pierre Höhmann (@NuvandaPV) <jean-pierre@höhmann.info>
  *
@@ -18,22 +18,10 @@
  * limitations under the License.
  */
 
-#include <string.h>
+#ifndef STDLIB_ALLOC_PAGE_H
+#define STDLIB_ALLOC_PAGE_H
 
-#include <kernel/mmu.h>
-#include <kernel/kernel.h>
+void* alloc_page(size_t);
 
-/*
- * Initialize the MMU.
- */
-void kernel_mmu_initialize(void) {
-    _pd_set(&_kernel_end);
-    _pg_set(&_kernel_end);
-}
+#endif // STDLIB_ALLOC_PAGE_H
 
-/*
- * Finalize the MMU.
- */
-void kernel_mmu_finalize(void) {
-    // Stub
-}

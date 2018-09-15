@@ -19,7 +19,7 @@
  */
 
 #ifndef ARCH_I386_BOOT_H
-#define ARCH_I386_BOOT_H 1
+#define ARCH_I386_BOOT_H
 
 #endif // ARCH_I386_BOOT_H
 

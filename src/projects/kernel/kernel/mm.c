@@ -23,6 +23,20 @@
 #include <kernel/mmu.h>
 
 /*
+ * Initialize the memory manager.
+ */
+void kernel_mm_initialize(void) {
+    // Stub
+}
+
+/*
+ * Finalize the memory manager.
+ */
+void kernel_mm_finalize(void) {
+    // Stub
+}
+
+/*
  * Allocate a kernel page.
  *
  * This will allocate a kernel page at the given virtual address, returning a pointer to the page.

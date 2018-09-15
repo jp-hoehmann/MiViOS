@@ -19,9 +19,13 @@
  */
 
 #ifndef _MM_H
-#define _MM_H 1
+#define _MM_H
 
 #include <stdint.h>
+
+void kernel_mm_initialize(void);
+
+void kernel_mm_finalize(void);
 
 void* kpalloc(uint32_t);
 void* cpalloc(uint32_t);

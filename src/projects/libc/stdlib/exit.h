@@ -1,7 +1,7 @@
 /*
- * mmu.c
+ * exit.h
  *
- * Created by Jean-Pierre Höhmann on 18-08-29.
+ * Created by Jean-Pierre Höhmann on 2018-09-14.
  *
  * Copyright 2018 Jean-Pierre Höhmann (@NuvandaPV) <jean-pierre@höhmann.info>
  *
@@ -18,22 +18,13 @@
  * limitations under the License.
  */
 
-#include <string.h>
+#ifndef STDLIB_EXIT_H
+#define STDLIB_EXIT_H
 
-#include <kernel/mmu.h>
-#include <kernel/kernel.h>
+__attribute__((__noreturn__))
+extern void _exit(int status);
 
-/*
- * Initialize the MMU.
- */
-void kernel_mmu_initialize(void) {
-    _pd_set(&_kernel_end);
-    _pg_set(&_kernel_end);
-}
+__attribute__((__noreturn__))
+extern void _end(int status);
 
-/*
- * Finalize the MMU.
- */
-void kernel_mmu_finalize(void) {
-    // Stub
-}
+#endif // STDLIB_EXIT_H
