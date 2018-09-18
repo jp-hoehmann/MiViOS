@@ -41,5 +41,6 @@ int putchar(int ic) {
 #endif // __is_kernel
 #ifdef __is_user
     // TODO: Implement stdio and the write system call.
+    return ic;
 #endif // __is_user
 }

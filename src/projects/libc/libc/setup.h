@@ -18,8 +18,8 @@
  * limitations under the License.
  */
 
-#ifndef INITIALIZE_H
-#define INITIALIZE_H
+#ifndef SETUP_H
+#define SETUP_H
 
 #include <stdint.h>
 
@@ -29,4 +29,4 @@ extern void* MAGIC;
 
 void setup(void);
 
-#endif // INITIALIZE_H
+#endif // SETUP_H

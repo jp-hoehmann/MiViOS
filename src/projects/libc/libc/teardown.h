@@ -18,9 +18,9 @@
  * limitations under the License.
  */
 
-#ifndef FINALIZE_H
-#define FINALIZE_H
+#ifndef TEARDOWN_H
+#define TEARDOWN_H
 
 void teardown(void);
 
-#endif // FINALIZE_H
+#endif // TEARDOWN_H
