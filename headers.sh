@@ -33,6 +33,8 @@ mkdir -p "$SYSROOT"
 for project in ${PROJECTS}
 do
     cd src/projects/${project}
-    DESTDIR=${SYSROOT} ${MAKE} install-headers
+    grep install-headers Makefile \
+        && DESTDIR=${SYSROOT} ${MAKE} install-headers \
+        || :
     cd ../../../
 done
