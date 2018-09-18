@@ -166,33 +166,21 @@
 #
 .set USER_PAGE_DIR_END, USER_PAGE_DIR_START + USER_PAGE_DIR_LENGTH - 1
 
-# The number of the first page directory entry for user code.
+# The number of the first page directory entry for the user binary.
 #
-.set C_PAGE_DIR_START, USER_PAGE_DIR_START
+.set B_PAGE_DIR_START, USER_PAGE_DIR_START
 
-# The number of page directory entries for user code.
+# The number of page directory entries for the user binary.
 #
-.set C_PAGE_DIR_LENGTH, USER_PAGE_DIR_LENGTH >> 3
+.set B_PAGE_DIR_LENGTH, USER_PAGE_DIR_LENGTH >> 2
 
-# The number of the last page directory entry for user code.
+# The number of the last page directory entry for the user binary.
 #
-.set C_PAGE_DIR_END, C_PAGE_DIR_START + C_PAGE_DIR_LENGTH - 1
-
-# The number of the first page directory entry for user data.
-#
-.set D_PAGE_DIR_START, C_PAGE_DIR_END + 1
-
-# The number of page directory entries for user data.
-#
-.set D_PAGE_DIR_LENGTH, USER_PAGE_DIR_LENGTH >> 3
-
-# The number of the last page directory entry for user data.
-#
-.set D_PAGE_DIR_END, D_PAGE_DIR_START + D_PAGE_DIR_LENGTH - 1
+.set B_PAGE_DIR_END, B_PAGE_DIR_START + B_PAGE_DIR_LENGTH - 1
 
 # The number of the first page directory entry for user extra data.
 #
-.set E_PAGE_DIR_START, D_PAGE_DIR_END + 1
+.set E_PAGE_DIR_START, B_PAGE_DIR_END + 1
 
 # The number of page directory entries for user extra data.
 #
@@ -292,27 +280,15 @@
 
 # Pointer to the start of the user code space.
 #
-.set C_SPACE_START, C_PAGE_DIR_START * HUGE_SIZE
+.set B_SPACE_START, B_PAGE_DIR_START * HUGE_SIZE
 
 # Size of the user code space.
 #
-.set C_SPACE_SIZE, C_PAGE_DIR_LENGTH * HUGE_SIZE
+.set B_SPACE_SIZE, B_PAGE_DIR_LENGTH * HUGE_SIZE
 
 # Pointer to the end of the user code space.
 #
-.set C_SPACE_END, C_SPACE_START + C_SPACE_SIZE
-
-# Pointer to the start of the user data space.
-#
-.set D_SPACE_START, D_PAGE_DIR_START * HUGE_SIZE
-
-# Size of the user data space.
-#
-.set D_SPACE_SIZE, D_PAGE_DIR_LENGTH * HUGE_SIZE
-
-# Pointer to the end of the user data space.
-#
-.set D_SPACE_END, D_SPACE_START + D_SPACE_SIZE
+.set B_SPACE_END, B_SPACE_START + B_SPACE_SIZE
 
 # Pointer to the start of the user extra data space.
 #
@@ -455,35 +431,19 @@ _user_space_end:
 
 # Pointer to the start of the user code space.
 #
-.global _c_space_start
-.type _c_space_start, @object
-_c_space_start:
-.long C_SPACE_START
-.size _c_space_start, . - _c_space_start
+.global _b_space_start
+.type _b_space_start, @object
+_b_space_start:
+.long B_SPACE_START
+.size _b_space_start, . - _b_space_start
 
 # Pointer to the end of the user code space.
 #
-.global _c_space_end
-.type _c_space_end, @object
-_c_space_end:
-.long C_SPACE_END
-.size _c_space_end, . - _c_space_end
-
-# Pointer to the start of the user data space.
-#
-.global _d_space_start
-.type _d_space_start, @object
-_d_space_start:
-.long D_SPACE_START
-.size _d_space_start, . - _d_space_start
-
-# Pointer to the end of the user data space.
-#
-.global _d_space_end
-.type _d_space_end, @object
-_d_space_end:
-.long D_SPACE_END
-.size _d_space_end, . - _d_space_end
+.global _b_space_end
+.type _b_space_end, @object
+_b_space_end:
+.long B_SPACE_END
+.size _b_space_end, . - _b_space_end
 
 # Pointer to the start of the user extra data space.
 #
@@ -583,19 +543,11 @@ _USER_SPACE_SIZE:
 
 # User code space size in bytes.
 #
-.global _C_SPACE_SIZE
-.type _C_SPACE_SIZE, @object
-_C_SPACE_SIZE:
-.long C_SPACE_SIZE
-.size _C_SPACE_SIZE, . - _C_SPACE_SIZE
-
-# User data space size in bytes.
-#
-.global _D_SPACE_SIZE
-.type _D_SPACE_SIZE, @object
-_D_SPACE_SIZE:
-.long D_SPACE_SIZE
-.size _D_SPACE_SIZE, . - _D_SPACE_SIZE
+.global _B_SPACE_SIZE
+.type _B_SPACE_SIZE, @object
+_B_SPACE_SIZE:
+.long B_SPACE_SIZE
+.size _B_SPACE_SIZE, . - _B_SPACE_SIZE
 
 # User extra data space size in bytes.
 #

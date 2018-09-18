@@ -27,16 +27,14 @@
 #include <stddef.h>
 
 static void* kfbase;
-static void* cfbase;
-static void* dfbase;
+static void* bfbase;
 static void* efbase;
 static void* ffbase;
 static void* gfbase;
 static void* sfbase;
 
 static void* kftop;
-static void* cftop;
-static void* dftop;
+static void* bftop;
 static void* eftop;
 static void* fftop;
 static void* gftop;
@@ -47,16 +45,14 @@ static void* sftop;
  */
 void kernel_ma_initialize(void) {
     kfbase = &_kernel_end;
-    cfbase = _c_space_start;
-    dfbase = _d_space_start;
+    bfbase = _b_space_start;
     efbase = _e_space_start;
     ffbase = _f_space_start;
     gfbase = _g_space_start;
     sfbase = _s_space_start;
 
     kftop = _kernel_space_end;
-    cftop = _c_space_end;
-    dftop = _d_space_end;
+    bftop = _b_space_end;
     eftop = _e_space_end;
     fftop = _f_space_end;
     gftop = _g_space_end;
@@ -97,7 +93,8 @@ void* alloc_kpage(size_t pages) {
  * This will allocate pages consecutive user code pages, returning a pointer to the start of the newly mapped memory.
  */
 void* alloc_cpage(size_t pages) {
-    return _alloc_page(pages, &cfbase, &cftop, cpalloc);
+    // User code space and user data space have been combined into user binary space.
+    return _alloc_page(pages, &bfbase, &bftop, cpalloc);
 }
 
 /*
@@ -106,7 +103,8 @@ void* alloc_cpage(size_t pages) {
  * This will allocate pages consecutive user data pages, returning a pointer to the start of the newly mapped memory.
  */
 void* alloc_dpage(size_t pages) {
-    return _alloc_page(pages, &dfbase, &dftop, dpalloc);
+    // User code space and user data space have been combined into user binary space.
+    return _alloc_page(pages, &bfbase, &bftop, dpalloc);
 }
 
 /*
