@@ -1,5 +1,5 @@
 #
-# make.config
+# crtn.S
 #
 # Created by Jean-Pierre Höhmann on 18-08-25.
 #
@@ -19,14 +19,19 @@
 #
 
 #
-# Architecture dependent make configuration for building the libc on i386.
+# More constructor magic for i386.
 #
 
-ARCH_CFLAGS=
-ARCH_CPPFLAGS=
-KERNEL_ARCH_CFLAGS=
-KERNEL_ARCH_CPPFLAGS=
+.section .init
 
-ARCH_FREEOBJS=\
+# Global constructor footer.
+	popl %ebp                                                           # This is the footer for _init(). Basically all
+	ret                                                                 # it does is LEAVE.
 
-ARCH_HOSTEDOBJS=\
+.section .fini
+
+# Global destructor footer.
+	popl %ebp                                                           # This is the footer for _fini(). Basically all
+	ret                                                                 # it does is LEAVE.
+
+.end

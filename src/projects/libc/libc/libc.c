@@ -1,7 +1,7 @@
 /*
- * alloc-page.c
+ * libc.c
  *
- * Created by Jean-Pierre Höhmann on 18-09-08.
+ * Created by Jean-Pierre Höhmann on 2018-09-16.
  *
  * Copyright 2018 Jean-Pierre Höhmann (@NuvandaPV) <jean-pierre@höhmann.info>
  *
@@ -18,23 +18,44 @@
  * limitations under the License.
  */
 
-#include <stdlib.h>
+#include "libc.h"
+#include "setup.h"
+#include "teardown.h"
 
 #ifdef __is_kernel
-#include <kernel/ma.h>
+#include "initialize-kernel-library.h"
+#include "finalize-kernel-library.h"
 #endif // __is_kernel
+
 #ifdef __is_user
-// TODO Implement syscalls.
+#include "initialize-user-library.h"
+#include "finalize-user-library.h"
 #endif // __is_user
 
 /*
- * Allocate a given number of consecutive pages and return a pointer to the first one.
+ * Initialize the library.
  */
-void* alloc_page(size_t pages) {
+void initialize_standard_library(size_t argc, char* argv[], size_t envc, char* envp[]) {
 #ifdef __is_kernel
-    alloc_kpage(pages);
+    initialize_kernel_library(argc, argv);
+    setup();
 #endif // __is_kernel
 #ifdef __is_user
-    // TODO Make a syscall to alloc_epage() here.
+    initialize_user_library(argc, argv, envc, envp);
+    setup();
+#endif // __is_user
+}
+
+/*
+ * Finalize the library.
+ */
+void finalize_standard_library(int status) {
+#ifdef __is_kernel
+    teardown();
+    finalize_kernel_library(status);
+#endif // __is_kernel
+#ifdef __is_user
+    teardown();
+    finalize_user_library(status);
 #endif // __is_user
 }

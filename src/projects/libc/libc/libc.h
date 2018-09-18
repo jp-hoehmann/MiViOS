@@ -1,7 +1,7 @@
 /*
- * initialize.h
+ * libc.h
  *
- * Created by Jean-Pierre Höhmann on 2018-09-14.
+ * Created by Jean-Pierre Höhmann on 2018-09-16.
  *
  * Copyright 2018 Jean-Pierre Höhmann (@NuvandaPV) <jean-pierre@höhmann.info>
  *
@@ -18,13 +18,13 @@
  * limitations under the License.
  */
 
-#ifndef INITIALIZE_H
-#define INITIALIZE_H
+#ifndef LIBC_LIBC_H
+#define LIBC_LIBC_H
 
-#include <stdint.h>
+#include <stddef.h>
 
-extern uint8_t _MAGIC[16];
+void initialize_standard_library(size_t argc, char* argv[], size_t envc, char* envp[]);
 
-extern void* MAGIC;
+void finalize_standard_library(int status);
 
-#endif // INITIALIZE_H
+#endif // LIBC_LIBC_H

@@ -1,7 +1,7 @@
 /*
- * alloc-page.c
+ * finalize-kernel-library.h
  *
- * Created by Jean-Pierre Höhmann on 18-09-08.
+ * Created by Jean-Pierre Höhmann on 2018-09-16.
  *
  * Copyright 2018 Jean-Pierre Höhmann (@NuvandaPV) <jean-pierre@höhmann.info>
  *
@@ -18,23 +18,9 @@
  * limitations under the License.
  */
 
-#include <stdlib.h>
+#ifndef LIBC_FINALIZE_KERNEL_LIBRARY
+#define LIBC_FINALIZE_KERNEL_LIBRARY
 
-#ifdef __is_kernel
-#include <kernel/ma.h>
-#endif // __is_kernel
-#ifdef __is_user
-// TODO Implement syscalls.
-#endif // __is_user
+void finalize_kernel_library(int);
 
-/*
- * Allocate a given number of consecutive pages and return a pointer to the first one.
- */
-void* alloc_page(size_t pages) {
-#ifdef __is_kernel
-    alloc_kpage(pages);
-#endif // __is_kernel
-#ifdef __is_user
-    // TODO Make a syscall to alloc_epage() here.
-#endif // __is_user
-}
+#endif // LIBC_FINALIZE_KERNEL_LIBRARY

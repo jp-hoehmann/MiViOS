@@ -1,7 +1,7 @@
 /*
- * alloc-page.c
+ * initialize-kernel-library.c
  *
- * Created by Jean-Pierre Höhmann on 18-09-08.
+ * Created by Jean-Pierre Höhmann on 2018-09-16.
  *
  * Copyright 2018 Jean-Pierre Höhmann (@NuvandaPV) <jean-pierre@höhmann.info>
  *
@@ -18,23 +18,25 @@
  * limitations under the License.
  */
 
-#include <stdlib.h>
-
-#ifdef __is_kernel
+#include <kernel/cpu.h>
+#include <kernel/kernel.h>
 #include <kernel/ma.h>
-#endif // __is_kernel
-#ifdef __is_user
-// TODO Implement syscalls.
-#endif // __is_user
+#include <kernel/mm.h>
+#include <kernel/mmu.h>
+#include <kernel/pfa.h>
+#include <kernel/tty.h>
+
+#include "initialize-kernel-library.h"
 
 /*
- * Allocate a given number of consecutive pages and return a pointer to the first one.
+ * Initialize the libk.
  */
-void* alloc_page(size_t pages) {
-#ifdef __is_kernel
-    alloc_kpage(pages);
-#endif // __is_kernel
-#ifdef __is_user
-    // TODO Make a syscall to alloc_epage() here.
-#endif // __is_user
+void initialize_kernel_library(size_t argc, char* argv[]) {
+     kernel_tty_initialize();
+     kernel_cpu_initialize();
+     kernel_mmu_initialize();
+     kernel_pfa_initialize();
+     kernel_mm_initialize();
+     kernel_ma_initialize();
+     kernel_initialize(argc, argv);
 }

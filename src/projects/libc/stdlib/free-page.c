@@ -20,18 +20,23 @@
 
 #include <stdlib.h>
 
-#ifdef __is_libk
+#ifdef __is_kernel
 #include <kernel/ma.h>
-#endif // __is_libk
+#endif // __is_kernel
+
+#ifdef __is_user
+// Stub
+#endif // __is_user
 
 /*
  * Free a given number of previously allocated pages starting at a given pointer.
  */
 void free_page(void* start, size_t pages) {
-#ifdef __is_libk
+#ifdef __is_kernel
     // FIXME Unimplemented
     free_kpage(start, pages);
-#else // __is_libk
+#endif // __is_kernel
+#ifdef __is_user
     // TODO Make a syscall to free_epage() here.
-#endif // __is_libk
+#endif // __is_user
 }

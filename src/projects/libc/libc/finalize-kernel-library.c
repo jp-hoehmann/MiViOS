@@ -1,7 +1,7 @@
 /*
- * finalize.c
+ * finalize-kernel-library.c
  *
- * Created by Jean-Pierre Höhmann on 2018-09-14.
+ * Created by Jean-Pierre Höhmann on 2018-09-16.
  *
  * Copyright 2018 Jean-Pierre Höhmann (@NuvandaPV) <jean-pierre@höhmann.info>
  *
@@ -18,14 +18,8 @@
  * limitations under the License.
  */
 
-#include <stddef.h>
-#include <stdlib.h>
+#include "finalize-kernel-library.h"
 
-#include "finalize.h"
-#include "initialize.h"
-#include "stdlib/malloc.h"
-
-#ifdef __is_libk
 #include <kernel/cpu.h>
 #include <kernel/kernel.h>
 #include <kernel/ma.h>
@@ -33,30 +27,6 @@
 #include <kernel/mmu.h>
 #include <kernel/pfa.h>
 #include <kernel/tty.h>
-#else // __is_libk
-// Stub
-#endif // __is_libk
-
-/*
- * Tear down stdlib.
- */
-void lib_teardown(void) {
-    malloc_teardown();
-}
-
-/*
- * Tear down stdio.
- */
-void io_teardown(void) {
-    // Stub
-}
-
-/*
- * No more magic.
- */
-void unmagic() {
-    free(MAGIC);
-}
 
 /*
  * Finalize the libk.
@@ -69,32 +39,4 @@ void finalize_kernel_library(int status) {
     kernel_mmu_finalize();
     kernel_cpu_finalize();
     kernel_tty_finalize();
-}
-
-/*
- * Finalize the libc.
- */
-void finalize_user_library(int status) {
-    // Stub
-}
-
-/*
- * Do common finalization.
- */
-void teardown(void) {
-    unmagic();
-    io_teardown();
-    lib_teardown();
-}
-
-/*
- * Finalize the library.
- */
-void finalize_standard_library(int status) {
-    teardown();
-#ifdef __is_libk
-    finalize_kernel_library(status);
-#else // __is_libk
-    finalize_user_library(status);
-#endif // __is_libk
 }

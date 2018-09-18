@@ -1,5 +1,5 @@
 /*
- * initialize-standard-library.c
+ * setup.c
  *
  * Created by Jean-Pierre Höhmann on 2018-09-13.
  *
@@ -18,24 +18,11 @@
  * limitations under the License.
  */
 
-#include <stddef.h>
 #include <stdlib.h>
 #include <string.h>
 
-#include "initialize.h"
-#include "stdlib/malloc.h"
-
-#ifdef __is_libk
-#include <kernel/cpu.h>
-#include <kernel/kernel.h>
-#include <kernel/ma.h>
-#include <kernel/mm.h>
-#include <kernel/mmu.h>
-#include <kernel/pfa.h>
-#include <kernel/tty.h>
-#else // __is_libk
-// Stub
-#endif // __is_libk
+#include "setup.h"
+#include "../stdlib/malloc.h"
 
 void* MAGIC;
 
@@ -62,42 +49,10 @@ void magic(void) {
 }
 
 /*
- * Initialize the libk.
- */
-void initialize_kernel_library(size_t argc, char* argv[]) {
-    kernel_tty_initialize();
-    kernel_cpu_initialize();
-    kernel_mmu_initialize();
-    kernel_pfa_initialize();
-    kernel_mm_initialize();
-    kernel_ma_initialize();
-    kernel_initialize(argc, argv);
-}
-
-/*
- * Initialize the libc.
- */
-void initialize_user_library(size_t argc, char* argv[], size_t envc, char* envp[]) {
-    // Stub
-}
-
-/*
  * Do common initializations.
  */
 void setup(void) {
     lib_setup();
     io_setup();
     magic();
-}
-
-/*
- * Initialize the library.
- */
-void initialize_standard_library(size_t argc, char* argv[], size_t envc, char* envp[]) {
-#ifdef __is_libk
-    initialize_kernel_library(argc, argv);
-#else // __is_libk
-    initialize_user_library(argc, argv, envc, envp);
-#endif // __is_libk
-    setup();
 }

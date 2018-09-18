@@ -22,6 +22,6 @@
 # List of files to install into the ISO.
 #
 
-boot/mivios.kernel
+boot/mivios.elf
 boot/grub/grub.cfg
 boot/grub/grubenv

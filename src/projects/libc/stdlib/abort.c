@@ -31,16 +31,17 @@ __attribute__((__noreturn__))
 void abort(void) {
 #pragma clang diagnostic push
 #pragma ide diagnostic ignored "OCDFAInspection"
-#ifdef __is_libk
+#ifdef __is_kernel
     // TODO Add proper kernel panic.
     printf("kernel: panic: abort()\n");
     while (1) {}
     __builtin_unreachable();
-#else // __is_libk
+#endif // __is_kernel
+#ifdef __is_user
     // TODO Abnormally terminate the process as if by SIGABRT.
     printf("abort()\n");
     while (1) {}
     __builtin_unreachable();
-#endif // __is_libk
+#endif // __is_user
 #pragma clang diagnostic pop
 }

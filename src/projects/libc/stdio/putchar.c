@@ -20,9 +20,13 @@
 
 #include <stdio.h>
 
-#if defined(__is_libk)
-    #include <kernel/tty.h>
-#endif
+#ifdef __is_kernel
+#include <kernel/tty.h>
+#endif // __is_kernel
+
+#ifdef __is_user
+// Stub
+#endif // __is_user
 
 /*
  * Write a character to the terminal.
@@ -30,11 +34,12 @@
  * This writes ic (interpreted as character) to the terminal, and returns it.
  */
 int putchar(int ic) {
-    #if defined(__is_libk)
-        char c = (char) ic;
-        terminal_write(&c, sizeof(c));
-    #else
-        // TODO: Implement stdio and the write system call.
-    #endif
+#ifdef __is_kernel
+    char c = (char) ic;
+    terminal_write(&c, sizeof(c));
 	return ic;
+#endif // __is_kernel
+#ifdef __is_user
+    // TODO: Implement stdio and the write system call.
+#endif // __is_user
 }

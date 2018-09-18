@@ -1,7 +1,7 @@
 /*
- * finalize.h
+ * initialize-kernel-library.h
  *
- * Created by Jean-Pierre Höhmann on 2018-09-14.
+ * Created by Jean-Pierre Höhmann on 2018-09-16.
  *
  * Copyright 2018 Jean-Pierre Höhmann (@NuvandaPV) <jean-pierre@höhmann.info>
  *
@@ -18,9 +18,11 @@
  * limitations under the License.
  */
 
-#ifndef FINALIZE_H
-#define FINALIZE_H
+#ifndef LIBC_INITIALIZE_KERNEL_LIBRARY
+#define LIBC_INITIALIZE_KERNEL_LIBRARY
 
-// Stub
+#include <stddef.h>
 
-#endif // FINALIZE_H
+void initialize_kernel_library(size_t argc, char* argv[]);
+
+#endif // LIBC_INITIALIZE_KERNEL_LIBRARY
