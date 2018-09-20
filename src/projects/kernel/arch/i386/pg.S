@@ -1,5 +1,5 @@
 #
-# pd.S
+# pg.S
 #
 # Created by Jean-Pierre Höhmann on 18-08-29.
 #
@@ -116,11 +116,11 @@
 
 # The number of entries in the page directory.
 #
-.set PAGE_DIR_LENGTH, 1024
+.set PD_LENGTH, 1024
 
 # The number of entries in each page table.
 #
-.set PAGE_TABLE_LENGTH, 1024
+.set PT_LENGTH, 1024
 
 # The size of each page in bytes.
 #
@@ -128,11 +128,11 @@
 
 # The size of the memory controlled by each page directory entry.
 #
-.set HUGE_SIZE, PAGE_SIZE * PAGE_TABLE_LENGTH
+.set HUGE_SIZE, PAGE_SIZE * PT_LENGTH
 
 # The total number of pages that can be mapped.
 #
-.set PAGE_COUNT, PAGE_DIR_LENGTH * PAGE_TABLE_LENGTH
+.set PAGE_COUNT, PD_LENGTH * PT_LENGTH
 
 # The size of each page table entry.
 #
@@ -144,99 +144,140 @@
 
 # The number of the first page directory entry for the kernel.
 #
-.set KERNEL_PAGE_DIR_START, 0
+.set KERNEL_PD_START, 0
 
 # The number of page directory entries for the kernel.
 #
-.set KERNEL_PAGE_DIR_LENGTH, PAGE_DIR_LENGTH >> 1
+.set KERNEL_PD_LENGTH, PD_LENGTH >> 1
 
 # The number of the last page directory entry for the kernel.
 #
-.set KERNEL_PAGE_DIR_END, KERNEL_PAGE_DIR_START + KERNEL_PAGE_DIR_LENGTH - 1
+.set KERNEL_PD_END, KERNEL_PD_START + KERNEL_PD_LENGTH - 1
 
 # The number of the first page directory entry for the user space.
 #
-.set USER_PAGE_DIR_START, KERNEL_PAGE_DIR_END + 1
+.set USER_PD_START, KERNEL_PD_END + 1
 
 # The number of page directory entries for the user space.
 #
-.set USER_PAGE_DIR_LENGTH, PAGE_DIR_LENGTH >> 1
+.set USER_PD_LENGTH, PD_LENGTH >> 1
 
 # The number of the last page directory entry for the user space.
 #
-.set USER_PAGE_DIR_END, USER_PAGE_DIR_START + USER_PAGE_DIR_LENGTH - 1
+.set USER_PD_END, USER_PD_START + USER_PD_LENGTH - 1
 
-# The number of the first page directory entry for the user binary.
+# The number of the first page table entry for the kernel.
 #
-.set B_PAGE_DIR_START, USER_PAGE_DIR_START
+# The kernel starts with a huge page, so this is a purely theoretical number.
+#
+.set KERNEL_PT_START, KERNEL_PD_START * PT_LENGTH
 
-# The number of page directory entries for the user binary.
+# The number of page table entries for the kernel.
 #
-.set B_PAGE_DIR_LENGTH, USER_PAGE_DIR_LENGTH >> 2
+# This is the theoretical maximal number of page table entries for the kernel. The actual number of page table entries
+# for the kernel will be lower due to huge pages.
+#
+.set KERNEL_PT_LENGTH, KERNEL_PD_LENGTH * PT_LENGTH
 
-# The number of the last page directory entry for the user binary.
+# The number of the last page table entry for the kernel.
 #
-.set B_PAGE_DIR_END, B_PAGE_DIR_START + B_PAGE_DIR_LENGTH - 1
+# This as a theoretical number that counts all page table entries, even the ones that do not exist due to huge pages.
+# Thus it can be turned into a pointer into memory by simply bit-shifting it.
+#
+.set KERNEL_PT_END, KERNEL_PT_START + KERNEL_PT_LENGTH - 1
 
-# The number of the first page directory entry for user extra data.
+# The number of the first page table entry for the user space.
 #
-.set E_PAGE_DIR_START, B_PAGE_DIR_END + 1
+# This as a theoretical number that counts all page table entries, even the ones that do not exist due to huge pages.
+# Thus it can be turned into a pointer into memory by simply bit-shifting it.
+#
+.set USER_PT_START, USER_PD_START * PT_LENGTH
 
-# The number of page directory entries for user extra data.
+# The number of page table entries for the user space.
 #
-.set E_PAGE_DIR_LENGTH, USER_PAGE_DIR_LENGTH >> 3
+# This as a theoretical number that counts all page table entries, even the ones that do not exist due to huge pages.
+# Thus it can be turned into a pointer into memory by simply bit-shifting it.
+#
+.set USER_PT_LENGTH, USER_PD_LENGTH * PT_LENGTH
 
-# The number of the last page directory entry for user extra data.
+# The number of the last page table entry for the user space.
 #
-.set E_PAGE_DIR_END, E_PAGE_DIR_START + E_PAGE_DIR_LENGTH - 1
+# This as a theoretical number that counts all page table entries, even the ones that do not exist due to huge pages.
+# Thus it can be turned into a pointer into memory by simply bit-shifting it.
+#
+.set USER_PT_END, USER_PT_START + USER_PT_LENGTH - 1
 
-# The number of the first page directory entry for user file data.
+# The number of the first page table entry for the user binary.
 #
-.set F_PAGE_DIR_START, E_PAGE_DIR_END + 1
+.set B_PT_START, USER_PT_START
 
-# The number of page directory entries for user file data.
+# The number of page table entries for the user binary.
 #
-.set F_PAGE_DIR_LENGTH, USER_PAGE_DIR_LENGTH >> 3
+.set B_PT_LENGTH, USER_PT_LENGTH >> 2
 
-# The number of the last page directory entry for user file data.
+# The number of the last page table entry for the user binary.
 #
-.set F_PAGE_DIR_END, F_PAGE_DIR_START + F_PAGE_DIR_LENGTH - 1
+.set B_PT_END, B_PT_START + B_PT_LENGTH - 1
 
-# The number of the first page directory entry for user generic data.
+# The number of the first page table entry for user extra data.
 #
-.set G_PAGE_DIR_START, F_PAGE_DIR_END + 1
+.set E_PT_START, B_PT_END + 1
 
-# The number of page directory entries for user generic data.
+# The number of page table entries for user extra data.
 #
-.set G_PAGE_DIR_LENGTH, USER_PAGE_DIR_LENGTH >> 3
+.set E_PT_LENGTH, USER_PT_LENGTH >> 3
 
-# The number of the last page directory entry for user generic data.
+# The number of the last page table entry for user extra data.
 #
-.set G_PAGE_DIR_END, G_PAGE_DIR_START + G_PAGE_DIR_LENGTH - 1
+.set E_PT_END, E_PT_START + E_PT_LENGTH - 1
 
-# The number of the first page directory entry for the user stack.
+# The number of the first page table entry for user file data.
 #
-.set S_PAGE_DIR_START, G_PAGE_DIR_END + 1
+.set F_PT_START, E_PT_END + 1
 
-# The number of page directory entries for the user stack.
+# The number of page table entries for user file data.
 #
-.set S_PAGE_DIR_LENGTH, USER_PAGE_DIR_LENGTH >> 3
+.set F_PT_LENGTH, USER_PT_LENGTH >> 3
 
-# The number of the last page directory entry for the user stack.
+# The number of the last page table entry for user file data.
 #
-.set S_PAGE_DIR_END, S_PAGE_DIR_START + S_PAGE_DIR_LENGTH - 1
+.set F_PT_END, F_PT_START + F_PT_LENGTH - 1
 
-# The number of the first unused page directory entry in the user space.
+# The number of the first page table entry for user generic data.
 #
-.set U_PAGE_DIR_START, S_PAGE_DIR_END + 1
+.set G_PT_START, F_PT_END + 1
 
-# The number of the last unused page directory entry in the user space.
+# The number of page table entries for user generic data.
 #
-.set U_PAGE_DIR_END, USER_PAGE_DIR_END
+.set G_PT_LENGTH, USER_PT_LENGTH >> 3
 
-# The number of unused page directory entries in the user space.
+# The number of the last page table entry for user generic data.
 #
-.set U_PAGE_DIR_LENGTH, U_PAGE_DIR_END - U_PAGE_DIR_START + 1
+.set G_PT_END, G_PT_START + G_PT_LENGTH - 1
+
+# The number of the first page table entry for the user stack.
+#
+.set S_PT_START, G_PT_END + 1
+
+# The number of page table entries for the user stack.
+#
+.set S_PT_LENGTH, USER_PT_LENGTH >> 3
+
+# The number of the last page table entry for the user stack.
+#
+.set S_PT_END, S_PT_START + S_PT_LENGTH - 1
+
+# The number of the first unused page table entry in the user space.
+#
+.set U_PT_START, S_PT_END + 1
+
+# The number of the last unused page table entry in the user space.
+#
+.set U_PT_END, USER_PT_END
+
+# The number of unused page table entries in the user space.
+#
+.set U_PT_LENGTH, U_PT_END - U_PT_START + 1
 
 #
 # Pointers to and sizes of places of interest in virtual memory space.
@@ -244,11 +285,11 @@
 
 # Pointer to the start of kernel space.
 #
-.set KERNEL_SPACE_START, KERNEL_PAGE_DIR_START * HUGE_SIZE
+.set KERNEL_SPACE_START, KERNEL_PD_START * HUGE_SIZE
 
 # Size of the kernel space.
 #
-.set KERNEL_SPACE_SIZE, KERNEL_PAGE_DIR_LENGTH * HUGE_SIZE
+.set KERNEL_SPACE_SIZE, KERNEL_PD_LENGTH * HUGE_SIZE
 
 # Pointer to the end of the kernel space.
 #
@@ -256,23 +297,23 @@
 
 # Pointer to the end of the page tables.
 #
-.set PAGE_DIR_END, KERNEL_SPACE_END
+.set PG_END, KERNEL_SPACE_END
 
 # The amount of physical memory used for page management (continuous, directly following the kernel).
 #
-.set PAGE_DIR_SIZE, PAGE_COUNT * ENTRY_SIZE
+.set PG_SIZE, PAGE_COUNT * ENTRY_SIZE
 
 # Pointer to the start of the page directory.
 #
-.set PAGE_DIR_START, PAGE_DIR_END - PAGE_DIR_SIZE
+.set PG_START, PG_END - PG_SIZE
 
 # Pointer to the start of the user space.
 #
-.set USER_SPACE_START, USER_PAGE_DIR_START * HUGE_SIZE
+.set USER_SPACE_START, USER_PD_START * HUGE_SIZE
 
 # Size of the user space.
 #
-.set USER_SPACE_SIZE, USER_PAGE_DIR_LENGTH * HUGE_SIZE
+.set USER_SPACE_SIZE, USER_PD_LENGTH * HUGE_SIZE
 
 # Pointer to the end of the user space.
 #
@@ -280,11 +321,11 @@
 
 # Pointer to the start of the user code space.
 #
-.set B_SPACE_START, B_PAGE_DIR_START * HUGE_SIZE
+.set B_SPACE_START, B_PT_START * PAGE_SIZE
 
 # Size of the user code space.
 #
-.set B_SPACE_SIZE, B_PAGE_DIR_LENGTH * HUGE_SIZE
+.set B_SPACE_SIZE, B_PT_LENGTH * PAGE_SIZE
 
 # Pointer to the end of the user code space.
 #
@@ -292,11 +333,11 @@
 
 # Pointer to the start of the user extra data space.
 #
-.set E_SPACE_START, E_PAGE_DIR_START * HUGE_SIZE
+.set E_SPACE_START, E_PT_START * PAGE_SIZE
 
 # Size of the user extra data space.
 #
-.set E_SPACE_SIZE, E_PAGE_DIR_LENGTH * HUGE_SIZE
+.set E_SPACE_SIZE, E_PT_LENGTH * PAGE_SIZE
 
 # Pointer to the end of the user extra data space.
 #
@@ -304,11 +345,11 @@
 
 # Pointer to the start of the user file data space.
 #
-.set F_SPACE_START, F_PAGE_DIR_START * HUGE_SIZE
+.set F_SPACE_START, F_PT_START * PAGE_SIZE
 
 # Size of the user file data space.
 #
-.set F_SPACE_SIZE, F_PAGE_DIR_LENGTH * HUGE_SIZE
+.set F_SPACE_SIZE, F_PT_LENGTH * PAGE_SIZE
 
 # Pointer to the end of the user file data space.
 #
@@ -316,11 +357,11 @@
 
 # Pointer to the start of the user generic data space.
 #
-.set G_SPACE_START, G_PAGE_DIR_START * HUGE_SIZE
+.set G_SPACE_START, G_PT_START * PAGE_SIZE
 
 # Size of the user generic data space.
 #
-.set G_SPACE_SIZE, G_PAGE_DIR_LENGTH * HUGE_SIZE
+.set G_SPACE_SIZE, G_PT_LENGTH * PAGE_SIZE
 
 # Pointer to the end of the user generic data space.
 #
@@ -328,11 +369,11 @@
 
 # Pointer to the start of the user stack space.
 #
-.set S_SPACE_START, S_PAGE_DIR_START * HUGE_SIZE
+.set S_SPACE_START, S_PT_START * PAGE_SIZE
 
 # Size of the user stack space.
 #
-.set S_SPACE_SIZE, S_PAGE_DIR_LENGTH * HUGE_SIZE
+.set S_SPACE_SIZE, S_PT_LENGTH * PAGE_SIZE
 
 # Pointer to the end of the user stack space.
 #
@@ -340,11 +381,11 @@
 
 # Pointer to the start of the unused user space.
 #
-.set U_SPACE_START, U_PAGE_DIR_START * HUGE_SIZE
+.set U_SPACE_START, U_PT_START * PAGE_SIZE
 
 # Size of the unused user space.
 #
-.set U_SPACE_SIZE, U_PAGE_DIR_LENGTH * HUGE_SIZE
+.set U_SPACE_SIZE, U_PT_LENGTH * PAGE_SIZE
 
 # Pointer to the end of the unused user space.
 #
@@ -399,19 +440,19 @@ _kernel_space_end:
 
 # Pointer to the start of the PD.
 #
-.global _page_dir_start
-.type _page_dir_start, @object
-_page_dir_start:
-.long PAGE_DIR_START
-.size _page_dir_start, . - _page_dir_start
+.global _pg_start
+.type _pg_start, @object
+_pg_start:
+.long PG_START
+.size _pg_start, . - _pg_start
 
 # Pointer to the end of the PTs.
 #
-.global _page_dir_end
-.type _page_dir_end, @object
-_page_dir_end:
-.long PAGE_DIR_END
-.size _page_dir_end, . - _page_dir_end
+.global _pg_end
+.type _pg_end, @object
+_pg_end:
+.long PG_END
+.size _pg_end, . - _pg_end
 
 # Pointer to the start of the user space.
 #
@@ -527,11 +568,11 @@ _KERNEL_SPACE_SIZE:
 
 # Combined size of page directory and page tables in bytes.
 #
-.global _PAGE_DIR_SIZE
-.type _PAGE_DIR_SIZE, @object
-_PAGE_DIR_SIZE:
-.long PAGE_DIR_SIZE
-.size _PAGE_DIR_SIZE, . - _PAGE_DIR_SIZE
+.global _PG_SIZE
+.type _PG_SIZE, @object
+_PG_SIZE:
+.long PG_SIZE
+.size _PG_SIZE, . - _PG_SIZE
 
 # User space size in bytes.
 #
@@ -595,9 +636,9 @@ _S_SPACE_SIZE:
 # as an index into the 4MB block. The actual page tables will be filled with dummmy entries, that have the flags they
 # will later use, but without a present flag or a memory address.
 #
-.global _pd_set
-.type _pd_set, @function
-_pd_set:
+.global _pg_install
+.type _pg_install, @function
+_pg_install:
     push %ebp                                                           # Enter the function and
     movl %esp, %ebp                                                     # store %ebx, because the
     push %ebx                                                           # routine will clobber it.
@@ -621,7 +662,7 @@ _pd_set:
     orl $KERNEL_PAGE_TABLE, %eax                                        # Add flags.
     movl %eax, (%ebx, %ecx, 4)                                          # Store the entry in the page directory.
     incl %ecx                                                           # Increment the counter.
-    cmp $KERNEL_PAGE_DIR_END, %ecx                                      # Check if enough page tables have been mapped
+    cmp $KERNEL_PD_END, %ecx                                            # Check if enough page tables have been mapped
     jne 1b                                                              # for the kernel.
 
     movl %ebx, %eax                                                     # Load pointer to page directory.
@@ -635,25 +676,25 @@ _pd_set:
     orl $USER_PAGE_TABLE, %eax                                          # goes all the way to the end of the directory
     movl %eax, (%ebx, %ecx, 4)                                          # instead of some arbitrary cutoff in the
     incl %ecx                                                           # middle. It would be nicer to have this be a
-    cmp $PAGE_DIR_LENGTH, %ecx                                          # f() called twice, but eh, this is asm.
+    cmp $PD_LENGTH, %ecx                                                # f() called twice, but eh, this is asm.
     jne 1b                                                              #
 
     movl $KERNEL_DUMMY_PAGE, %eax                                       # Load flags for an unused kernel page.
     movl %ebx, %ecx                                                     # Calc num of table entries not needed at the
     shrl $12, %ecx                                                      # start due to huge pages.
-    movl $KERNEL_PAGE_DIR_END, %edx                                     # Calculate the number of page table entries
+    movl $KERNEL_PD_END, %edx                                           # Calculate the number of page table entries
     shll $10, %edx                                                      # to be made for the kernel.
     call pt_fill                                                        # Call pt_fill().
 
     movl $USER_DUMMY_PAGE, %eax                                         # Load flags for an unused user page.
-    addl $PAGE_TABLE_LENGTH, %ecx                                       # Skip 1024 entries (there's a huge page here).
+    addl $PT_LENGTH, %ecx                                               # Skip 1024 entries (there's a huge page here).
     movl $PAGE_COUNT, %edx                                              # Load the total number of page tables to be
     call pt_fill                                                        # made and call pt_fill() again.
 
     popl %ebx                                                           # Restore %ebx,
     popl %ebp                                                           # leave the function
     ret                                                                 # and return.
-.size _pd_set, . - _pd_set
+.size _pg_install, . - _pg_install
 
 # Turn on paging.
 #
@@ -676,7 +717,7 @@ _pg_set:
 
     popl %ebp                                                           # Leave the function
     ret                                                                 # and return to the caller.
-.size _pd_set, . - _pd_set
+.size _pg_set, . - _pg_set
 
 # Generate dummy page table entries.
 #

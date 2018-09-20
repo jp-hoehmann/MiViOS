@@ -95,6 +95,6 @@ $(ARCHDIR)/boot.o \
 $(ARCHDIR)/tty.o \
 $(ARCHDIR)/gdt.o \
 $(ARCHDIR)/cpu.o \
-$(ARCHDIR)/pd.o \
+$(ARCHDIR)/pg.o \
 $(ARCHDIR)/mmu.o \
 $(ARCHDIR)/pfa.o \

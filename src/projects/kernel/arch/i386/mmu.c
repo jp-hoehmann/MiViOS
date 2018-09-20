@@ -27,7 +27,7 @@
  * Initialize the MMU.
  */
 void kernel_mmu_initialize(void) {
-    _pd_set(&_kernel_end);
+    _pg_install(&_kernel_end);
     _pg_set(&_kernel_end);
 }
 

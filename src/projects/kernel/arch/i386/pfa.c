@@ -18,7 +18,7 @@
  * limitations under the License.
  */
 
-#include "pd.h"
+#include "pg.h"
 
 #include <kernel/pfa.h>
 #include <kernel/mmu.h>
@@ -30,7 +30,7 @@ static uint32_t watermark;
  * Initialize the page frame allocator.
  */
 void kernel_pfa_initialize(void) {
-    watermark = &_kernel_end + _PAGE_DIR_SIZE;
+    watermark = &_kernel_end + _PG_SIZE;
 }
 
 /*
@@ -49,7 +49,7 @@ void kernel_pfa_finalize(void) {
  * already mapped in the desired way.
  */
 void* _pfalloc(uint32_t flags, uint32_t virt, uint32_t phys) {
-    *(uint32_t*) (_page_dir_start + (virt >> 10)) = phys | flags;
+    *(uint32_t*) (_pg_start + (virt >> 10)) = phys | flags;
     return (void*) virt;
 }
 
