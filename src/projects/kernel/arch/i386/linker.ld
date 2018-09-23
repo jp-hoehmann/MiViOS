@@ -37,10 +37,9 @@ SECTIONS
 	/*
 	 * Start of Kernel.
 	 *
-	 * Begin putting sections at 1 MiB, a conventional place for kernels to be
-	 * loaded at by the bootloader.
+	 * Begin putting sections at 4 MiB, leaving the first huge page for bios and bootloader.
 	 */
-	. = 1M;
+	. = 4M;
 	_kernel_start = .;
 
 	/*
