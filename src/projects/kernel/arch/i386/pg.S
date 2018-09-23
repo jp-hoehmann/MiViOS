@@ -148,7 +148,7 @@
 
 # The number of page directory entries for the kernel.
 #
-.set KERNEL_PD_LENGTH, PD_LENGTH >> 1
+.set KERNEL_PD_LENGTH, PD_LENGTH >> 5
 
 # The number of the last page directory entry for the kernel.
 #
@@ -160,7 +160,7 @@
 
 # The number of page directory entries for the user space.
 #
-.set USER_PD_LENGTH, PD_LENGTH >> 1
+.set USER_PD_LENGTH, PD_LENGTH - KERNEL_PD_LENGTH
 
 # The number of the last page directory entry for the user space.
 #
@@ -207,13 +207,25 @@
 #
 .set USER_PT_END, USER_PT_START + USER_PT_LENGTH - 1
 
+# The number of the first page table entry for the user stack.
+#
+.set S_PT_START, USER_PT_START
+
+# The number of page table entries for the user stack.
+#
+.set S_PT_LENGTH, 72
+
+# The number of the last page table entry for the user stack.
+#
+.set S_PT_END, S_PT_START + S_PT_LENGTH - 1
+
 # The number of the first page table entry for the user binary.
 #
-.set B_PT_START, USER_PT_START
+.set B_PT_START, S_PT_END + 1
 
 # The number of page table entries for the user binary.
 #
-.set B_PT_LENGTH, USER_PT_LENGTH >> 2
+.set B_PT_LENGTH, 32768 - S_PT_LENGTH
 
 # The number of the last page table entry for the user binary.
 #
@@ -225,7 +237,7 @@
 
 # The number of page table entries for user extra data.
 #
-.set E_PT_LENGTH, USER_PT_LENGTH >> 3
+.set E_PT_LENGTH, 65536
 
 # The number of the last page table entry for user extra data.
 #
@@ -237,7 +249,7 @@
 
 # The number of page table entries for user file data.
 #
-.set F_PT_LENGTH, USER_PT_LENGTH >> 3
+.set F_PT_LENGTH, 65536
 
 # The number of the last page table entry for user file data.
 #
@@ -249,27 +261,15 @@
 
 # The number of page table entries for user generic data.
 #
-.set G_PT_LENGTH, USER_PT_LENGTH >> 3
+.set G_PT_LENGTH, 65536
 
 # The number of the last page table entry for user generic data.
 #
 .set G_PT_END, G_PT_START + G_PT_LENGTH - 1
 
-# The number of the first page table entry for the user stack.
-#
-.set S_PT_START, G_PT_END + 1
-
-# The number of page table entries for the user stack.
-#
-.set S_PT_LENGTH, USER_PT_LENGTH >> 3
-
-# The number of the last page table entry for the user stack.
-#
-.set S_PT_END, S_PT_START + S_PT_LENGTH - 1
-
 # The number of the first unused page table entry in the user space.
 #
-.set U_PT_START, S_PT_END + 1
+.set U_PT_START, G_PT_END + 1
 
 # The number of the last unused page table entry in the user space.
 #
@@ -319,6 +319,18 @@
 #
 .set USER_SPACE_END, USER_SPACE_START + USER_SPACE_SIZE
 
+# Pointer to the start of the user stack space.
+#
+.set S_SPACE_START, S_PT_START * PAGE_SIZE
+
+# Size of the user stack space.
+#
+.set S_SPACE_SIZE, S_PT_LENGTH * PAGE_SIZE
+
+# Pointer to the end of the user stack space.
+#
+.set S_SPACE_END, S_SPACE_START + S_SPACE_SIZE
+
 # Pointer to the start of the user code space.
 #
 .set B_SPACE_START, B_PT_START * PAGE_SIZE
@@ -366,18 +378,6 @@
 # Pointer to the end of the user generic data space.
 #
 .set G_SPACE_END, G_SPACE_START + G_SPACE_SIZE
-
-# Pointer to the start of the user stack space.
-#
-.set S_SPACE_START, S_PT_START * PAGE_SIZE
-
-# Size of the user stack space.
-#
-.set S_SPACE_SIZE, S_PT_LENGTH * PAGE_SIZE
-
-# Pointer to the end of the user stack space.
-#
-.set S_SPACE_END, S_SPACE_START + S_SPACE_SIZE
 
 # Pointer to the start of the unused user space.
 #
@@ -470,6 +470,22 @@ _user_space_end:
 .long USER_SPACE_END
 .size _user_space_end, . - _user_space_end
 
+# Pointer to the start of the user stack space.
+#
+.global _s_space_start
+.type _s_space_start, @object
+_s_space_start:
+.long S_SPACE_START
+.size _s_space_start, . - _s_space_start
+
+# Pointer to the end of the user stack space.
+#
+.global _s_space_end
+.type _s_space_end, @object
+_s_space_end:
+.long S_SPACE_END
+.size _s_space_end, . - _s_space_end
+
 # Pointer to the start of the user code space.
 #
 .global _b_space_start
@@ -534,22 +550,6 @@ _g_space_end:
 .long G_SPACE_END
 .size _g_space_end, . - _g_space_end
 
-# Pointer to the start of the user stack space.
-#
-.global _s_space_start
-.type _s_space_start, @object
-_s_space_start:
-.long S_SPACE_START
-.size _s_space_start, . - _s_space_start
-
-# Pointer to the end of the user stack space.
-#
-.global _s_space_end
-.type _s_space_end, @object
-_s_space_end:
-.long S_SPACE_END
-.size _s_space_end, . - _s_space_end
-
 # Page size in bytes.
 #
 .global _PAGE_SIZE
@@ -582,6 +582,14 @@ _USER_SPACE_SIZE:
 .long USER_SPACE_SIZE
 .size _USER_SPACE_SIZE, . - _USER_SPACE_SIZE
 
+# User stack space size in bytes.
+#
+.global _S_SPACE_SIZE
+.type _S_SPACE_SIZE, @object
+_S_SPACE_SIZE:
+.long S_SPACE_SIZE
+.size _S_SPACE_SIZE, . - _S_SPACE_SIZE
+
 # User code space size in bytes.
 #
 .global _B_SPACE_SIZE
@@ -613,14 +621,6 @@ _F_SPACE_SIZE:
 _G_SPACE_SIZE:
 .long G_SPACE_SIZE
 .size _G_SPACE_SIZE, . - _G_SPACE_SIZE
-
-# User stack space size in bytes.
-#
-.global _S_SPACE_SIZE
-.type _S_SPACE_SIZE, @object
-_S_SPACE_SIZE:
-.long S_SPACE_SIZE
-.size _S_SPACE_SIZE, . - _S_SPACE_SIZE
 
 .section .text
 
