@@ -26,6 +26,11 @@ set -euxo pipefail
 # Build configuration.
 #
 
+export MAKE HOST AR AS CC PREFIX EXEC_PREFIX BOOTDIR LIBDIR INCLUDEDIR CFLAGS CPPFLAGS SYSROOT LD_LIBRARY_PATH
+
+MAKE="${MAKE:-}"
+HOST="${HOST:-}"
+
 # FIXME None of STATICDIR ISODIR ISOFILE TMPDIR PIDDIR SYSROOT PROJECTDIR can contain spaces.
 # FIXME The individual file names in FILES, as well as the individual project names in PROJECTS cannot contain spaces.
 
@@ -84,5 +89,3 @@ if echo "$HOST" | grep -Eq -- '-elf($|-)'
 then
     CC="$CC -isystem=$INCLUDEDIR"
 fi
-
-export MAKE HOST AR AS CC PREFIX EXEC_PREFIX BOOTDIR LIBDIR INCLUDEDIR CFLAGS CPPFLAGS SYSROOT LD_LIBRARY_PATH
