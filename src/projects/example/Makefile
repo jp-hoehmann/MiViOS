@@ -143,6 +143,7 @@ example/example.o \
 
 BINARIES=\
 example.elf \
+example.txt \
 
 .PHONY: all clean install
 .SUFFIXES: .o .c
@@ -151,6 +152,9 @@ all: $(BINARIES)
 
 example.elf: $(OBJS)
 	$(CC) -o $@ $(EXAMPLE_CFLAGS) $(EXAMPLE_LDFLAGS) $(OBJS) $(EXAMPLE_LIBS)
+
+example.txt: example/example.txt
+	txt.pl $< > $@
 
 .c.o:
 	$(CC) -MD -c $< -o $@ -std=gnu11 $(EXAMPLE_CFLAGS) $(EXAMPLE_CPPFLAGS)
