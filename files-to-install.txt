@@ -28,3 +28,5 @@ boot/grub/grub.cfg
 boot/grub/grubenv
 boot/mivios.elf
 boot/mivios.env
+boot/example.bin
+boot/example.txt
