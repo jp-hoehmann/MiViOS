@@ -133,13 +133,15 @@ pids/
 # Build artifacts
 #
 
-# System root directory to be.
+# Build directories.
 #
-/build/sysroot/
+/build/*/
 
-# Root directory for the actual iso.
+# Project binaries.
 #
-/build/isodir/
+/src/projects/*/*
+!/src/projects/*/Makefile
+!/src/projects/*/*/
 
 # CD-ROM images.
 #

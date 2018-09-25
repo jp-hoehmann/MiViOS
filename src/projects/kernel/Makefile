@@ -142,6 +142,7 @@ $(ARCHDIR)/crtn.o \
 
 BINARIES=\
 mivios.elf \
+mivios.env \
 
 .PHONY: all clean install install-headers install-kernel
 .SUFFIXES: .o .c .S
@@ -151,6 +152,9 @@ all: $(BINARIES)
 mivios.elf: $(OBJS) $(ARCHDIR)/linker.ld
 	$(CC) -T $(ARCHDIR)/linker.ld -o $@ $(KERNEL_CFLAGS) $(LINK_LIST)
 	grub-file --is-x86-multiboot mivios.elf
+
+mivios.env: kernel/kernel.env
+	txt.pl $< > $@
 
 $(ARCHDIR)/crtbegin.o $(ARCHDIR)/crtend.o:
 	OBJ=`$(CC) $(KERNEL_CFLAGS) $(KERNEL_LDFLAGS) -print-file-name=$(@F)` && cp "$$OBJ" $@
