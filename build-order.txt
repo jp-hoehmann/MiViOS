@@ -1,3 +1,5 @@
+#!/usr/bin/env txt.pl
+
 #
 # build-order.txt
 #

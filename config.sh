@@ -49,12 +49,12 @@ RELEASE_LDFLAGS=''
 PATH="${PWD}/bin:${PATH}"
 LD_LIBRARY_PATH=''
 
-PROJECTS="${PROJECTS:-$(txt.pl build-order.txt)}"
-FILES="${FILES:-$(txt.pl files-to-install.txt)}"
-GRUBENV="${GRUBENV:-$(txt.pl grub.env)}"
+PROJECTS="${PROJECTS:-$(./build-order.txt)}"
+FILES="${FILES:-$(./files-to-install.txt)}"
+GRUBENV="${GRUBENV:-$(./grub.env)}"
 
 MAKE=${MAKE:-make}
-HOST=${HOST:-$(txt.pl default-host.txt)}
+HOST=${HOST:-$(./default-host.txt)}
 
 AR=${HOST}-ar
 AS=${HOST}-as

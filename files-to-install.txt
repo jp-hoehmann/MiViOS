@@ -1,3 +1,5 @@
+#!/usr/bin/env txt.pl
+
 #
 # files-to-install.txt
 #
