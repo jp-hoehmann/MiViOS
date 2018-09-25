@@ -143,6 +143,7 @@ example/example.o \
 
 BINARIES=\
 example.elf \
+example.bin \
 example.txt \
 
 .PHONY: all clean install
@@ -152,6 +153,9 @@ all: $(BINARIES)
 
 example.elf: $(OBJS)
 	$(CC) -o $@ $(EXAMPLE_CFLAGS) $(EXAMPLE_LDFLAGS) $(OBJS) $(EXAMPLE_LIBS)
+
+example.bin: example.elf
+	$(OBJCOPY) -O binary $< $@
 
 example.txt: example/example.txt
 	txt.pl $< > $@
