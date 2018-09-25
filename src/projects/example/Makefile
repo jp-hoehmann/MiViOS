@@ -24,7 +24,7 @@
 
 DEFAULT_HOST?=i686-elf
 HOST?=$(DEFAULT_HOST)
-HOSTARCH!=../../../target-triplet-to-arch.sh $(HOST)
+HOSTARCH!=target-triplet-to-arch.sh $(HOST)
 
 AR?=$(HOST)-ar
 AS?=$(HOST)-as

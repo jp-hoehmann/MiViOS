@@ -30,4 +30,4 @@ set -euxo pipefail
 
 . ./config.sh
 
-exec qemu-system-$(./target-triplet-to-arch.sh ${HOST}) -cdrom ${ISOFILE} "$@"
+exec qemu-system-$(target-triplet-to-arch.sh ${HOST}) -cdrom ${ISOFILE} "$@"
