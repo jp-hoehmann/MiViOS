@@ -74,7 +74,7 @@ LD_LIBRARY_PATH=''
 
 PROJECTS="${PROJECTS:-$(./build-order.txt)}"
 FILES="${FILES:-$(./files-to-install.txt)}"
-GRUBENV="${GRUBENV:-$(./grub.env)}"
+GRUBENV="${GRUBENV:-$(./grub_${TARGET,,*}.env)}"
 
 MAKE=${MAKE:-make}
 HOST=${HOST:-$(./default-host.txt)}
