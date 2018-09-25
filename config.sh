@@ -68,11 +68,11 @@ CFLAGS="${!CFLAGS}"
 CPPFLAGS="${!CPPFLAGS}"
 LDFLAGS="${!LDFLAGS}"
 
-STATICDIR="$(pwd)/src/static"
-ISODIR="$(pwd)/build/isodir"
-ISOFILE="$(pwd)/mivios.iso"
-TMPDIR="$(pwd)/tmp"
-PIDDIR="$(pwd)/pids"
+STATICDIR="${PWD}/src/static"
+ISODIR="${PWD}/build/isodir"
+ISOFILE="${PWD}/mivios.iso"
+TMPDIR="${PWD}/tmp"
+PIDDIR="${PWD}/pids"
 
 # Configure the cross-compiler to use the desired system root.
 SYSROOT="$(pwd)/build/sysroot"
