@@ -22,9 +22,12 @@
 
 use strict;
 use warnings FATAL => 'all';
+use v5.10;
 
 #
 # Parser for txt files.
 #
+# TODO Handling for quoting and escaping.
+#
 
-print if ! /^\s*(#|$)/;
+say $1 if /^\s*([^\s#].*?)\s*(#.*)?$/;
