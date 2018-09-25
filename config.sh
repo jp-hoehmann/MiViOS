@@ -26,7 +26,23 @@ set -euxo pipefail
 # Build configuration.
 #
 
-export MAKE HOST AR AS CC PREFIX EXEC_PREFIX BOOTDIR LIBDIR INCLUDEDIR CFLAGS CPPFLAGS SYSROOT LD_LIBRARY_PATH PATH
+export \
+        LD_LIBRARY_PATH \
+        PATH \
+        MAKE \
+        HOST \
+        AR \
+        AS \
+        CC \
+        OBJCOPY \
+        PREFIX \
+        EXEC_PREFIX \
+        BOOTDIR \
+        LIBDIR \
+        INCLUDEDIR \
+        CFLAGS \
+        CPPFLAGS \
+        SYSROOT \
 
 MAKE="${MAKE:-}"
 HOST="${HOST:-}"
@@ -59,6 +75,7 @@ HOST=${HOST:-$(./default-host.txt)}
 AR=${HOST}-ar
 AS=${HOST}-as
 CC=${HOST}-gcc
+OBJCOPY=${HOST}-objcopy
 
 PREFIX=/usr
 EXEC_PREFIX=${PREFIX}
