@@ -163,7 +163,7 @@ $(ARCHDIR)/crtbegin.o $(ARCHDIR)/crtend.o:
 	$(CC) -MD -c $< -o $@ -std=gnu11 $(KERNEL_CFLAGS) $(KERNEL_CPPFLAGS)
 
 .S.o:
-	$(CC) -MD -c $< -o $@ $(KERNEL_CFLAGS) $(KERNEL_CPPFLAGS)
+	$(CC) -MD -c $< -o $@ $(KERNEL_CFLAGS) -D__assembler $(KERNEL_CPPFLAGS)
 
 clean:
 	rm -f $(BINARIES) $(OBJS) $(OBJS:.o=.d)

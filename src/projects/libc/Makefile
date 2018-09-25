@@ -391,25 +391,25 @@ crt0.o: $(CRT0_OBJ)
 	$(CC) -MD -c $< -o $@ -std=gnu11 $(LIBC_CFLAGS) $(LIBC_CPPFLAGS)
 
 .S.libc.o:
-	$(CC) -MD -c $< -o $@ $(LIBC_CFLAGS) $(LIBC_CPPFLAGS)
+	$(CC) -MD -c $< -o $@ $(LIBC_CFLAGS) -D__assembler $(LIBC_CPPFLAGS)
 
 .c.libg.o:
 	$(CC) -MD -c $< -o $@ -std=gnu11 $(LIBG_CFLAGS) $(LIBG_CPPFLAGS)
 
 .S.libg.o:
-	$(CC) -MD -c $< -o $@ $(LIBG_CFLAGS) $(LIBG_CPPFLAGS)
+	$(CC) -MD -c $< -o $@ $(LIBG_CFLAGS) -D__assembler $(LIBG_CPPFLAGS)
 
 .c.libk.o:
 	$(CC) -MD -c $< -o $@ -std=gnu11 $(LIBK_CFLAGS) $(LIBK_CPPFLAGS)
 
 .S.libk.o:
-	$(CC) -MD -c $< -o $@ $(LIBK_CFLAGS) $(LIBK_CPPFLAGS)
+	$(CC) -MD -c $< -o $@ $(LIBK_CFLAGS) -D__assembler $(LIBK_CPPFLAGS)
 
 .c.crt0.o:
 	$(CC) -MD -c $< -o $@ -std=gnu11 $(CRT0_CFLAGS) $(CRT0_CPPFLAGS)
 
 .S.crt0.o:
-	$(CC) -MD -c $< -o $@ $(CRT0_CFLAGS) $(CRT0_CPPFLAGS)
+	$(CC) -MD -c $< -o $@ $(CRT0_CFLAGS) -D__assembler $(CRT0_CPPFLAGS)
 
 clean:
 	rm -f $(BINARIES) $(OBJS) $(OBJS:.o=.d) $(ARCHDIR)/crt{begin,end}.o
