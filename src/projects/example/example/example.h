@@ -25,4 +25,4 @@
 
 int main(size_t argc, char* argv[]);
 
-#endif // HELLO_HELLO_H
+#endif // ! HELLO_HELLO_H
