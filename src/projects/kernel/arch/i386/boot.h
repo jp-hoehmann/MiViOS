@@ -28,6 +28,8 @@
 
 #define STACK_SIZE 16384
 
+#define MAGIC 0xC0FFEE1511FE92A15E60D4600DC0FFEE
+
 #ifndef __assembler
 
 // Stub.

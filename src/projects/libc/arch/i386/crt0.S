@@ -31,7 +31,7 @@
 .global _MAGIC
 .type _MAGIC, @object
 _MAGIC:
-.octa 0xC0FEFEF029E091E029E091EF02C0FEFE
+.octa MAGIC
 .size _MAGIC, . - _MAGIC
 
 .section .text

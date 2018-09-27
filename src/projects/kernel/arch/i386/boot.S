@@ -56,7 +56,7 @@ stack_top:
 .global _MAGIC
 .type _MAGIC, @object
 _MAGIC:
-.octa 0xC0FFEE1511FE92A15E60D4600DC0FFEE
+.octa MAGIC
 .size _MAGIC, . - _MAGIC
 
 .section .text

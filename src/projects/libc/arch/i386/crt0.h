@@ -21,7 +21,7 @@
 #ifndef ARCH_I386_CRT0_H
 #define ARCH_I386_CRT0_H
 
-// Stub.
+#define MAGIC 0xC0FEFEF029E091E029E091EF02C0FEFE
 
 #ifndef __assembler
 
