@@ -18,6 +18,8 @@
 # limitations under the License.
 #
 
+#include "crt0.h"
+
 #
 # Set up everything the application needs to execute on i386.
 #
