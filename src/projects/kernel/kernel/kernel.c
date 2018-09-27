@@ -44,7 +44,6 @@ void kernel_finalize(int status) {
 /*
  * Print a warning.
  */
-__attribute__((__noreturn__))
 void kwarn(char* warn) {
     printf("kernel: warn:  %s\n", warn);
 }
@@ -52,6 +51,7 @@ void kwarn(char* warn) {
 /*
  * Panic with an error.
  */
+__attribute__((__noreturn__))
 void kerror(char* err) {
     printf("kernel: error: %s\n", err);
     abort();
