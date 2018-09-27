@@ -18,6 +18,11 @@
  * limitations under the License.
  */
 
+#ifndef STDLIB_MALLOC_H
+#define STDLIB_MALLOC_H
+
 void malloc_setup(void);
 
 void malloc_teardown(void);
+
+#endif // ! STDLIB_MALLOC_H

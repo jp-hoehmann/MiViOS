@@ -25,4 +25,4 @@
 
 void run_atexit_handlers(void);
 
-#endif // STDLIB_ATEXIT_H
+#endif // ! STDLIB_ATEXIT_H

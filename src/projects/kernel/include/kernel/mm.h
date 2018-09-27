@@ -35,5 +35,5 @@ int kpfree(uint32_t);
 int cpfree(uint32_t);
 int dpfree(uint32_t);
 
-#endif // _MM_H
+#endif // ! _MM_H
 

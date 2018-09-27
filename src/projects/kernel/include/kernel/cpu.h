@@ -25,5 +25,5 @@ void kernel_cpu_initialize(void);
 
 void kernel_cpu_finalize(void);
 
-#endif // _KERNEL_CPU_H
+#endif // ! _KERNEL_CPU_H
 

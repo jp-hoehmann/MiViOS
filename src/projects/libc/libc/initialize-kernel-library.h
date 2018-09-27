@@ -25,4 +25,4 @@
 
 void initialize_kernel_library(size_t argc, char* argv[]);
 
-#endif // LIBC_INITIALIZE_KERNEL_LIBRARY
+#endif // ! LIBC_INITIALIZE_KERNEL_LIBRARY

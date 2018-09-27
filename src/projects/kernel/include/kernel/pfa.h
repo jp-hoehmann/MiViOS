@@ -29,5 +29,5 @@ void* pfalloc(uint32_t, uint32_t);
 
 int pffree(uint32_t);
 
-#endif // _KERNEL_PFA_H
+#endif // ! _KERNEL_PFA_H
 

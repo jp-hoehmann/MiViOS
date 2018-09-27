@@ -67,4 +67,4 @@ void _Exit(int status);
 }
 #endif // __cplusplus
 
-#endif // _STDLIB_H
+#endif // ! _STDLIB_H

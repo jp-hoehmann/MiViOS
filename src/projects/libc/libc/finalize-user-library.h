@@ -23,4 +23,4 @@
 
 void finalize_user_library(int);
 
-#endif // LIBC_FINALIZE_USER_LIBRARY
+#endif // ! LIBC_FINALIZE_USER_LIBRARY

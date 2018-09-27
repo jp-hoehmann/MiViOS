@@ -27,4 +27,4 @@ extern void _exit(int status);
 __attribute__((__noreturn__))
 extern void _end(int status);
 
-#endif // STDLIB_EXIT_H
+#endif // ! STDLIB_EXIT_H

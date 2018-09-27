@@ -45,4 +45,4 @@ size_t strlen(const char*);
     }
 #endif // __cplusplus
 
-#endif // _STRING_H
+#endif // ! _STRING_H

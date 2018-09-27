@@ -23,5 +23,5 @@
 
 void* alloc_page(size_t);
 
-#endif // STDLIB_ALLOC_PAGE_H
+#endif // ! STDLIB_ALLOC_PAGE_H
 

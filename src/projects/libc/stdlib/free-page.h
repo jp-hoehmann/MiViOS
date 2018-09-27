@@ -23,4 +23,4 @@
 
 void free_page(void*, size_t);
 
-#endif // STDLIB_FREE_PAGE_H
+#endif // ! STDLIB_FREE_PAGE_H

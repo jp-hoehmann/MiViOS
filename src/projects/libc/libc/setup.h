@@ -29,4 +29,4 @@ extern void* MAGIC;
 
 void setup(void);
 
-#endif // SETUP_H
+#endif // ! SETUP_H

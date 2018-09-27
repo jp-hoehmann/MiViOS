@@ -25,4 +25,4 @@
 
 void initialize_user_library(size_t argc, char* argv[], size_t envc, char* envp[]);
 
-#endif // LIBC_INITIALIZE_USER_LIBRARY
+#endif // ! LIBC_INITIALIZE_USER_LIBRARY

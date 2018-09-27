@@ -25,6 +25,6 @@
  * Macros for the libc.
  */
 
-#define __mivios_libc 1
+#define __mivios_libc
 
-#endif // _SYS_CDEFS_H
+#endif // ! _SYS_CDEFS_H

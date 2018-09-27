@@ -23,4 +23,4 @@
 
 void teardown(void);
 
-#endif // TEARDOWN_H
+#endif // ! TEARDOWN_H

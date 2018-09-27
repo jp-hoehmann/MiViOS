@@ -55,4 +55,4 @@ void free_gpage(void*, size_t);
 
 void free_spage(void*, size_t);
 
-#endif // _KERNEL_MA_H
+#endif // ! _KERNEL_MA_H

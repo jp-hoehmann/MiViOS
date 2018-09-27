@@ -43,4 +43,4 @@ int puts(const char*);
     }
 #endif // __clusplus
 
-#endif // _STDIO_H
+#endif // ! _STDIO_H

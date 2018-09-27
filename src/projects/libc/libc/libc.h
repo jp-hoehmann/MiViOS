@@ -27,4 +27,4 @@ void initialize_standard_library(size_t argc, char* argv[], size_t envc, char* e
 
 void finalize_standard_library(int status);
 
-#endif // LIBC_LIBC_H
+#endif // ! LIBC_LIBC_H

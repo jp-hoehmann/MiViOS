@@ -37,4 +37,4 @@ void kerror(char* err);
 
 void kernel_main(size_t argc, char* argv[]);
 
-#endif // _KERNEL_KERNEL_H
+#endif // ! _KERNEL_KERNEL_H

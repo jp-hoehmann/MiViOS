@@ -23,4 +23,4 @@
 
 void finalize_kernel_library(int);
 
-#endif // LIBC_FINALIZE_KERNEL_LIBRARY
+#endif // ! LIBC_FINALIZE_KERNEL_LIBRARY

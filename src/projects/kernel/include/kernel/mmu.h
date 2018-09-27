@@ -55,4 +55,4 @@ void kernel_mmu_initialize(void);
 
 void kernel_mmu_finalize(void);
 
-#endif // _KERNEL_MMU_H
+#endif // ! _KERNEL_MMU_H
