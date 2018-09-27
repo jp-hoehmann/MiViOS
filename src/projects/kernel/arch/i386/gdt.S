@@ -22,13 +22,26 @@
 
 .section .data
 
-# GDT with five entries. Mandatory null entry, supervisor code, supervisor data, user code, user data, in a flat setup.
+# GDT with six entries, implementing a flat setup, with a single (currently unused) entry for TSS.
+#
+# Entries:
+# * Null entry
+# * Supervisor code
+# * Supervisor data
+# * User code
+# * User data
+# * TSS
 #
 .align 8
 .global _gdt_start
 .type _gdt_start, @object
 _gdt_start:
-.quad 0x0000000000000000, 0x00CF9A000000FFFF, 0x00CF92000000FFFF, 0x00CFFA000000FFFF, 0x00CFF2000000FFFF
+.quad 0x0000000000000000
+.quad 0x00CF9A000000FFFF
+.quad 0x00CF92000000FFFF
+.quad 0x00CFFA000000FFFF
+.quad 0x00CFF2000000FFFF
+.quad 0x0000000000000000
 .global _gdt_end
 .type _gdt_end, @notype
 _gdt_end:
