@@ -21,7 +21,12 @@
 #ifndef ARCH_I386_BOOT_H
 #define ARCH_I386_BOOT_H
 
-// Stub.
+#include "multiboot.h"
+
+#define MULTIBOOT_HEADER_FLAGS MULTIBOOT_PAGE_ALIGN | MULTIBOOT_MEMORY_INFO
+#define MULTIBOOT_HEADER_CHECK -(MULTIBOOT_HEADER_MAGIC + MULTIBOOT_HEADER_FLAGS)
+
+#define STACK_SIZE 16384
 
 #ifndef __assembler
 
@@ -30,4 +35,3 @@
 #endif // ! __assembler
 
 #endif // ! ARCH_I386_BOOT_H
-

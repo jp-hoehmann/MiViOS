@@ -24,39 +24,29 @@
 # Set up everything the kernel needs to execute on i386.
 #
 
-# Align loaded modules on page boundaries.
-#
-.set ALIGN, 1<<0
-
-# Provide memory map.
-#
-.set MEMINFO, 1<<1
-
-# This is the Multiboot 'flag' field.
-#
-.set FLAGS, ALIGN | MEMINFO
-
-# Magic letting bootloader find the header.
-#
-.set MAGIC, 0x1BADB002
-
-# Checksum of the above.
-#
-.set CHECKSUM, -(MAGIC + FLAGS)
+.section .multiboot
 
 # Multiboot header.
-.section .multiboot
 .align 4
-.long MAGIC
-.long FLAGS
-.long CHECKSUM
+.long MULTIBOOT_HEADER_MAGIC
+.long MULTIBOOT_HEADER_FLAGS
+.long MULTIBOOT_HEADER_CHECK
+.long 0
+.long 0
+.long 0
+.long 0
+.long 0
+.long 0
+.long 0
+.long 0
+.long 0
 
 .section .bss
 
 # Reserve a stack for the initial thread.
 .align 16
 stack_bottom:
-.skip 16384
+.skip STACK_SIZE
 stack_top:
 
 .section .data
