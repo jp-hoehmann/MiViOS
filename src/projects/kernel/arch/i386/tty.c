@@ -82,17 +82,32 @@ void terminal_putchar(char c) {
 	terminal_putentryat(uc, terminal_color, terminal_column, terminal_row);
 	if (++terminal_column == VGA_WIDTH) {
 		terminal_column = 0;
-		if (++terminal_row == VGA_HEIGHT)
-			terminal_row = 0;
+		if (++terminal_row == VGA_HEIGHT) {
+            terminal_row = 0;
+        }
 	}
+}
+
+/*
+ * Print out a newline.
+ */
+void terminal_newline() {
+    while (terminal_column) {
+        terminal_putchar(' ');
+    }
 }
 
 /*
  * Print out a character array of given size.
  */
 void terminal_write(const char* data, size_t size) {
-	for (size_t i = 0; i < size; i++)
-		terminal_putchar(data[i]);
+	for (size_t i = 0; i < size; i++) {
+	    if (data[i] == '\n' || data[i] == '\r') {
+	        terminal_newline();
+	    } else {
+            terminal_putchar(data[i]);
+        }
+    }
 }
 
 /*
