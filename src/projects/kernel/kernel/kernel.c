@@ -65,6 +65,6 @@ void kerror(char* err) {
 int kernel_main(size_t argc, char* args[]) {
 	char* ptr = (char*) calloc(72, 1);
 	strcpy(ptr, "Hello, kernel World!");
-	printf("%s\n", ptr);
+	puts(ptr);
 	return 0;
 }
