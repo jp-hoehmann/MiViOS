@@ -30,6 +30,11 @@ void kernel_initialize(size_t argc, char* argv[]);
 
 void kernel_finalize(int status);
 
+void kwarn(char* warn);
+
+__attribute__((__noreturn__))
+void kerror(char* err);
+
 void kernel_main(size_t argc, char* argv[]);
 
 #endif // _KERNEL_KERNEL_H

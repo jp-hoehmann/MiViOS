@@ -42,13 +42,29 @@ void kernel_finalize(int status) {
 }
 
 /*
+ * Print a warning.
+ */
+__attribute__((__noreturn__))
+void kwarn(char* warn) {
+    printf("kernel: warn:  %s\n", warn);
+}
+
+/*
+ * Panic with an error.
+ */
+void kerror(char* err) {
+    printf("kernel: error: %s\n", err);
+    abort();
+}
+
+/*
  * MiViOS Kernel.
  *
  * This is called as soon as the libk is fully operational.
  */
 int kernel_main(size_t argc, char* args[]) {
 	char* ptr = (char*) calloc(72, 1);
-	strcpy(ptr, "Hello, kernel World!\n");
-	printf(ptr);
+	strcpy(ptr, "Hello, kernel World!");
+	printf("%s\n", ptr);
 	return 0;
 }
