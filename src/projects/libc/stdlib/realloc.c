@@ -21,6 +21,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "realloc.h"
+
 /*
  * Reallocate a memory block.
  *

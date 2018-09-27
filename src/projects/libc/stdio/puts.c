@@ -20,6 +20,8 @@
 
 #include <stdio.h>
 
+#include "puts.h"
+
 /*
  * Write a string into the terminal.
  *

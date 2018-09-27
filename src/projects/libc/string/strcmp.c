@@ -20,6 +20,8 @@
 
 #include <string.h>
 
+#include "strcmp.h"
+
 /*
  * Compare two strings.
  *

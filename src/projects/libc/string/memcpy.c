@@ -20,6 +20,8 @@
 
 #include <string.h>
 
+#include "memcpy.h"
+
 /*
  * Copy a block of memory.
  *

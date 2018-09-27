@@ -20,6 +20,8 @@
 
 #include <string.h>
 
+#include "memcmp.h"
+
  /*
   * Compare two blocks of memory.
   *

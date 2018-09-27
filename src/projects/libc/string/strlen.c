@@ -20,6 +20,8 @@
 
 #include <string.h>
 
+#include "strlen.h"
+
 /*
  * Get string length.
  *

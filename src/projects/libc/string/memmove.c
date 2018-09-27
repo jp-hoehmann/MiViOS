@@ -20,6 +20,8 @@
 
 #include <string.h>
 
+#include "memmove.h"
+
 /*
  * Move a block of memory safely to a new location that overlaps the old one.
  *

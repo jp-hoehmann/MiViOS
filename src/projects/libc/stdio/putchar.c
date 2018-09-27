@@ -20,6 +20,8 @@
 
 #include <stdio.h>
 
+#include "putchar.h"
+
 #ifdef __is_kernel
 #include <kernel/tty.h>
 #endif // __is_kernel

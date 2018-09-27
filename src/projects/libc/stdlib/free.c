@@ -21,6 +21,7 @@
 #include <stdlib.h>
 
 #include "free-page.h"
+#include "free.h"
 
 /*
  * Deallocate a memory block.

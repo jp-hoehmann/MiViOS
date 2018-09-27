@@ -21,6 +21,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include "abort.h"
+
 /*
  * Terminate the current process abnormally.
  *
