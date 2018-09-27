@@ -30,6 +30,10 @@ void kernel_initialize(size_t argc, char* argv[]);
 
 void kernel_finalize(int status);
 
+void kdebug(char* dbg);
+
+void kinfo(char* info);
+
 void kwarn(char* warn);
 
 __attribute__((__noreturn__))

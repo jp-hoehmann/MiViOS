@@ -42,6 +42,21 @@ void kernel_finalize(int status) {
 }
 
 /*
+ * Print a debugging message.
+ */
+void kdebug(char* dbg) {
+    // TODO Add an option to turn this off with an environment variable
+    printf("kernel: debug: %s\n", dbg);
+}
+
+/*
+ * Print an informational message.
+ */
+void kinfo(char* info) {
+    printf("kernel: info:  %s\n", info);
+}
+
+/*
  * Print a warning.
  */
 void kwarn(char* warn) {
