@@ -98,3 +98,4 @@ $(ARCHDIR)/cpu.o \
 $(ARCHDIR)/pg.o \
 $(ARCHDIR)/mmu.o \
 $(ARCHDIR)/pfa.o \
+$(ARCHDIR)/tss.o \

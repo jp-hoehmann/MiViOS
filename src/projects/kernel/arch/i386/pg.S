@@ -298,6 +298,7 @@ _pg_install:
     push %ebp                                                           # Enter the function and
     movl %esp, %ebp                                                     # store %ebx, because the
     push %ebx                                                           # routine will clobber it.
+    subl $4, %esp                                                       # Align the stack to 16 bytes.
 
     movl 8(%ebp), %ebx                                                  # Load base pointer.
     movl $0, %ecx                                                       # Load counter.
@@ -347,9 +348,10 @@ _pg_install:
     movl $PAGE_COUNT, %edx                                              # Load the total number of page tables to be
     call pt_fill                                                        # made and call pt_fill() again.
 
-    popl %ebx                                                           # Restore %ebx,
-    popl %ebp                                                           # leave the function
-    ret                                                                 # and return.
+    addl $4, %esp                                                       # Restore %ebx,
+    popl %ebx                                                           # leave the function
+    popl %ebp                                                           # and return.
+    ret
 .size _pg_install, . - _pg_install
 
 # Turn on paging.

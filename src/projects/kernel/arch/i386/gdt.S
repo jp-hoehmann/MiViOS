@@ -22,7 +22,7 @@
 
 .section .data
 
-# GDT with six entries, implementing a flat setup, with a single (currently unused) entry for TSS.
+# Empty GDT with six entries
 #
 # Entries:
 # * Null entry

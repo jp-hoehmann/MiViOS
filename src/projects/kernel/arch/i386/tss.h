@@ -1,7 +1,7 @@
 /*
- * gdt.h
+ * tss.h
  *
- * Created by Jean-Pierre Höhmann on 18-08-26.
+ * Created by Jean-Pierre Höhmann on 2018-09-27.
  *
  * Copyright 2018 Jean-Pierre Höhmann (@NuvandaPV) <jean-pierre@höhmann.info>
  *
@@ -18,8 +18,8 @@
  * limitations under the License.
  */
 
-#ifndef ARCH_I386_GDT_H
-#define ARCH_I386_GDT_H
+#ifndef ARCH_I386_TSS_H
+#define ARCH_I386_TSS_H
 
 // Stub.
 
@@ -27,16 +27,12 @@
 
 #include <stdint.h>
 
-struct gdt_entry {
-    uint32_t base;
-    uint32_t limit;
-    uint8_t type;
-};
-
-extern uint64_t _gdt_start;
-extern void _gdt_end;
-extern void _gdt_set(uint64_t*, uint16_t);
+extern uint16_t _tss_start;
+extern void _tss_end;
+extern uint32_t _isr_stack_bottom;
+extern void _isr_stack_top;
+extern void _tss_set(void*, uint16_t*);
 
 #endif // ! __assembler
 
-#endif // ! ARCH_I386_GDT_H
+#endif // ! ARCH_I386_TSS_H
