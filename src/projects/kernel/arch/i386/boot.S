@@ -18,6 +18,8 @@
 # limitations under the License.
 #
 
+#include "boot.h"
+
 #
 # Set up everything the kernel needs to execute on i386.
 #

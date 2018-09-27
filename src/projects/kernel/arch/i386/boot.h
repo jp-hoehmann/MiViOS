@@ -21,5 +21,13 @@
 #ifndef ARCH_I386_BOOT_H
 #define ARCH_I386_BOOT_H
 
-#endif // ARCH_I386_BOOT_H
+// Stub.
+
+#ifndef __assembler
+
+// Stub.
+
+#endif // ! __assembler
+
+#endif // ! ARCH_I386_BOOT_H
 

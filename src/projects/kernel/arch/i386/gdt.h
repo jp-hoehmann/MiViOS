@@ -21,10 +21,16 @@
 #ifndef ARCH_I386_GDT_H
 #define ARCH_I386_GDT_H
 
+// Stub.
+
+#ifndef __assembler
+
 #include <stdint.h>
 
 extern uint64_t _gdt_start;
 extern void _gdt_end;
 extern void _gdt_set(uint64_t*, uint16_t);
 
-#endif // ARCH_I386_GDT_H
+#endif // ! __assembler
+
+#endif // ! ARCH_I386_GDT_H

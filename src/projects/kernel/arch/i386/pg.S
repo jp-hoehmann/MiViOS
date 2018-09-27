@@ -18,388 +18,17 @@
 # limitations under the License.
 #
 
-#
-# Flags for page table and page directory.
-#
+#include "pg.h"
 
-# Present.
-#
-.set P, 1 << 0
-
-# Read/Write.
-#
-.set R, 1 << 1
-
-# User/Supervisor.
-#
-.set U, 1 << 2
-
-# Write Through.
-#
-.set W, 1 << 3
-
-# Cache Disabled.
-#
-.set C, 1 << 4
-
-# Dirty.
-#
-.set D, 1 << 6
-
-# Page Size.
-#
-.set S, 1 << 7
-
-# Global.
-#
-.set G, 1 << 8
-
-# Page directory entry for identity mapped 4MB kernel page.
-#
-.set KERNEL_HUGE_PAGE, P | R | S | G
-
-# Page directory entry for kernel page table.
-#
-.set KERNEL_PAGE_TABLE, P | G
-
-# Page directory entry for application page table.
-#
-.set USER_PAGE_TABLE, P | U
-
-# Page table entry for regular kernel page.
-#
-.set KERNEL_DATA_PAGE, P | R | G
-
-# Page table entry for application code page.
-#
-.set USER_CODE_PAGE, P | U
-
-# Page table entry for application data page.
-#
-.set USER_DATA_PAGE, P | R | U
-
-# Dummy kernel page table entry.
-#
-.set KERNEL_DUMMY_PAGE, G
-
-# Dummy application page table entry.
-#
-.set USER_DUMMY_PAGE, U
-
-#
-# Control register flags.
-#
-
-# Paging.
-#
-.set PG, 1 << 31
-
-# Page Size Extension.
-#
-.set PSE, 1 << 4
-
-# Page Global Enabled.
-#
-.set PGE, 1 << 7
-
-# Flags for CR0.
-#
-.set CR0, PG
-
-# Flags for CR4.
-#
-.set CR4, PSE | PGE
-
-#
-# Architecture specific information about the pageing.
-#
-
-# The number of entries in the page directory.
-#
-.set PD_LENGTH, 1024
-
-# The number of entries in each page table.
-#
-.set PT_LENGTH, 1024
-
-# The size of each page in bytes.
-#
-.set PAGE_SIZE, 4096
-
-# The size of the memory controlled by each page directory entry.
-#
-.set HUGE_SIZE, PAGE_SIZE * PT_LENGTH
-
-# The total number of pages that can be mapped.
-#
-.set PAGE_COUNT, PD_LENGTH * PT_LENGTH
-
-# The size of each page table entry.
-#
-.set ENTRY_SIZE, 4
-
-#
-# Information about the virtual memory architecture.
-#
-
-# The number of the first page directory entry for the kernel.
-#
-.set KERNEL_PD_START, 0
-
-# The number of page directory entries for the kernel.
-#
-.set KERNEL_PD_LENGTH, PD_LENGTH >> 5
-
-# The number of the last page directory entry for the kernel.
-#
-.set KERNEL_PD_END, KERNEL_PD_START + KERNEL_PD_LENGTH - 1
-
-# The number of the first page directory entry for the user space.
-#
-.set USER_PD_START, KERNEL_PD_END + 1
-
-# The number of page directory entries for the user space.
-#
-.set USER_PD_LENGTH, PD_LENGTH - KERNEL_PD_LENGTH
-
-# The number of the last page directory entry for the user space.
-#
-.set USER_PD_END, USER_PD_START + USER_PD_LENGTH - 1
-
-# The number of the first page table entry for the kernel.
-#
-# The kernel starts with a huge page, so this is a purely theoretical number.
-#
-.set KERNEL_PT_START, KERNEL_PD_START * PT_LENGTH
-
-# The number of page table entries for the kernel.
-#
-# This is the theoretical maximal number of page table entries for the kernel. The actual number of page table entries
-# for the kernel will be lower due to huge pages.
-#
-.set KERNEL_PT_LENGTH, KERNEL_PD_LENGTH * PT_LENGTH
-
-# The number of the last page table entry for the kernel.
-#
-# This as a theoretical number that counts all page table entries, even the ones that do not exist due to huge pages.
-# Thus it can be turned into a pointer into memory by simply bit-shifting it.
-#
-.set KERNEL_PT_END, KERNEL_PT_START + KERNEL_PT_LENGTH - 1
-
-# The number of the first page table entry for the user space.
-#
-# This as a theoretical number that counts all page table entries, even the ones that do not exist due to huge pages.
-# Thus it can be turned into a pointer into memory by simply bit-shifting it.
-#
-.set USER_PT_START, USER_PD_START * PT_LENGTH
-
-# The number of page table entries for the user space.
-#
-# This as a theoretical number that counts all page table entries, even the ones that do not exist due to huge pages.
-# Thus it can be turned into a pointer into memory by simply bit-shifting it.
-#
-.set USER_PT_LENGTH, USER_PD_LENGTH * PT_LENGTH
-
-# The number of the last page table entry for the user space.
-#
-# This as a theoretical number that counts all page table entries, even the ones that do not exist due to huge pages.
-# Thus it can be turned into a pointer into memory by simply bit-shifting it.
-#
-.set USER_PT_END, USER_PT_START + USER_PT_LENGTH - 1
-
-# The number of the first page table entry for the user stack.
-#
-.set S_PT_START, USER_PT_START
-
-# The number of page table entries for the user stack.
-#
-.set S_PT_LENGTH, 72
-
-# The number of the last page table entry for the user stack.
-#
-.set S_PT_END, S_PT_START + S_PT_LENGTH - 1
-
-# The number of the first page table entry for the user binary.
-#
-.set B_PT_START, S_PT_END + 1
-
-# The number of page table entries for the user binary.
-#
-.set B_PT_LENGTH, 32768 - S_PT_LENGTH
-
-# The number of the last page table entry for the user binary.
-#
-.set B_PT_END, B_PT_START + B_PT_LENGTH - 1
-
-# The number of the first page table entry for user extra data.
-#
-.set E_PT_START, B_PT_END + 1
-
-# The number of page table entries for user extra data.
-#
-.set E_PT_LENGTH, 65536
-
-# The number of the last page table entry for user extra data.
-#
-.set E_PT_END, E_PT_START + E_PT_LENGTH - 1
-
-# The number of the first page table entry for user file data.
-#
-.set F_PT_START, E_PT_END + 1
-
-# The number of page table entries for user file data.
-#
-.set F_PT_LENGTH, 65536
-
-# The number of the last page table entry for user file data.
-#
-.set F_PT_END, F_PT_START + F_PT_LENGTH - 1
-
-# The number of the first page table entry for user generic data.
-#
-.set G_PT_START, F_PT_END + 1
-
-# The number of page table entries for user generic data.
-#
-.set G_PT_LENGTH, 65536
-
-# The number of the last page table entry for user generic data.
-#
-.set G_PT_END, G_PT_START + G_PT_LENGTH - 1
-
-# The number of the first unused page table entry in the user space.
-#
-.set U_PT_START, G_PT_END + 1
-
-# The number of the last unused page table entry in the user space.
-#
-.set U_PT_END, USER_PT_END
-
-# The number of unused page table entries in the user space.
-#
-.set U_PT_LENGTH, U_PT_END - U_PT_START + 1
-
-#
-# Pointers to and sizes of places of interest in virtual memory space.
-#
-
-# Pointer to the start of kernel space.
-#
-.set KERNEL_SPACE_START, KERNEL_PD_START * HUGE_SIZE
-
-# Size of the kernel space.
-#
-.set KERNEL_SPACE_SIZE, KERNEL_PD_LENGTH * HUGE_SIZE
-
-# Pointer to the end of the kernel space.
-#
-.set KERNEL_SPACE_END, KERNEL_SPACE_START + KERNEL_SPACE_SIZE
-
-# Pointer to the end of the page tables.
-#
-.set PG_END, KERNEL_SPACE_END
-
-# The amount of physical memory used for page management (continuous, directly following the kernel).
-#
-.set PG_SIZE, PAGE_COUNT * ENTRY_SIZE
-
-# Pointer to the start of the page directory.
-#
-.set PG_START, PG_END - PG_SIZE
-
-# Pointer to the start of the user space.
-#
-.set USER_SPACE_START, USER_PD_START * HUGE_SIZE
-
-# Size of the user space.
-#
-.set USER_SPACE_SIZE, USER_PD_LENGTH * HUGE_SIZE
-
-# Pointer to the end of the user space.
-#
-.set USER_SPACE_END, USER_SPACE_START + USER_SPACE_SIZE
-
-# Pointer to the start of the user stack space.
-#
-.set S_SPACE_START, S_PT_START * PAGE_SIZE
-
-# Size of the user stack space.
-#
-.set S_SPACE_SIZE, S_PT_LENGTH * PAGE_SIZE
-
-# Pointer to the end of the user stack space.
-#
-.set S_SPACE_END, S_SPACE_START + S_SPACE_SIZE
-
-# Pointer to the start of the user code space.
-#
-.set B_SPACE_START, B_PT_START * PAGE_SIZE
-
-# Size of the user code space.
-#
-.set B_SPACE_SIZE, B_PT_LENGTH * PAGE_SIZE
-
-# Pointer to the end of the user code space.
-#
-.set B_SPACE_END, B_SPACE_START + B_SPACE_SIZE
-
-# Pointer to the start of the user extra data space.
-#
-.set E_SPACE_START, E_PT_START * PAGE_SIZE
-
-# Size of the user extra data space.
-#
-.set E_SPACE_SIZE, E_PT_LENGTH * PAGE_SIZE
-
-# Pointer to the end of the user extra data space.
-#
-.set E_SPACE_END, E_SPACE_START + E_SPACE_SIZE
-
-# Pointer to the start of the user file data space.
-#
-.set F_SPACE_START, F_PT_START * PAGE_SIZE
-
-# Size of the user file data space.
-#
-.set F_SPACE_SIZE, F_PT_LENGTH * PAGE_SIZE
-
-# Pointer to the end of the user file data space.
-#
-.set F_SPACE_END, F_SPACE_START + F_SPACE_SIZE
-
-# Pointer to the start of the user generic data space.
-#
-.set G_SPACE_START, G_PT_START * PAGE_SIZE
-
-# Size of the user generic data space.
-#
-.set G_SPACE_SIZE, G_PT_LENGTH * PAGE_SIZE
-
-# Pointer to the end of the user generic data space.
-#
-.set G_SPACE_END, G_SPACE_START + G_SPACE_SIZE
-
-# Pointer to the start of the unused user space.
-#
-.set U_SPACE_START, U_PT_START * PAGE_SIZE
-
-# Size of the unused user space.
-#
-.set U_SPACE_SIZE, U_PT_LENGTH * PAGE_SIZE
-
-# Pointer to the end of the unused user space.
-#
-.set U_SPACE_END, U_SPACE_START + U_SPACE_SIZE
+.section .data
 
 #
 # Globals used to implement page frame and memory allocation.
 #
 
-.section .data
-.align 4
-
 # Flags for a page table entry for a new data page for the kernel.
 #
+.align 4
 .global _KERNEL_DATA_PAGE
 .type _KERNEL_DATA_PAGE, @object
 _KERNEL_DATA_PAGE:
@@ -408,6 +37,7 @@ _KERNEL_DATA_PAGE:
 
 # Flags for a page table entry for a new code page for an application.
 #
+.align 4
 .global _USER_CODE_PAGE
 .type _USER_CODE_PAGE, @object
 _USER_CODE_PAGE:
@@ -416,6 +46,7 @@ _USER_CODE_PAGE:
 
 # Flags for a page table entry for a new data page for an application.
 #
+.align 4
 .global _USER_DATA_PAGE
 .type _USER_DATA_PAGE, @object
 _USER_DATA_PAGE:
@@ -424,6 +55,7 @@ _USER_DATA_PAGE:
 
 # Pointer to the start of the kernel space.
 #
+.align 4
 .global _kernel_space_start
 .type _kernel_space_start, @object
 _kernel_space_start:
@@ -432,6 +64,7 @@ _kernel_space_start:
 
 # Pointer to the end of the kernel space.
 #
+.align 4
 .global _kernel_space_end
 .type _kernel_space_end, @object
 _kernel_space_end:
@@ -440,6 +73,7 @@ _kernel_space_end:
 
 # Pointer to the start of the PD.
 #
+.align 4
 .global _pg_start
 .type _pg_start, @object
 _pg_start:
@@ -448,6 +82,7 @@ _pg_start:
 
 # Pointer to the end of the PTs.
 #
+.align 4
 .global _pg_end
 .type _pg_end, @object
 _pg_end:
@@ -456,6 +91,7 @@ _pg_end:
 
 # Pointer to the start of the user space.
 #
+.align 4
 .global _user_space_start
 .type _user_space_start, @object
 _user_space_start:
@@ -464,6 +100,7 @@ _user_space_start:
 
 # Pointer to the end of the user space.
 #
+.align 4
 .global _user_space_end
 .type _user_space_end, @object
 _user_space_end:
@@ -472,6 +109,7 @@ _user_space_end:
 
 # Pointer to the start of the user stack space.
 #
+.align 4
 .global _s_space_start
 .type _s_space_start, @object
 _s_space_start:
@@ -480,6 +118,7 @@ _s_space_start:
 
 # Pointer to the end of the user stack space.
 #
+.align 4
 .global _s_space_end
 .type _s_space_end, @object
 _s_space_end:
@@ -488,6 +127,7 @@ _s_space_end:
 
 # Pointer to the start of the user code space.
 #
+.align 4
 .global _b_space_start
 .type _b_space_start, @object
 _b_space_start:
@@ -496,6 +136,7 @@ _b_space_start:
 
 # Pointer to the end of the user code space.
 #
+.align 4
 .global _b_space_end
 .type _b_space_end, @object
 _b_space_end:
@@ -504,6 +145,7 @@ _b_space_end:
 
 # Pointer to the start of the user extra data space.
 #
+.align 4
 .global _e_space_start
 .type _e_space_start, @object
 _e_space_start:
@@ -512,6 +154,7 @@ _e_space_start:
 
 # Pointer to the end of the user extra data space.
 #
+.align 4
 .global _e_space_end
 .type _e_space_end, @object
 _e_space_end:
@@ -520,6 +163,7 @@ _e_space_end:
 
 # Pointer to the start of the user file data space.
 #
+.align 4
 .global _f_space_start
 .type _f_space_start, @object
 _f_space_start:
@@ -528,6 +172,7 @@ _f_space_start:
 
 # Pointer to the end of the user file data space.
 #
+.align 4
 .global _f_space_end
 .type _f_space_end, @object
 _f_space_end:
@@ -536,6 +181,7 @@ _f_space_end:
 
 # Pointer to the start of the user generic data space.
 #
+.align 4
 .global _g_space_start
 .type _g_space_start, @object
 _g_space_start:
@@ -544,6 +190,7 @@ _g_space_start:
 
 # Pointer to the end of the user generic data space.
 #
+.align 4
 .global _g_space_end
 .type _g_space_end, @object
 _g_space_end:
@@ -552,6 +199,7 @@ _g_space_end:
 
 # Page size in bytes.
 #
+.align 4
 .global _PAGE_SIZE
 .type _PAGE_SIZE, @object
 _PAGE_SIZE:
@@ -560,6 +208,7 @@ _PAGE_SIZE:
 
 # Kernel space size in bytes.
 #
+.align 4
 .global _KERNEL_SPACE_SIZE
 .type _KERNEL_SPACE_SIZE, @object
 _KERNEL_SPACE_SIZE:
@@ -568,6 +217,7 @@ _KERNEL_SPACE_SIZE:
 
 # Combined size of page directory and page tables in bytes.
 #
+.align 4
 .global _PG_SIZE
 .type _PG_SIZE, @object
 _PG_SIZE:
@@ -576,6 +226,7 @@ _PG_SIZE:
 
 # User space size in bytes.
 #
+.align 4
 .global _USER_SPACE_SIZE
 .type _USER_SPACE_SIZE, @object
 _USER_SPACE_SIZE:
@@ -584,6 +235,7 @@ _USER_SPACE_SIZE:
 
 # User stack space size in bytes.
 #
+.align 4
 .global _S_SPACE_SIZE
 .type _S_SPACE_SIZE, @object
 _S_SPACE_SIZE:
@@ -592,6 +244,7 @@ _S_SPACE_SIZE:
 
 # User code space size in bytes.
 #
+.align 4
 .global _B_SPACE_SIZE
 .type _B_SPACE_SIZE, @object
 _B_SPACE_SIZE:
@@ -600,6 +253,7 @@ _B_SPACE_SIZE:
 
 # User extra data space size in bytes.
 #
+.align 4
 .global _E_SPACE_SIZE
 .type _E_SPACE_SIZE, @object
 _E_SPACE_SIZE:
@@ -608,6 +262,7 @@ _E_SPACE_SIZE:
 
 # User file data space size in bytes.
 #
+.align 4
 .global _F_SPACE_SIZE
 .type _F_SPACE_SIZE, @object
 _F_SPACE_SIZE:
@@ -616,6 +271,7 @@ _F_SPACE_SIZE:
 
 # User generic data space size in bytes.
 #
+.align 4
 .global _G_SPACE_SIZE
 .type _G_SPACE_SIZE, @object
 _G_SPACE_SIZE:

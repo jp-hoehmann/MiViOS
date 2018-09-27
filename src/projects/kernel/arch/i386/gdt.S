@@ -18,9 +18,12 @@
 # limitations under the License.
 #
 
+#include "gdt.h"
+
 .section .data
 
 # GDT with five entries. Mandatory null entry, supervisor code, supervisor data, user code, user data, in a flat setup.
+#
 .align 8
 .global _gdt_start
 .type _gdt_start, @object
@@ -33,6 +36,7 @@ _gdt_end:
 .section .text
 
 # Set the GDT frome a given pointer and size (on the stack in that order).
+#
 .global _gdt_set
 .type _gdt_set, @function
 _gdt_set:
