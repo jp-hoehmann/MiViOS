@@ -141,11 +141,29 @@
  * C types for working with multiboot.
  */
 
+/*
+ * Should usually be identical to uint8_t.
+ */
 typedef unsigned char multiboot_uint8_t;
+
+/*
+ * Should usually be identical to uint16_t.
+ */
 typedef unsigned short multiboot_uint16_t;
+
+/*
+ * Should usually be identical to uint32_t.
+ */
 typedef unsigned int multiboot_uint32_t;
+
+/*
+ * Should usually be identical to uint64_t.
+ */
 typedef unsigned long long multiboot_uint64_t;
 
+/*
+ * The multiboot header structure contained in the kernel binary.
+ */
 struct
     __attribute__((__packed__))
     __attribute__((__aligned__(4)))
@@ -201,6 +219,9 @@ multiboot_elf_section_header_table {
 };
 typedef struct multiboot_elf_section_header_table multiboot_elf_section_header_table_t;
 
+/*
+ * The multiboot header structure
+ */
 struct
     __attribute__((__packed__))
     __attribute__((__aligned__(4)))
@@ -275,6 +296,9 @@ multiboot_info {
 };
 typedef struct multiboot_info multiboot_info_t;
 
+/*
+ * An RGB color.
+ */
 struct
     __attribute__((__packed__))
 multiboot_color {
@@ -283,6 +307,9 @@ multiboot_color {
     multiboot_uint8_t blue;
 };
 
+/*
+ * A memory map entry.
+ */
 struct
     __attribute__((__packed__))
 multiboot_mmap_entry {
@@ -293,6 +320,9 @@ multiboot_mmap_entry {
 };
 typedef struct multiboot_mmap_entry multiboot_memory_map_t;
 
+/*
+ * A multiboot module list entry.
+ */
 struct
     __attribute__((__packed__))
 multiboot_mod_list {
@@ -327,4 +357,4 @@ multiboot_apm_info {
 
 #endif // ! __assembler
 
-#endif // ARCH_I386_MULTIBOOT_H
+#endif // ! ARCH_I386_MULTIBOOT_H

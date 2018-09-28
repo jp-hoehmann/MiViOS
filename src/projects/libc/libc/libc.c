@@ -33,29 +33,65 @@
 #endif // __is_user
 
 /*
- * Initialize the library.
+ * Internal initialization routine.
  */
-void initialize_standard_library(size_t argc, char* argv[], size_t envc, char* envp[]) {
+void _initialize_standard_library() {
 #ifdef __is_kernel
-    initialize_kernel_library(argc, argv);
-    setup();
+    initialize_kernel_library();
 #endif // __is_kernel
 #ifdef __is_user
-    initialize_user_library(argc, argv, envc, envp);
-    setup();
+    initialize_user_library();
 #endif // __is_user
+}
+
+/*
+ * Internal finalization routine.
+ */
+void _finalize_standard_library() {
+#ifdef __is_kernel
+    finalize_kernel_library();
+#endif // __is_kernel
+#ifdef __is_user
+    finalize_user_library();
+#endif // __is_user
+}
+
+/*
+ * Initialize the library.
+ *
+ * This will initialize the library. Among its tasks is the parsing of arguments and environment. For this purpose it
+ * gets passed four pointers, through which it returns the parsed data, so it can be passed to main(), or
+ * kernel_main(), respectively. The last two arguments it gets are a magic integer and a data structure. The magic
+ * integer determines how the structure is interpreted, the structure itself contains all the information provided by
+ * the bootloader or operating system, respectively.
+ */
+void initialize_standard_library(
+    size_t* argc_ptr,
+    char*** argv_ptr,
+    size_t* envc_ptr,
+    char*** envp_ptr,
+    union info info,
+    uint32_t magic
+) {
+    switch (magic) {
+        case MULTIBOOT_BOOTLOADER_MAGIC:
+            // Stub.
+            break;
+        case MIVIOS_APPLOADER_MAGIC:
+            // Stub.
+            break;
+        default:
+            // Disturbance in the force.
+            abort();
+    }
+    _initialize_standard_library();
+    setup();
 }
 
 /*
  * Finalize the library.
  */
 void finalize_standard_library(int status) {
-#ifdef __is_kernel
     teardown();
-    finalize_kernel_library(status);
-#endif // __is_kernel
-#ifdef __is_user
-    teardown();
-    finalize_user_library(status);
-#endif // __is_user
+    _finalize_standard_library();
 }

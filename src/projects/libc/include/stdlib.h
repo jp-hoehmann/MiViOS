@@ -29,8 +29,9 @@
  * Stdlib interface.
  */
 
-#define EXIT_SUCCESS 0
-#define EXIT_FAILURE 1
+#define EXIT_SUCCESS    0
+#define EXIT_FAILURE    1
+#define NULL            (void*) 0
 
 #ifdef __cplusplus
 extern "C" {

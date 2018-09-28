@@ -21,6 +21,6 @@
 #ifndef LIBC_FINALIZE_USER_LIBRARY
 #define LIBC_FINALIZE_USER_LIBRARY
 
-void finalize_user_library(int);
+void finalize_user_library();
 
 #endif // ! LIBC_FINALIZE_USER_LIBRARY

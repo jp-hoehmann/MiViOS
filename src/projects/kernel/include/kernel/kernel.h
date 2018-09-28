@@ -26,9 +26,9 @@
 extern void _kernel_start;
 extern void _kernel_end;
 
-void kernel_initialize(size_t argc, char* argv[]);
+void kernel_initialize();
 
-void kernel_finalize(int status);
+void kernel_finalize();
 
 void kdebug(char* dbg);
 

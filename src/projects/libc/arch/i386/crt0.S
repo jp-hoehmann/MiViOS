@@ -44,24 +44,36 @@ _MAGIC:
 .global _start
 .type _start, @function
 _start:
-    popl %eax
-    movl $0, %eax
-    movl %eax, %ebp
-    push %eax
-    push %ebp
+    pushl $0
     movl %esp, %ebp
-    subl $24, %esp
+    subl $40, %esp
 
-    movl 8(%ebp), %edi
-    movl 12(%ebp), %esi
-    movl 16(%ebp), %edx
-    movl 20(%ebp), %ecx
-    movl %edi, (%esp)
-    movl %esi, 4(%esp)
-    movl %edx, 8(%esp)
+    movl $0, 36(%esp)
+    movl $0, 32(%esp)
+    movl $0, 28(%esp)
+    movl $0, 24(%esp)
+    leal 36(%esp), %edi
+    leal 32(%esp), %esi
+    leal 28(%esp), %edx
+    leal 24(%esp), %ecx
+    movl %ebx, 20(%esp)
+    movl %eax, 16(%esp)
     movl %ecx, 12(%esp)
+    movl %edx, 8(%esp)
+    movl %esi, 4(%esp)
+    movl %edi, (%esp)
     call initialize_standard_library
+
     call _init
+
+    movl 36(%esp), %edi
+    movl 32(%esp), %esi
+    movl 28(%esp), %edx
+    movl 24(%esp), %ecx
+    movl %ecx, 12(%esp)
+    movl %edx, 8(%esp)
+    movl %esi, 4(%esp)
+    movl %edi, (%esp)
     call main
 
     movl %eax, (%esp)

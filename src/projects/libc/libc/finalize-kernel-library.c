@@ -31,8 +31,8 @@
 /*
  * Finalize the libk.
  */
-void finalize_kernel_library(int status) {
-    kernel_finalize(status);
+void finalize_kernel_library() {
+    kernel_finalize();
     kernel_ma_finalize();
     kernel_mm_finalize();
     kernel_pfa_finalize();

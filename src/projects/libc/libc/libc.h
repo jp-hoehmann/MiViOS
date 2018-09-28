@@ -22,8 +22,16 @@
 #define LIBC_LIBC_H
 
 #include <stddef.h>
+#include <stdint.h>
+#include <kernel/info.h>
 
-void initialize_standard_library(size_t argc, char* argv[], size_t envc, char* envp[]);
+void initialize_standard_library(
+    size_t* argc_ptr,
+    char*** argv_ptr,
+    size_t* envc_ptr,
+    char*** envp_ptr,
+    union info info,
+    uint32_t magic);
 
 void finalize_standard_library(int status);
 

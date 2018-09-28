@@ -30,14 +30,14 @@
 /*
  * Initialize the kernel.
  */
-void kernel_initialize(size_t argc, char* args[]) {
+void kernel_initialize() {
     // Stub
 }
 
 /*
  * Finalize the kernel.
  */
-void kernel_finalize(int status) {
+void kernel_finalize() {
     // Stub
 }
 

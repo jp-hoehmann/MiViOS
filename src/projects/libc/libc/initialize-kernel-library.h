@@ -23,6 +23,6 @@
 
 #include <stddef.h>
 
-void initialize_kernel_library(size_t argc, char* argv[]);
+void initialize_kernel_library();
 
 #endif // ! LIBC_INITIALIZE_KERNEL_LIBRARY

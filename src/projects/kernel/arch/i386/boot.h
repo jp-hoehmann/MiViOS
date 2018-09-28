@@ -21,7 +21,7 @@
 #ifndef ARCH_I386_BOOT_H
 #define ARCH_I386_BOOT_H
 
-#include "multiboot.h"
+#include <kernel/multiboot.h>
 
 #define MULTIBOOT_HEADER_FLAGS MULTIBOOT_PAGE_ALIGN | MULTIBOOT_MEMORY_INFO
 #define MULTIBOOT_HEADER_CHECK -(MULTIBOOT_HEADER_MAGIC + MULTIBOOT_HEADER_FLAGS)
@@ -32,7 +32,7 @@
 
 #ifndef __assembler
 
-// Stub.
+extern struct multiboot_header _MULTIBOOT_HEADER;
 
 #endif // ! __assembler
 

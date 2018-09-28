@@ -23,6 +23,6 @@
 /*
  * Finalize the libc.
  */
-void finalize_user_library(int status) {
+void finalize_user_library() {
     // Stub
 }

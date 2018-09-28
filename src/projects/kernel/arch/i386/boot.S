@@ -28,6 +28,9 @@
 
 # Multiboot header.
 .align 4
+.global _MULTIBOOT_HEADER
+.type _MULTIBOOT_HEADER, @object
+_MULTIBOOT_HEADER:
 .long MULTIBOOT_HEADER_MAGIC
 .long MULTIBOOT_HEADER_FLAGS
 .long MULTIBOOT_HEADER_CHECK
@@ -40,6 +43,7 @@
 .long 0
 .long 0
 .long 0
+.size _MULTIBOOT_HEADER, . - _MULTIBOOT_HEADER
 
 .section .bss
 
@@ -68,38 +72,42 @@ _MAGIC:
 .global _start
 .type _start, @function
 _start:
-    movl $stack_top, %esp                                               # Set up the stack,
-    movl $0, %eax                                                       # by loading its position,
-    movl %eax, %ebp                                                     # and storing a NULL
-    push %eax                                                           # return address and
-    push %ebp                                                           # base pointer.
+    movl $stack_top, %esp                                               # Set up the stack, by loading
+    movl $0, %ebp                                                       # its position and storing
+    pushl $0                                                            # a NULL return address
+    pushl %ebp                                                          # and base pointer.
+    pushl $0                                                            # Clear the
+    popf                                                                # EFLAGS.
     movl %esp, %ebp                                                     # Add a new stack frame and
     subl $40, %esp                                                      # make room for local variables.
 
-    movl $0, %eax                                                       # Store two empty
-    movl %eax, 32(%esp)                                                 # strings for args
-    movl %eax, 36(%esp)                                                 # and envp, respectively.
-    leal 32(%esp), %eax                                                 # Create a
-    movl %eax, 24(%esp)                                                 # pointer
-    leal 36(%esp), %eax                                                 # to each
-    movl %eax, 28(%esp)                                                 # string.
-    leal 24(%esp), %eax                                                 # Create
-    movl %eax, 16(%esp)                                                 # pointers
-    leal 28(%esp), %eax                                                 # to the
-    movl %eax, 20(%esp)                                                 # pointers.
+    movl $0, 36(%esp)                                                   # Initialize argc
+    movl $0, 32(%esp)                                                   # and envc to zero
+    movl $0, 28(%esp)                                                   # and argv and envp
+    movl $0, 24(%esp)                                                   # to NULL.
+    leal 36(%esp), %edi                                                 # Load pointers to
+    leal 32(%esp), %esi                                                 # argc, argv, envc
+    leal 28(%esp), %edx                                                 # and envp.
+    leal 24(%esp), %ecx                                                 #
+    movl %ebx, 20(%esp)                                                 # Initialize the library,
+    movl %eax, 16(%esp)                                                 # passing the pointers,
+    movl %ecx, 12(%esp)                                                 # along with the info
+    movl %edx, 8(%esp)                                                  # structure and magic
+    movl %esi, 4(%esp)                                                  # value from the
+    movl %edi, (%esp)                                                   # bootloader.
+    call initialize_standard_library                                    #
 
-    movl $0, %edi                                                       # Initialize argc
-    movl 16(%esp), %esi                                                 # and envc to
-    movl $0, %edx                                                       # zero, and argv
-    movl 20(%esp), %ecx                                                 # and envp each
-    movl %edi, (%esp)                                                   # to an array of
-    movl %esi, 4(%esp)                                                  # strings containing
-    movl %edx, 8(%esp)                                                  # a single empty
-    movl %ecx, 12(%esp)                                                 # string.
+    call _init                                                          # Call global constructors.
 
-    call initialize_standard_library                                    # Initialize everything things necessary for the
-    call _init                                                          # library to work, call the global constructors,
-    call kernel_main                                                    # and transfer control to the kernel.
+    movl 36(%esp), %edi                                                 # Load the values
+    movl 32(%esp), %esi                                                 # for argc, argv,
+    movl 28(%esp), %edx                                                 # envc and envp,
+    movl 24(%esp), %ecx                                                 # that were populated
+    movl %ecx, 12(%esp)                                                 # during library
+    movl %edx, 8(%esp)                                                  # initialization
+    movl %esi, 4(%esp)                                                  # and pass them
+    movl %edi, (%esp)                                                   # into the main
+    call kernel_main                                                    # kernel.
 
     movl %eax, (%esp)                                                   # Call exit() with the result
     call exit                                                           # of kernel_main().

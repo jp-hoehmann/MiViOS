@@ -1,7 +1,7 @@
 /*
- * finalize-kernel-library.h
+ * mivios.h
  *
- * Created by Jean-Pierre Höhmann on 2018-09-16.
+ * Created by Jean-Pierre Höhmann on 2018-09-28.
  *
  * Copyright 2018 Jean-Pierre Höhmann (@NuvandaPV) <jean-pierre@höhmann.info>
  *
@@ -18,9 +18,19 @@
  * limitations under the License.
  */
 
-#ifndef LIBC_FINALIZE_KERNEL_LIBRARY
-#define LIBC_FINALIZE_KERNEL_LIBRARY
+/*
+ * Mivios header file.
+ */
 
-void finalize_kernel_library();
+// This should be in %eax.
+#define MIVIOS_APPLOADER_MAGIC 0x600DB007
 
-#endif // ! LIBC_FINALIZE_KERNEL_LIBRARY
+/*
+ * Information structure passed to applications loaded by mivios.
+ */
+struct
+__attribute__((__packed__))
+__attribute__((__aligned__(4)))
+mivios_info {
+    // Stub
+};

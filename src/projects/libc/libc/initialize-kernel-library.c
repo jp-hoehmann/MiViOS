@@ -31,12 +31,12 @@
 /*
  * Initialize the libk.
  */
-void initialize_kernel_library(size_t argc, char* argv[]) {
+void initialize_kernel_library() {
      kernel_tty_initialize();
      kernel_cpu_initialize();
      kernel_mmu_initialize();
      kernel_pfa_initialize();
      kernel_mm_initialize();
      kernel_ma_initialize();
-     kernel_initialize(argc, argv);
+     kernel_initialize();
 }

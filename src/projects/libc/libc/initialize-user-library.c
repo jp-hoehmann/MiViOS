@@ -23,6 +23,6 @@
 /*
  * Initialize the libc.
  */
-void initialize_user_library(size_t argc, char* argv[], size_t envc, char* envp[]) {
+void initialize_user_library() {
     // Stub
 }
