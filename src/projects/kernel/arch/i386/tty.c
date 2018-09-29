@@ -45,7 +45,7 @@ static uint16_t* terminal_buffer;
 /*
  * Initialize the terminal.
  */
-void kernel_tty_initialize(void) {
+void kernel_tty_initialize(struct tty_info* info) {
 	terminal_row = 0;
 	terminal_column = 0;
 	terminal_color = vga_entry_color(VGA_COLOR_LIGHT_GREY, VGA_COLOR_BLACK);
@@ -62,7 +62,7 @@ void kernel_tty_initialize(void) {
  * Finalize the terminal.
  */
 void kernel_tty_finalize(void) {
-    // Stub
+    ((void) 0);
 }
 
 void terminal_setcolor(uint8_t color) {

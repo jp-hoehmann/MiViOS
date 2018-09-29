@@ -23,6 +23,10 @@
 
 #include <stddef.h>
 
-void initialize_user_library();
+struct libc_info {
+    // Stub
+};
+
+void initialize_user_library(struct libc_info* info);
 
 #endif // ! LIBC_INITIALIZE_USER_LIBRARY

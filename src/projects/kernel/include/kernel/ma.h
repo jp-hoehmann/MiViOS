@@ -23,36 +23,44 @@
 
 #include <stddef.h>
 
-void kernel_ma_initialize(void);
+struct ma_info {
+    // Stub
+};
+
+void kernel_ma_initialize(struct ma_info* info);
 
 void kernel_ma_finalize(void);
 
-void* alloc_kpage(size_t);
+void* alloc_kpage(size_t pages);
 
-void* alloc_cpage(size_t);
+void* alloc_bpage(size_t pages);
 
-void* alloc_dpage(size_t);
+void* alloc_cpage(size_t pages);
 
-void* alloc_epage(size_t);
+void* alloc_dpage(size_t pages);
 
-void* alloc_fpage(size_t);
+void* alloc_epage(size_t pages);
 
-void* alloc_gpage(size_t);
+void* alloc_fpage(size_t pages);
 
-void* alloc_spage(size_t);
+void* alloc_gpage(size_t pages);
 
-void free_kpage(void*, size_t);
+void* alloc_spage(size_t pages);
 
-void free_cpage(void*, size_t);
+void free_kpage(void* start, size_t pages);
 
-void free_dpage(void*, size_t);
+void free_bpage(void* start, size_t pages);
 
-void free_epage(void*, size_t);
+void free_cpage(void* start, size_t pages);
 
-void free_fpage(void*, size_t);
+void free_dpage(void* start, size_t pages);
 
-void free_gpage(void*, size_t);
+void free_epage(void* start, size_t pages);
 
-void free_spage(void*, size_t);
+void free_fpage(void* start, size_t pages);
+
+void free_gpage(void* start, size_t pages);
+
+void free_spage(void* start, size_t pages);
 
 #endif // ! _KERNEL_MA_H

@@ -18,15 +18,11 @@
  * limitations under the License.
  */
 
+#ifndef _KERNEL_INFO_H
+#define _KERNEL_INFO_H
+
 #include <kernel/mivios.h>
 #include <kernel/multiboot.h>
-
-/*
- * Dummy information structure.
- *
- * This is a fallback, which is used when an unknown magic value is passed.
- */
-struct dummy_info { };
 
 /*
  * Generic information structure.
@@ -35,10 +31,11 @@ struct dummy_info { };
  * one that is actually passed. There is one structure for each supported bootloader, which is used when loading the
  * kernel from that loader, as well as one structure for Mivios itself, which is used when loading an application from
  * Mivios. Each structure is identified by a magic value. The magic value is passed through %eax, so the libc can judge
- * what kind of data was actually passed.
+ * what kind of data was actually passed.  Note that magic may be 0x0 and info may be NULL.
  */
 union info {
-    struct mivios_info;
-    struct multiboot_info;
-    struct dummy_info;
+    struct mivios_info mivios;
+    struct multiboot_info multiboot;
 };
+
+#endif // ! _KERNEL_INFO_H

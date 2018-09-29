@@ -22,13 +22,19 @@
 #define _KERNEL_KERNEL_H
 
 #include <stddef.h>
+#include <kernel/file.h>
+
+struct kernel_info {
+    char* args;
+    struct file env;
+};
 
 extern void _kernel_start;
 extern void _kernel_end;
 
-void kernel_initialize();
+void kernel_initialize(struct kernel_info* info);
 
-void kernel_finalize();
+void kernel_finalize(void);
 
 void kdebug(char* dbg);
 
@@ -39,6 +45,6 @@ void kwarn(char* warn);
 __attribute__((__noreturn__))
 void kerror(char* err);
 
-void kernel_main(size_t argc, char* argv[]);
+int kernel_main(size_t argc, char* argv[], size_t envc, char* envp[]);
 
 #endif // ! _KERNEL_KERNEL_H

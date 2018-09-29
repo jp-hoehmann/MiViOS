@@ -27,7 +27,11 @@
  * TTY driver interface.
  */
 
-void kernel_tty_initialize(void);
+struct tty_info {
+    // Stub
+};
+
+void kernel_tty_initialize(struct tty_info* info);
 
 void kernel_tty_finalize(void);
 

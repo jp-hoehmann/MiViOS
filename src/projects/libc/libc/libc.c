@@ -18,9 +18,15 @@
  * limitations under the License.
  */
 
+#include <stdlib.h>
+#include <kernel/file.h>
+#include <kernel/init.h>
+
 #include "libc.h"
 #include "setup.h"
 #include "teardown.h"
+#include "initialize-kernel-library.h"
+#include "initialize-user-library.h"
 
 #ifdef __is_kernel
 #include "initialize-kernel-library.h"
@@ -35,12 +41,12 @@
 /*
  * Internal initialization routine.
  */
-void _initialize_standard_library() {
+void _initialize_standard_library(struct libc_info* libc_info, struct libk_info* libk_info) {
 #ifdef __is_kernel
-    initialize_kernel_library();
+    initialize_kernel_library(libk_info);
 #endif // __is_kernel
 #ifdef __is_user
-    initialize_user_library();
+    initialize_user_library(libc_info);
 #endif // __is_user
 }
 
@@ -70,22 +76,111 @@ void initialize_standard_library(
     char*** argv_ptr,
     size_t* envc_ptr,
     char*** envp_ptr,
-    union info info,
-    uint32_t magic
+    uint32_t magic,
+    union info* info
 ) {
+    char* args = NULL;
+
+    struct file env = (struct file) {
+        .cmd        = NULL,
+        .start      = NULL,
+        .length     = 0
+    };
+
+    struct file bin = (struct file) {
+        .cmd        = NULL,
+        .start      = NULL,
+        .length     = 0
+    };
+
+    struct file f = (struct file) {
+        .cmd        = NULL,
+        .start      = NULL,
+        .length     = 0
+    };
+
     switch (magic) {
         case MULTIBOOT_BOOTLOADER_MAGIC:
-            // Stub.
+            args = (char*) info->multiboot.cmdline;
+
+            // FIXME This relies on the order of the modules instead of their names.
+            env = (struct file) {
+                .cmd        = (char*) ((struct multiboot_mod_list*) info->multiboot.mods_addr)[0].cmdline,
+                .start      = (void*) ((struct multiboot_mod_list*) info->multiboot.mods_addr)[0].mod_start,
+                .length     = ((void*) ((struct multiboot_mod_list*) info->multiboot.mods_addr)[0].mod_end)
+                              - ((void*) ((struct multiboot_mod_list*) info->multiboot.mods_addr)[0].mod_start)
+            };
+
+            // FIXME This relies on the order of the modules instead of their names.
+            bin = (struct file) {
+                .cmd        = (char*) ((struct multiboot_mod_list*) info->multiboot.mods_addr)[1].cmdline,
+                .start      = (void*) ((struct multiboot_mod_list*) info->multiboot.mods_addr)[1].mod_start,
+                .length     = ((void*) ((struct multiboot_mod_list*) info->multiboot.mods_addr)[1].mod_end)
+                              - ((void*) ((struct multiboot_mod_list*) info->multiboot.mods_addr)[1].mod_start)
+            };
+
+            // FIXME This relies on the order of the modules instead of their names.
+            f = (struct file) {
+                .cmd        = (char*) ((struct multiboot_mod_list*) info->multiboot.mods_addr)[2].cmdline,
+                .start      = (void*) ((struct multiboot_mod_list*) info->multiboot.mods_addr)[2].mod_start,
+                .length     = ((void*) ((struct multiboot_mod_list*) info->multiboot.mods_addr)[2].mod_end)
+                              - ((void*) ((struct multiboot_mod_list*) info->multiboot.mods_addr)[2].mod_start)
+            };
+
             break;
+
         case MIVIOS_APPLOADER_MAGIC:
-            // Stub.
+            args = info->mivios.args;
+
+            env = (struct file) {
+                .cmd        = info->mivios.env_name,
+                .start      = (void*) info->mivios.env_start,
+                .length     = info->mivios.env_end - ((void*) info->mivios.env_start)
+            };
+
             break;
+
         default:
-            // Disturbance in the force.
-            abort();
+            ((void) 0);
     }
-    _initialize_standard_library();
-    setup();
+
+    struct cpu_info cpu_info = (struct cpu_info) {};
+
+    struct init_info init_info = (struct init_info) {
+        .bin    = bin,
+        .f      = f
+    };
+
+    struct kernel_info kernel_info = (struct kernel_info) {
+        .args   = args,
+        .env    = env
+    };
+
+    struct ma_info ma_info = (struct ma_info) {};
+
+    struct mm_info mm_info = (struct mm_info) {};
+
+    struct mmu_info mmu_info = (struct mmu_info) {};
+
+    struct pfa_info pfa_info = (struct pfa_info) {};
+
+    struct tty_info tty_info = (struct tty_info) {};
+
+    struct libc_info libc_info = (struct libc_info) {};
+
+    struct libk_info libk_info = (struct libk_info) {
+        .tty        = &tty_info,
+        .cpu        = &cpu_info,
+        .mmu        = &mmu_info,
+        .pfa        = &pfa_info,
+        .mm         = &mm_info,
+        .ma         = &ma_info,
+        .init       = &init_info,
+        .kernel     = &kernel_info
+    };
+
+    _initialize_standard_library(&libc_info, &libk_info);
+    setup(argc_ptr, argv_ptr, envc_ptr, envp_ptr, args, &env);
 }
 
 /*

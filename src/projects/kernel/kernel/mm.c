@@ -25,15 +25,15 @@
 /*
  * Initialize the memory manager.
  */
-void kernel_mm_initialize(void) {
-    // Stub
+void kernel_mm_initialize(struct mm_info* info) {
+    ((void) 0);
 }
 
 /*
  * Finalize the memory manager.
  */
 void kernel_mm_finalize(void) {
-    // Stub
+    ((void) 0);
 }
 
 /*

@@ -59,7 +59,7 @@ void encode_gdt_entry(uint8_t* dst, struct gdt_entry src) {
 /*
  * Initialize CPU-specific features.
  */
-void kernel_cpu_initialize(void) {
+void kernel_cpu_initialize(struct cpu_info* info) {
     // Null.
     encode_gdt_entry((uint8_t*) (&_gdt_start)[0], (struct gdt_entry) {
         .base   = 0x00000000,
@@ -103,12 +103,12 @@ void kernel_cpu_initialize(void) {
     });
 
     _tss_set(&_isr_stack_top, &_tss_start);
-    _gdt_set(&_gdt_start, ((void*) &_gdt_end) - ((void*) &_gdt_start));
+    _gdt_set(&_gdt_start, &_gdt_end - ((void*) &_gdt_start));
 }
 
 /*
  * Finalize CPU-specific features.
  */
 void kernel_cpu_finalize(void) {
-    // Stub
+    ((void) 0);
 }

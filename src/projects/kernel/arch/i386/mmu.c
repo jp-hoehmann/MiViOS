@@ -26,7 +26,7 @@
 /*
  * Initialize the MMU.
  */
-void kernel_mmu_initialize(void) {
+void kernel_mmu_initialize(struct mmu_info* info) {
     _pg_install(&_kernel_end);
     _pg_set(&_kernel_end);
 }
@@ -35,5 +35,5 @@ void kernel_mmu_initialize(void) {
  * Finalize the MMU.
  */
 void kernel_mmu_finalize(void) {
-    // Stub
+    ((void) 0);
 }

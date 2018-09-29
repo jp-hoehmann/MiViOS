@@ -43,8 +43,8 @@
  * Multiboot header file.
  */
 
-#ifndef ARCH_I386_MULTIBOOT_H
-#define ARCH_I386_MULTIBOOT_H
+#ifndef _KERNEL_MULTIBOOT_H
+#define _KERNEL_MULTIBOOT_H
 
 // How many bytes from the start of the file we search for the header.
 #define MULTIBOOT_SEARCH        8192
@@ -357,4 +357,4 @@ multiboot_apm_info {
 
 #endif // ! __assembler
 
-#endif // ! ARCH_I386_MULTIBOOT_H
+#endif // ! _KERNEL_MULTIBOOT_H

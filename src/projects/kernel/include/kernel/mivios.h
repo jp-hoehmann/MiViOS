@@ -22,6 +22,9 @@
  * Mivios header file.
  */
 
+#ifndef _KERNEL_MIVIOS_H
+#define _KERNEL_MIVIOS_H
+
 // This should be in %eax.
 #define MIVIOS_APPLOADER_MAGIC 0x600DB007
 
@@ -29,8 +32,13 @@
  * Information structure passed to applications loaded by mivios.
  */
 struct
-__attribute__((__packed__))
-__attribute__((__aligned__(4)))
+    __attribute__((__packed__))
+    __attribute__((__aligned__(4)))
 mivios_info {
-    // Stub
+    char* args;
+    char* env_name;
+    char* env_start;
+    void* env_end;
 };
+
+#endif // ! _KERNEL_MIVIOS_H

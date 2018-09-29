@@ -23,22 +23,25 @@
 #include <stdlib.h>
 #include <stddef.h>
 
-#include <kernel/tty.h>
-#include <kernel/cpu.h>
-#include <kernel/mmu.h>
+#include <kernel/kernel.h>
+#include <kernel/init.h>
+
+static char* args;
+static struct file env;
 
 /*
  * Initialize the kernel.
  */
-void kernel_initialize() {
-    // Stub
+void kernel_initialize(struct kernel_info* info) {
+    args    = info->args;
+    env     = info->env;
 }
 
 /*
  * Finalize the kernel.
  */
 void kernel_finalize() {
-    // Stub
+    ((void) 0);
 }
 
 /*
@@ -77,9 +80,6 @@ void kerror(char* err) {
  *
  * This is called as soon as the libk is fully operational.
  */
-int kernel_main(size_t argc, char* args[]) {
-	char* ptr = (char*) calloc(72, 1);
-	strcpy(ptr, "Hello, kernel World!");
-	puts(ptr);
-	return 0;
+int kernel_main(size_t argc, char* argv[], size_t envc, char* envp[]) {
+    run_init(args, env);
 }

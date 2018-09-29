@@ -1,7 +1,7 @@
 /*
- * initialize-kernel-library.h
+ * init.c
  *
- * Created by Jean-Pierre Höhmann on 2018-09-16.
+ * Created by Jean-Pierre Höhmann on 2018-09-29.
  *
  * Copyright 2018 Jean-Pierre Höhmann (@NuvandaPV) <jean-pierre@höhmann.info>
  *
@@ -18,31 +18,31 @@
  * limitations under the License.
  */
 
-#ifndef LIBC_INITIALIZE_KERNEL_LIBRARY
-#define LIBC_INITIALIZE_KERNEL_LIBRARY
-
-#include <stddef.h>
-
-#include <kernel/cpu.h>
+#include <string.h>
 #include <kernel/init.h>
-#include <kernel/kernel.h>
 #include <kernel/ma.h>
-#include <kernel/mm.h>
-#include <kernel/mmu.h>
-#include <kernel/pfa.h>
-#include <kernel/tty.h>
 
-struct libk_info {
-    struct tty_info* tty;
-    struct cpu_info* cpu;
-    struct mmu_info* mmu;
-    struct pfa_info* pfa;
-    struct mm_info* mm;
-    struct ma_info* ma;
-    struct init_info* init;
-    struct kernel_info* kernel;
-};
+#include "pg.h"
 
-void initialize_kernel_library(struct libk_info* info);
+static struct file bin;
+static struct file f;
 
-#endif // ! LIBC_INITIALIZE_KERNEL_LIBRARY
+void kernel_init_initialize(struct init_info* info) {
+    bin     = info->bin;
+    f       = info->f;
+}
+
+void kernel_init_finalize() {
+    ((void) 0);
+}
+
+int _run_init(void* b, void* d, void* f) {
+    return 0;
+}
+
+int run_init(char* args, struct file env) {
+    return _run_init(
+        memcpy(alloc_bpage(bin.length / PAGE_SIZE + 1), bin.start, bin.length),
+        memcpy(alloc_dpage(env.length / PAGE_SIZE + 1), env.start, env.length),
+        memcpy(alloc_fpage(f.length / PAGE_SIZE + 1), f.start, f.length));
+}

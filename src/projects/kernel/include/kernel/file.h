@@ -1,7 +1,7 @@
 /*
- * pfa.h
+ * file.h
  *
- * Created by Jean-Pierre Höhmann on 18-09-08.
+ * Created by Jean-Pierre Höhmann on 2018-09-29.
  *
  * Copyright 2018 Jean-Pierre Höhmann (@NuvandaPV) <jean-pierre@höhmann.info>
  *
@@ -18,20 +18,15 @@
  * limitations under the License.
  */
 
-#ifndef _KERNEL_PFA_H
-#define _KERNEL_PFA_H
+#ifndef _KERNEL_FILE_H
+#define _KERNEL_FILE_H
 
-struct pfa_info {
-    // Stub
+#include <stddef.h>
+
+struct file {
+    char* cmd;
+    void* start;
+    size_t length;
 };
 
-void kernel_pfa_initialize(struct pfa_info* info);
-
-void kernel_pfa_finalize(void);
-
-void* pfalloc(uint32_t, uint32_t);
-
-int pffree(uint32_t);
-
-#endif // ! _KERNEL_PFA_H
-
+#endif // ! _KERNEL_FILE_H

@@ -22,11 +22,12 @@
 #define SETUP_H
 
 #include <stdint.h>
+#include <kernel/file.h>
 
 extern uint8_t _MAGIC[16];
 
 extern void* MAGIC;
 
-void setup(void);
+void setup(size_t* argc_ptr, char*** argv_ptr, size_t* envc_ptr, char*** envp_ptr, char* args, struct file* env);
 
 #endif // ! SETUP_H

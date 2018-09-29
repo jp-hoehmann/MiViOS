@@ -29,7 +29,7 @@ static uint32_t watermark;
 /*
  * Initialize the page frame allocator.
  */
-void kernel_pfa_initialize(void) {
+void kernel_pfa_initialize(struct pfa_info* info) {
     watermark = &_kernel_end + _PG_SIZE;
 }
 
@@ -37,7 +37,7 @@ void kernel_pfa_initialize(void) {
  * Finalize the page frame allocator.
  */
 void kernel_pfa_finalize(void) {
-    // Stub
+    ((void) 0);
 }
 
 /*

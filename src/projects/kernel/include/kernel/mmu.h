@@ -23,6 +23,14 @@
 
 #include <stdint.h>
 
+struct mmu_info {
+    // Stub
+};
+
+void kernel_mmu_initialize(struct mmu_info* info);
+
+void kernel_mmu_finalize(void);
+
 extern uint32_t _KERNEL_DATA_PAGE;
 extern uint32_t _USER_CODE_PAGE;
 extern uint32_t _USER_DATA_PAGE;
@@ -50,9 +58,5 @@ extern uint32_t _E_SPACE_SIZE;
 extern uint32_t _F_SPACE_SIZE;
 extern uint32_t _G_SPACE_SIZE;
 extern uint32_t _S_SPACE_SIZE;
-
-void kernel_mmu_initialize(void);
-
-void kernel_mmu_finalize(void);
 
 #endif // ! _KERNEL_MMU_H

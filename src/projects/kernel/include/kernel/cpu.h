@@ -21,7 +21,11 @@
 #ifndef _KERNEL_CPU_H
 #define _KERNEL_CPU_H
 
-void kernel_cpu_initialize(void);
+struct cpu_info {
+    // Stub
+};
+
+void kernel_cpu_initialize(struct cpu_info* info);
 
 void kernel_cpu_finalize(void);
 

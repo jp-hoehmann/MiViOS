@@ -23,7 +23,11 @@
 
 #include <stdint.h>
 
-void kernel_mm_initialize(void);
+struct mm_info {
+    // Stub
+};
+
+void kernel_mm_initialize(struct mm_info* info);
 
 void kernel_mm_finalize(void);
 

@@ -43,7 +43,7 @@ static void* sftop;
 /*
  * Initialize the memory allocator.
  */
-void kernel_ma_initialize(void) {
+void kernel_ma_initialize(struct ma_info* info) {
     kfbase = &_kernel_end;
     bfbase = _b_space_start;
     efbase = _e_space_start;
@@ -63,7 +63,7 @@ void kernel_ma_initialize(void) {
  * Finalize the memory allocator.
  */
 void kernel_ma_finalize(void) {
-    // Stub
+    ((void) 0);
 }
 
 void* _alloc_page(size_t pages, void** fbase, void** ftop, void* palloc(uint32_t)) {
@@ -85,6 +85,16 @@ void* _alloc_page(size_t pages, void** fbase, void** ftop, void* palloc(uint32_t
  */
 void* alloc_kpage(size_t pages) {
     return _alloc_page(pages, &kfbase, &kftop, kpalloc);
+}
+
+/*
+ * Allocate a given number of user binary pages.
+ *
+ * This will allocate pages consecutive user binary pages, returning a pointer to the start of the newly mapped memory.
+ */
+void* alloc_bpage(size_t pages) {
+    // Since there is no execute prevention, this can just use data pages.
+    return alloc_dpage(pages);
 }
 
 /*
@@ -153,6 +163,17 @@ void* alloc_spage(size_t pages) {
  */
 void free_kpage(void* start, size_t pages) {
     // TODO Implement
+    ((void) 0);
+}
+
+/*
+ * Free a given number of user binary pages starting from a given address.
+ *
+ * Once properly implemented, this will free pages consecutive user binary pages starting at start.
+ */
+void free_bpage(void* start, size_t pages) {
+    // TODO Implement
+    ((void) 0);
 }
 
 /*
@@ -162,6 +183,7 @@ void free_kpage(void* start, size_t pages) {
  */
 void free_cpage(void* start, size_t pages) {
     // TODO Implement
+    ((void) 0);
 }
 
 /*
@@ -171,6 +193,7 @@ void free_cpage(void* start, size_t pages) {
  */
 void free_dpage(void* start, size_t pages) {
     // TODO Implement
+    ((void) 0);
 }
 
 /*
@@ -180,6 +203,7 @@ void free_dpage(void* start, size_t pages) {
  */
 void free_epage(void* start, size_t pages) {
     // TODO Implement
+    ((void) 0);
 }
 
 /*
@@ -189,6 +213,7 @@ void free_epage(void* start, size_t pages) {
  */
 void free_fpage(void* start, size_t pages) {
     // TODO Implement
+    ((void) 0);
 }
 
 /*
@@ -198,6 +223,7 @@ void free_fpage(void* start, size_t pages) {
  */
 void free_gpage(void* start, size_t pages) {
     // TODO Implement
+    ((void) 0);
 }
 
 /*
@@ -207,4 +233,5 @@ void free_gpage(void* start, size_t pages) {
  */
 void free_spage(void* start, size_t pages) {
     // TODO Implement
+    ((void) 0);
 }

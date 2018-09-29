@@ -29,8 +29,10 @@ void* MAGIC;
 /*
  * Setup stdlib.
  */
-void lib_setup(void) {
+void lib_setup(size_t* envc_ptr, char*** envp_ptr, struct file* env) {
     malloc_setup();
+    // TODO Implement
+    // getenv_setup(envc_ptr, envp_ptr, env);
 }
 
 /*
@@ -51,8 +53,11 @@ void magic(void) {
 /*
  * Do common initializations.
  */
-void setup(void) {
-    lib_setup();
+void setup(size_t* argc_ptr, char*** argv_ptr, size_t* envc_ptr, char*** envp_ptr, char* args, struct file* env) {
+    lib_setup(envc_ptr, envp_ptr, env);
     io_setup();
+
+    // TODO Populate argc_ptr and argv_ptr
+
     magic();
 }

@@ -18,25 +18,18 @@
  * limitations under the License.
  */
 
-#include <kernel/cpu.h>
-#include <kernel/kernel.h>
-#include <kernel/ma.h>
-#include <kernel/mm.h>
-#include <kernel/mmu.h>
-#include <kernel/pfa.h>
-#include <kernel/tty.h>
-
 #include "initialize-kernel-library.h"
 
 /*
  * Initialize the libk.
  */
-void initialize_kernel_library() {
-     kernel_tty_initialize();
-     kernel_cpu_initialize();
-     kernel_mmu_initialize();
-     kernel_pfa_initialize();
-     kernel_mm_initialize();
-     kernel_ma_initialize();
-     kernel_initialize();
+void initialize_kernel_library(struct libk_info* info) {
+     kernel_tty_initialize(info->tty);
+     kernel_cpu_initialize(info->cpu);
+     kernel_mmu_initialize(info->mmu);
+     kernel_pfa_initialize(info->pfa);
+     kernel_mm_initialize(info->mm);
+     kernel_ma_initialize(info->ma);
+     kernel_init_initialize(info->init);
+     kernel_initialize(info->kernel);
 }

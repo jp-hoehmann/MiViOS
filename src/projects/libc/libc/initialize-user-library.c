@@ -23,6 +23,6 @@
 /*
  * Initialize the libc.
  */
-void initialize_user_library() {
-    // Stub
+void initialize_user_library(struct libc_info* info) {
+    ((void) 0);
 }

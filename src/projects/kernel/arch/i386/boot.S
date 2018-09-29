@@ -91,9 +91,9 @@ _start:
     leal 24(%esp), %ecx                                                 #
     movl %ebx, 20(%esp)                                                 # Initialize the library,
     movl %eax, 16(%esp)                                                 # passing the pointers,
-    movl %ecx, 12(%esp)                                                 # along with the info
-    movl %edx, 8(%esp)                                                  # structure and magic
-    movl %esi, 4(%esp)                                                  # value from the
+    movl %ecx, 12(%esp)                                                 # along with the magic
+    movl %edx, 8(%esp)                                                  # value and information
+    movl %esi, 4(%esp)                                                  # structure from the
     movl %edi, (%esp)                                                   # bootloader.
     call initialize_standard_library                                    #
 

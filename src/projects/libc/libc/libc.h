@@ -30,8 +30,8 @@ void initialize_standard_library(
     char*** argv_ptr,
     size_t* envc_ptr,
     char*** envp_ptr,
-    union info info,
-    uint32_t magic);
+    uint32_t magic,
+    union info* info);
 
 void finalize_standard_library(int status);
 
