@@ -36,13 +36,18 @@ void kernel_init_finalize() {
     ((void) 0);
 }
 
-int _run_init(void* b, void* d, void* f) {
+int _run_init(void* b, void* f, void* g) {
     return 0;
 }
 
+/*
+ * Run the initial user space application.
+ *
+ * This will run the first – and (in lieu of multitasking) only – user space application.
+ */
 int run_init(char* args, struct file env) {
     return _run_init(
         memcpy(alloc_bpage(bin.length / PAGE_SIZE + 1), bin.start, bin.length),
-        memcpy(alloc_dpage(env.length / PAGE_SIZE + 1), env.start, env.length),
-        memcpy(alloc_fpage(f.length / PAGE_SIZE + 1), f.start, f.length));
+        memcpy(alloc_fpage(f.length / PAGE_SIZE + 1), f.start, f.length),
+        memcpy(alloc_gpage(env.length / PAGE_SIZE + 1), env.start, env.length));
 }

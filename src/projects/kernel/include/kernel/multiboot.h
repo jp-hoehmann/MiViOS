@@ -96,7 +96,7 @@
 
 // Is there a symbol table loaded, or is there an ELF section header table?
 #define MULTIBOOT_INFO_AOUT_SYMS    0x00000010
-#define MULTIBOOT_INFO_ELF_SHDR     0X00000020
+#define MULTIBOOT_INFO_ELF_SHDR     0x00000020
 
 // Is there a full memory map?
 #define MULTIBOOT_INFO_MEM_MAP 0x00000040
